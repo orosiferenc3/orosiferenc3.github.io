@@ -1,0 +1,26 @@
+{
+    "tasks": [
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Adott a következő 10 elemű S1L típusú lista: <0.36, 0.42, 0.66, 0.26, 0.98, 0.43, 0.57, 0.78, 0.99, 0.41> A listán edényrendezést hajtunk végre, az edényeket is S1L típusú listákkal reprezentáljuk. A rendezés során nem elvárás a stabilitás, de a rendezést lehető legegyszerűbben szeretnénk elvégezni. Milyen sorrendben lesznek az elemek a 4-es edényben?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "<0.42, 0.43, 0.41>"
+                    },
+                    {
+                        "id": 2,
+                        "text": "<0.41, 0.42, 0.43>"
+                    },
+                    {
+                        "id": 3,
+                        "text": "<0.41, 0.43, 0.42>"
+                    }
+                ]
+            },
+            "solution": 1
+        }
+    ]
+}

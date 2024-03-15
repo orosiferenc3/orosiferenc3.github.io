@@ -1,0 +1,49 @@
+{
+    "tasks": [
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Szemléltesse a merge sort működését az alábbi tömbön! [4, 2, 6, 3, 2', 5, 1, 7, 3]",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img1.png"
+            }
+        },
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Melyik az egyetlen igaz állítás?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "Az összesfésülő rendezés aszimptotikusan optimális."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Az összesfésülő rendezés helyben rendező algoritmus."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Az összesfésülő rendezés lineáris időben rendez."
+                    },
+                    {
+                        "id": 4,
+                        "text": "Az összesfésülő rendezés nem stabil."
+                    }
+                ]
+            },
+            "solution": 1
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Végezzük el az összefésülő rendezést a következő tömbön: A = [36,27,12,24,32,15,22,35,10]. A rekurzív felbontások után adja meg a 3. összefésülés eredményét, vesszővel elválasztva, szóközök nélkül.",
+                "img": ""
+            },
+            "solution": "12,24,27,36"
+        }
+    ]
+}

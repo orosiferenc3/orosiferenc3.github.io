@@ -1,0 +1,15 @@
+{
+    "tasks": [
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Test",
+                "img": ""
+            },
+            "solution": {
+                "text": "Test",
+                "img": ""
+            }
+        }
+    ]
+}

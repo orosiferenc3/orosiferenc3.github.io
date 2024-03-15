@@ -1,0 +1,16 @@
+:root {
+    --navbarBackground: #1a1918;
+    --background: #2e2d2b;
+    --link: #2bba9bf6;
+    --linkHover: #11eebef6;
+    --main: #ff873cd7;
+    --darkMain: #834620f8;
+    --stukiHighlight: yellow;
+    --animationColor1: #2bba9bf6;
+    --animationColor2: #2b85baf6;
+    --animationColor3: #114238f6;
+    --animationColor4: #BCB8B1;
+    --animationColor5: #b67c00d7;
+    --gray: #BCB8B1;
+    --white: #f3f1ea;
+}

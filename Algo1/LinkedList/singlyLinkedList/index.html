@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Egyirányú láncolt listák</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/PostfixExpression/postfixExpression/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/LinkedList/doublyLinkedList/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Láncolt listák > Egyirányú
+                        láncolt listák</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Egyirányú láncolt listák (Singly linked lists)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">A láncolt lista olyan adatszerkezet, amelyben az <b>objektumok lineáris
+                        sorrendben
+                        követik egymást</b>. A tömböknél a lineáris sorrendet a tömbindexek határozzák meg, ezzel
+                    szemben a
+                    láncolt listákban pointerek valósítják meg az elemek lineáris elrendezettségét. <b>A lista minden
+                        objektuma tartalmaz egy mutatót, amely a következő objektumra mutat.</b></p>
+
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img1.png" alt="">
+
+                <p class="mb-1 hidden">Egy lista lehet <b>egyszeresen</b> vagy <b>kétszeresen láncolt</b>, lehet
+                    <b>rendezett</b>
+                    vagy <b>rendezetlen</b>, és lehet <b>ciklikus</b> vagy <b>nem ciklikus</b>.
+                </p>
+                <p class="mb-1 hidden">Ha egy lista rendezett, akkor a legkisebb kulcsérték a lista fejében található, a
+                    legnagyobb kulcsérték pedig a lista végében. Ha egy lista rendezetlen, akkor elemeinek sorrendje
+                    tetszőleges lehet. A ciklikus listát az jellemzi, hogy a fej előző pointere a lista végére, a lista
+                    utolsó elemének következő pointere a fej elemre mutat.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Tömbbel való összehasonlítás:</h3>
+
+                <p class="mb-1 hidden"><b>Láncolt lista előnyei:</b></p>
+                <ul class="mb-1 hidden">
+                    <li>gyors beszúrás és törlés</li>
+                    <li>a rendezett beszúrás/törlés nem igényel elemmozgatást. Persze a beszúrás/törlés helyének
+                        megtalálása
+                        rendezett esetben $O (n)$.</li>
+                    <li>dinamikus a mérete</li>
+                </ul>
+
+                <p class="mb-1 hidden"><b>Láncolt lista hátrányai:</b></p>
+                <ul class="mb-1 hidden">
+                    <li>nem indexelhető konstans műveletigénnyel, csak $O (n)$-nel.</li>
+                    <li>minden listaelem több memóriát igényel, mivel tárolni kell a következő elemre mutató pointert
+                        is.
+                    </li>
+                </ul>
+
+                <h3 class="mt-5 mb-2 hidden">Egyirányú láncolt listák:</h3>
+
+                <h5 class="mt-2 hidden">Listaelem típusa:</h5>
+
+                <p class="mb-1 hidden">A bejáráshoz pointereket használunk. Egy elem adattagjainak elérése: $p
+                    \rightarrow
+                    key$, $p \rightarrow next$ (helyes még $(^*p).key$, $(^*p).next)$. Ha új listaelemet szeretnénk
+                    létrehozni: $p = \text{new} \space E1$, feleslegessé vált listaelem felszabadítása: $delete \space p$.</p>
+
+                <table class="mb-2 hidden w-25">
+                    <tr>
+                        <td>$E1$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space key : \mathcal{T}$<br>$+ \space next : E1^*$<br>$+ \space ...$
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space E1() \space \{ next := \emptyset \}$</td>
+                    </tr>
+                </table>
+
+                <h3 class="mt-5 mb-2 hidden">Egyirányú láncolt listák fajtái:</h3>
+
+                <h5 class="mt-2 hidden">Egyszerű, egyirányú láncolt lista (S1L (Simple 1-way List)):</h5>
+
+                <p class="mb-1 hidden">Az első elemre egy pointer mutat. Ha még nincs eleme a
+                    listának, ez a pointer nullpointer.</p>
+
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img1.png" alt="">
+
+                <h5 class="mt-2 hidden">Fejelemes egyirányú láncolt lista (H1L (Header node + 1-way List)):</h5>
+
+                <p class="mb-1 hidden">Hasonló az S1L-hez, de a H1L mindig tartalmaz egy <b>fejelemet</b> (őrszem vagy
+                    sentinel
+                    elemet) a lista elején. Ez az elem ugyanolyan felépítésű, mint a lista összes többi eleme, de nem
+                    tárol
+                    valódi adatot. Célja, hogy a lista elején végzett műveleteket megkönnyítse, mert így a lista elejére
+                    mutató pointerünk soha nem nullpointer. Továbbá segítségével egyszerűbben a lista határait
+                    ellenőrizni.
+                </p>
+
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img2.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">Műveletek egyirányú láncolt listákkal:</h3>
+
+                <p class="mb-1 hidden">(<i>Feltételezzük, hogy a lista növekvően rendezett!</i>)</p>
+
+                <h5 class="mt-2 hidden">Keresés kulcs alapján:</h5>
+
+                <p class="mb-1 hidden">Lineáris módon keresi a megfelelő kulcsú elemet a listában, és az arra mutató
+                    pointert adja vissza, ha megtalálta az elemet. Ha nem találta meg az elemet a listában, akkor a
+                    visszaadott érték nullpointer, így nem kell a logikai változó, amit a lineáris keresés tételénél
+                    tanultunk.</p>
+
+                <div class="row">
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$findInS1L(L : E1^*, dataToFind : \mathcal{T}) : E1^*$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" id="id48" tabindex="0">$p := L$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="4" class="loopSidePart rowspan" rowspan="2" id="id49" tabindex="0">
+                                    </td>
+                                    <td forloop="4" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$p \neq 0 \land p \rightarrow key &lt;
+                                        dataToFind$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id50" tabindex="0">$p := p \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id51" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$p \neq 0 \land p \rightarrow key = dataToFind$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id52" tabindex="0">$\text{return} \space p$</td>
+                                    <td colspan="2" rowspan="1" id="id53" tabindex="0">$\text{return} \space \emptyset$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$findInH1L(L : E1^*, dataToFind : \mathcal{T}) : E1^*$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" id="id48" tabindex="0">$p := L \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="4" class="loopSidePart rowspan" rowspan="2" id="id49" tabindex="0">
+                                    </td>
+                                    <td forloop="4" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$p \neq 0 \land p \rightarrow key &lt;
+                                        dataToFind$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id50" tabindex="0">$p := p \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id51" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$p \neq 0 \land p \rightarrow key = dataToFind$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id52" tabindex="0">$\text{return} \space p$</td>
+                                    <td colspan="2" rowspan="1" id="id53" tabindex="0">$\text{return} \space \emptyset$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden">Ha H1L-el csináljuk csak az indulás különbözik, $p:= L \rightarrow next$ az
+                    induló
+                    lépés.</p>
+
+                <h5 class="mt-2 hidden">Beszúrás:</h5>
+
+                <p class="mb-1 hidden">(<i>Ha rendezetlen listába szeretnénk egy megadott elemet beszúrni, akkor
+                        egyszerűen
+                        csak a lista elejére szúrnánk be. Ekkor a műveletigénye $O (1)$ lenne.</i>)</p>
+
+                <p class="mb-1 hidden">Beszúrás esetei:</p>
+                <ul class="mb-1 hidden">
+                    <li>a lista belsejébe szúrunk be az új elemet</li>
+                    <li>a lista utolsó eleme után fűzzük be az új elemet</li>
+                    <li>a lista elejére szúrjuk be az új elemet</li>
+                    <li>üres listába fűzzük be az új elemet</li>
+                </ul>
+
+                <p class="mb-1 hidden">Két elem címe kell: $p$ az aktuálisan vizsgált elem, ami elé fogunk befűzni,
+                    valamint
+                    $pe$ az előtte lévő elem címe. Megoldható egy pointerrel is, de kevesebb hibával jár, ha két
+                    pointert
+                    használunk. A négy eset között az a különbség, hogy az az elem, amelyik az aktuális elem előtt van,
+                    az
+                    nem mindig létezik, így egyedül ezt kell majd egy elágazással kezelni.</p>
+
+                <div class="row">
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$insertIntoS1L(\&amp;L : E1^*, dataToInsert : \mathcal{T})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" id="id36" tabindex="0">$pe := 0$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id37" tabindex="0">$p := L$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="3" class="loopSidePart rowspan" rowspan="3" id="id38" tabindex="0">
+                                    </td>
+                                    <td forloop="3" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$p \neq 0 \land p \rightarrow key &lt;
+                                        dataToInsert$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id39" tabindex="0">$pe := p$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id40" tabindex="0">$p := p \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id41" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$p \neq 0 \land p \rightarrow key = dataToInsert$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="5" id="id42" tabindex="0">$\text{SKIP}$</td>
+                                    <td colspan="2" rowspan="1" id="id43" tabindex="0">$q := \text{new} \space E1$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id44" tabindex="0">$q
+                                        \rightarrow key := dataToInsert$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id45" tabindex="0">$q
+                                        \rightarrow next := p$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id46" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$pe = 0$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" rowspan="1" id="id47" tabindex="0">$L := q$</td>
+                                    <td colspan="1" rowspan="1" id="id47" tabindex="0">$pe
+                                        \rightarrow next := q$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$insertIntoH1L(L : E1^*, dataToInsert : \mathcal{T})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" id="id36" tabindex="0">$pe := L$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id37" tabindex="0">$p := L \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="3" class="loopSidePart rowspan" rowspan="3" id="id38" tabindex="0">
+                                    </td>
+                                    <td forloop="3" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$p \neq 0 \land p \rightarrow key &lt;
+                                        dataToInsert$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id39" tabindex="0">$pe := p$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id40" tabindex="0">$p := p \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id41" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$p \neq 0 \land p \rightarrow key = dataToInsert$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="4" id="id42" tabindex="0">$\text{SKIP}$</td>
+                                    <td colspan="2" rowspan="1" id="id43" tabindex="0">$q := \text{new} \space E1$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id44" tabindex="0">$q
+                                        \rightarrow key := dataToInsert$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id45" tabindex="0">$q
+                                        \rightarrow next := p$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id47" tabindex="0">$pe
+                                        \rightarrow next := q$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden">Mivel a műveletnél $L$ pointer módosulhat, így fontos, hogy az cím szerint átvett
+                    paraméter legyen! Ha H1L-el csináljuk indulásnál $pe$ a fejelemre mutathat, hiszen az első elem
+                    előtt
+                    ott van mindig a fejelem, $p$ pedig a lista első elemére mutat. Mivel $pe$ nem lehet nullpointer,
+                    nincs
+                    szükség az elágazásra a befűzésnél. Továbbá a lista nem cím szerint adódik át, hiszen a fejelem nem
+                    változtatja meg a címét, így az arra mutató pointer biztosan nem fog változni.</p>
+
+                <h5 class="mt-2 hidden">Törlés:</h5>
+
+                <p class="mb-1 hidden">Törlés esetei:</p>
+                <ul class="mb-1 hidden">
+                    <li>a lista üres</li>
+                    <li>a törlendő elem a lista első eleme</li>
+                    <li>a törlendő elem a lista belsejében van</li>
+                    <li>a törlendő elem a lista utolsó eleme</li>
+                </ul>
+
+                <p class="mb-1 hidden">Két elem címe kell: $p$ az aktuálisan vizsgált elem, ami elé fogunk befűzni,
+                    valamint
+                    $pe$ az előtte lévő elem címe. Ha az adott kulcsú elem nem található, akkor nem történik semmi.</p>
+
+                <div class="row">
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$deleteFromS1L(\&amp;L : E1^*; dataToDelete : \mathcal{T})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" id="id71" tabindex="0">$pe := 0$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id72" tabindex="0">$p := L$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="7" class="loopSidePart rowspan" rowspan="2" id="id73" tabindex="0">
+                                    </td>
+                                    <td forloop="7" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$p \neq 0 \land p \rightarrow key &lt;
+                                        dataToDelete$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id74" tabindex="0">$pe := p; \space p := p \rightarrow
+                                        next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id75" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$p \neq 0 \land p \rightarrow key = dataToDelete$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id76" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$pe = 0$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                    <td colspan="2" rowspan="3" id="id77" tabindex="0">$\text{SKIP}$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" rowspan="1" id="id78" tabindex="0">$L := p
+                                        \rightarrow next$</td>
+                                    <td colspan="1" rowspan="1" id="id78" tabindex="0">$pe
+                                        \rightarrow next := p \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id79" tabindex="0">$delete
+                                        \space p$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$deleteFromH1L(L : E1^*; dataToDelete : \mathcal{T})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" id="id71" tabindex="0">$pe := L$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id72" tabindex="0">$p := L \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="7" class="loopSidePart rowspan" rowspan="2" id="id73" tabindex="0">
+                                    </td>
+                                    <td forloop="7" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$p \neq 0 \land p \rightarrow key &lt;
+                                        dataToDelete$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id74" tabindex="0">$pe := p; \space p := p \rightarrow
+                                        next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" id="id75" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$p \neq 0 \land p \rightarrow key = dataToDelete$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id78" tabindex="0">$pe
+                                        \rightarrow next := p \rightarrow next$</td>
+                                    <td colspan="2" rowspan="2" id="id77" tabindex="0">$\text{SKIP}$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" id="id79" tabindex="0">$delete
+                                        \space p$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden">Mivel a műveletnél $L$ pointer módosulhat, így fontos, hogy az cím szerint átvett
+                    paraméter legyen! Ha H1L-el csináljuk az indulás hasonló, itt sem kell elágazás a kifűzésnél, mert
+                    $pe$
+                    nem lehet nullpointer.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Ciklikus egyirányú listák:</h3>
+
+                <p class="mb-1 hidden">Ciklikus esetben az utolsó listaelem $next$ mezője nem a nullpointer, hanem
+                    visszamutat a lista elejére.</p>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares">
+                            <p class="mx-auto">Az animáció fejlesztés alatt áll 😭😭</p>
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <!--<table></table>-->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2">
+                            <p class="mx-auto">Az animáció fejlesztés alatt áll 😭😭</p>
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram</h1>
+                    <!--<table></table>-->
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="singlyLinkedList.js"></script>
+</body>
+
+</html>

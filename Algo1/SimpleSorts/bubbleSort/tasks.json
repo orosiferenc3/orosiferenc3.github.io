@@ -1,0 +1,56 @@
+{
+    "tasks": [
+        {
+            "type": "taskCheckbox",
+            "task": {
+                "text": "Melyek az igaz állítások?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "Buborékrendezésnél először a tömb eleje válik rendezetté."
+                    },
+                    {
+                        "id": 2,
+                        "text": "A buborékrendezésben a cserék száma egyenlő az inverziók számával."
+                    },
+                    {
+                        "id": 3,
+                        "text": "A buborékrendezés átlagos futási ideje $\\Theta (n^2)$."
+                    }
+                ]
+            },
+            "solution": [2,3]
+        },
+        {
+            "type": "taskCheckbox",
+            "task": {
+                "text": "Melyek a hamis állítások?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "A buborékrendezés nem stabil rendezés."
+                    },
+                    {
+                        "id": 2,
+                        "text": "A buborékrendezés helyben rendez."
+                    },
+                    {
+                        "id": 3,
+                        "text": "A buborékrendezés összehasonlító rendezés."
+                    }
+                ]
+            },
+            "solution": [1]
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "[12, 3, 5, 6, 1]. Az alábbi tömbre elindítjuk a buborékrendezést. Adja meg a tömböt a külső ciklus 3. iterációjának lefutása után, vesszővel elválasztva, szóközök nélkül!",
+                "img": ""
+            },
+            "solution": "3,1,5,6,12"
+        }
+    ]
+}

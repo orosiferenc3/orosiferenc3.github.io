@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AVL fa</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo2/Compressions/lempelZivWelch/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo2/Trees/n-aryTree/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 2. > Fák >
+                        AVL fa</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">AVL fa (AVL tree)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">A bináris keresőfák elromolhatnak. Hosszú, listaszerű ágak keletkezhetnek. Így a
+                    műveletvégzés hatékonysága romlik. Ezért fogunk <b>kiegyensúlyozott bináris keresőfákat</b>
+                    használni.</p>
+                <p class="mb-1 hidden">Az AVL fák <b>magasság szerint kiegyensúlyozott bináris keresőfák</b>. Egy
+                    bináris fa
+                    magasság szerint kiegyensúlyozott, ha <b>minden csúcsa kiegyensúlyozott</b>. Egy csúcs
+                    kiegyensúlyozott, ha
+                    <b>a jobb részfájának a magassága mínusz a bal részfájának a magassága $0$, $1$ vagy $-1$</b>. Tehát
+                    a $p$
+                    csúcs
+                    egyensúlya ($p \rightarrow b$) $0$, $1$ vagy $-1$. Ez a képlet ugyanezt írja le: $|h(p \rightarrow
+                    right) - h(p \rightarrow left)| \leq
+                    1$.
+                </p>
+                <p class="mb-1 hidden">Az AVL fákat láncoltan reprezentáljuk. A csúcsokról eltároljuk az értéküket
+                    ($key$), az egyensúlyukat ($b$, mint balance) és a bal- és jobb gyereküket ($left, right$). Mivel
+                    magaság szerint kiegyensúlyozottak, így a $b$ (balance) csak $-1$ és $1$ között lehet.</p>
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>$Node$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ key : \mathcal{T}$<br>$+ b : -1..1$<br>$+ left, right : Node^*$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+
+                            Node() \{ left :=
+                            right := \emptyset ; b := 0\}$<br>$+ Node(x : \mathcal{T}) \{ left := right := \emptyset ; b
+                            := 0 ; key := x\}$</td>
+                    </tr>
+                </table>
+                </p>
+                <h5 class="mt-2 hidden">Tétel:</h5>
+                <p class="mb-1 hidden">Tetszőleges $n$ csúcsú nemüres AVL fa $h$ magasságára igaz, hogy $\lfloor \log n
+                    \rfloor \leq h \leq 1.45 \log n$, azaz $h \in \Theta (\log n)$.</p>
+
+                <h3 class="mt-5 mb-2 hidden">AVL fák zárójelezett alakja:</h3>
+                <p class="mb-1 hidden">A bináris fák zárójelezett alakja úgy nézett ki, hogy $(bal \space részfa
+                    \hspace{0.5cm} csúcs \hspace{0.5cm} jobb \space részfa)$. Pl.: $\{ \space [ \space (1) \space 2
+                    \space ] \space 3 \space [ \space ( 4 (5) ) \space 6 \space (7) \space ] \space \}$.</p>
+                <p class="mb-1 hidden">Az AVL fák zárójelezett alakja ugyanígy néz ki annyi különbséggel, hogy a csúcsok
+                    egyensúlyait is jelöljük. A levelek egyensúlya mindig nulla, ezért azokat nem jelöljük.</p>
+                <h5 class="mt-2 hidden">Egyensúlyok:</h5>
+                <ul>
+                    <li><b>$o$</b> $0$</li>
+                    <li><b>$+$</b> $1$</li>
+                    <li><b>$++$</b> $2$</li>
+                    <li><b>$-$</b> $-1$</li>
+                    <li><b>$--$</b> $-2$</li>
+                </ul>
+                <p class="mb-1 hidden">Pl.: $\{ \space [ \space (1) \space 2- \space ] \space 3+ \space [ \space ( 4+
+                    (5) ) \space 6- \space (7) \space ] \space \}$.</p>
+                <img class="mb-2 hidden w-50 mx-auto d-block" src="img1.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">AVL fák műveletei:</h3>
+                <p class="mb-1 hidden">Mivel az AVL fák speciális alakú keresőfák, így a <b>keresőfákra bevezetett
+                        műveletek továbbra is érvényesek</b>. Annyi lesz a különbség, hogy minden művelet után
+                    ellenőriznünk
+                    kell az AVL-tulajdonságot, és ha kell, helyreállítjuk. A helyreállításhoz forgatásokat fogunk
+                    használni.</p>
+                <h5 class="mt-2 hidden">Forgatások:</h5>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img2.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img3.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img4.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img5.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img6.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img7.png" alt="">
+
+                <h5 class="mt-2 hidden">insert:</h5>
+                <p class="mb-1 hidden">Megkeressük a kulcs helyét a fában, tehát megyünk lefelé a
+                    kulcsösszehasonlításokkal mindaddig, amíg nullpointert nem találunk. Pontosan ennek a nullpointernek
+                    a helyére kell beilleszteni a kulcsot. Viszont, ha a kulcsösszehasonlítások során a kulcsok
+                    egyenlőek, akkor az azt jelenti, hogy a kulcs már benne van a fában. Mivel a keresőfában <b>minden
+                        kulcs egyedi</b>, így nem kell beszúrni ezt a kulcsot.</p>
+                <p class="mb-1 hidden">Ha sikeres a beszúrás, a részfa magassága egyel nőtt, ezért újra kell számolnunk
+                    a csúcsok egyensúlyait, de csak a beszúrás nyomvonalán visszafelé haladva (mindig egyet felfelé
+                    lépünk) és csak itt kell kiegyensúlyoznunk, ha kiegyensúlyozatlan csúcsot találunk. Minden beszúrást
+                    legfeljebb egyetlen kiegyensúlyozás követ. Ha a jobb részfa
+                    lett magasabb, hozzáadunk az egyensúlyhoz egyet, ha a bal, levonunk belőle egyet.</p>
+                <p class="mb-1 hidden">Ha az aktuális csúcs egyensúlya $0$ lett, akkor az aktuális csúcshoz tartozó
+                    részfa
+                    alacsonyabb ága hozzá nőtt a magasabbikhoz, tehát az aktuális részfa most ugyanolyan magas, mint a
+                    beszúrás előtt volt, és így egyetlen más csúcs egyensúlyát sem kell módosítani.</p>
+                <p class="mb-1 hidden">Ha az aktuális csúcs új egyensúlya $1$ vagy $-1$, akkor előtte $0$ volt, ezért az
+                    aktuális részfa magasabb lett eggyel. Ekkor <b>haladunk feljebb a beszúrás nyomvonalán</b>, tehát
+                    egyel
+                    feljebb lépünk és ott is ellenőrizzük a csúcs egyensúlyát.</p>
+                <p class="mb-1 hidden">Ha az aktuális csúcs új egyensúlya $2$ vagy $-2$, akkor a hozzá tartozó részfát
+                    <b>ki
+                        kell egyensúlyozni</b>. A kiegyensúlyozás után az aktuális részfa <b>visszanyeri a beszúrás
+                        előtti
+                        magasságát</b>, ezért már egyetlen más csúcs egyensúlyát sem kell módosítani.
+                </p>
+
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$AVLinsert(\&amp;t : Node^*; k : \mathcal{T}; \&amp; d: \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="7" class="if" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t = \emptyset$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$t := \text{new} \space Node(k)$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$k &lt; t \rightarrow key$</div>
+                            </td>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$k &gt; t \rightarrow key$</div>
+                            </td>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$\text{ELSE}$</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="3" tabindex="0">$d := true$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$AVLinsert(t \rightarrow left, k, d)$
+                            </td>
+                            <td colspan="2" rowspan="1" tabindex="0">$AVLinsert(t \rightarrow right, k, d)$
+                            </td>
+                            <td colspan="2" rowspan="3" tabindex="0">$d := false$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$d$</div>
+                                <hr class="hrRight">
+                            </td>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$d$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" rowspan="1" tabindex="0">$leftSubTreeGrown(t, d)$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$rightSubTreeGrown(t, d)$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$leftSubTreeGrown(\&amp;t : Node^*; \&amp; d: \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="5" class="if" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t \rightarrow b = -1$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$l := t \rightarrow left$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$t \rightarrow b := t \rightarrow b -1$
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$l \rightarrow b = -1$</div>
+                                <hr class="hrRight">
+                            </td>
+                            <td colspan="2" rowspan="3" tabindex="0">$d := (t \rightarrow b &lt; 0)$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" rowspan="1" tabindex="0">$balanceMMm(t, l)$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$balanceMMp(t, l)$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$d := false$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$rightSubTreeGrown(\&amp;t : Node^*; \&amp; d: \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="5" class="if" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t \rightarrow b = 1$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$r := t \rightarrow right$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$t \rightarrow b := t \rightarrow b +1$
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$r \rightarrow b = 1$</div>
+                                <hr class="hrRight">
+                            </td>
+                            <td colspan="2" rowspan="3" tabindex="0">$d := (t \rightarrow b &gt; 0)$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" rowspan="1" tabindex="0">$balancePPp(t, l)$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$balancePPm(t, l)$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$d := false$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mx-auto">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$balancePPp(\&amp;t, r : Node^*)$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t \rightarrow right := r \rightarrow
+                                        left$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$r \rightarrow left := t$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t \rightarrow b := 0$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$r \rightarrow b := t \rightarrow b$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t := r$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mx-auto">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$balanceMMm(\&amp;t, l : Node^*)$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t \rightarrow left := l \rightarrow
+                                        right$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$l \rightarrow right := t$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t \rightarrow b := 0$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$l \rightarrow b := t \rightarrow b$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t := l$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mx-auto">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$balancePPm(\&amp;t, r : Node^*)$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$l := r \rightarrow left$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t \rightarrow right := l \rightarrow
+                                        left$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$r \rightarrow left := l \rightarrow
+                                        right$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$l \rightarrow left := t$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$l \rightarrow right := r$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t \rightarrow b := - \lfloor (l
+                                        \rightarrow b
+                                        + 1) / 2 \rfloor$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$r \rightarrow b := \lfloor (1-l
+                                        \rightarrow b)
+                                        / 2 \rfloor$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$l \rightarrow b := 0$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t := l$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mx-auto">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$balanceMMp(\&amp;t, l : Node^*)$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$r := l \rightarrow right$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$l \rightarrow right := r \rightarrow
+                                        left$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t \rightarrow left := r \rightarrow
+                                        right$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$r \rightarrow left := l$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$r \rightarrow right := t$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$l \rightarrow b := - \lfloor (r
+                                        \rightarrow b
+                                        + 1) / 2 \rfloor$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t \rightarrow b := \lfloor (1-r
+                                        \rightarrow b)
+                                        / 2 \rfloor$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$r \rightarrow b := 0$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$t := r$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <br>
+                    </div>
+                </div>
+
+                <h5 class="mt-2 hidden">Példa:</h5>
+                <p class="mb-1 hidden">21 beszúrása:</p>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img8.png" alt="">
+                <p class="mb-1 hidden">19 beszúrása:</p>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img9.png" alt="">
+
+                <h5 class="mt-2 hidden">remMin:</h5>
+                <p class="mb-1 hidden">Először megkeressük a minimális kulcsú elemet. A minimális kulcsú elem mindig
+                    könnyen megtalálható, ha addig követjük a bal oldali gyerekeket, amíg nullpointert nem találunk.
+                    Mivel a minimális kulcsú elemnek nincs bal gyereke, így egyszerűen csak a jobb gyerekét rakjuk a
+                    helyére. A szülőhöz visszalépve beállítjuk az egyensúlyát. Ha a szülő egyensúlya 0 lesz, akkor
+                    feljebb kell lépni, egyébként nem kell. Ha kell forgassunk valamelyik balra forgatással ((++, 0),
+                    (++, +), (++, -)).</p>
+                <p class="mb-1 hidden">A beszúrással szemben lényeges különbség, hogy ott minden beszúrást csak egyetlen
+                    kiegyensúlyozás követ, míg itt előfordulhat, hogy a minimális csúcs eltávolítása után, minden
+                    felette lévő szinten ki kell egyensúlyozni.</p>
+
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$AVLremMin(\&amp;t, \&amp;minp : Node^*; \&amp;d : \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="5" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t \rightarrow left = \emptyset$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$minp := t$
+                            </td>
+                            <td colspan="2" rowspan="2" tabindex="0">$AVLremMin(t
+                                \rightarrow left, minp, d)$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$t := minp
+                                \rightarrow right$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$minp
+                                \rightarrow right := \emptyset$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$d$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$d := true$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$leftSubTreeShrunk(t, d)$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$leftSubTreeShrunk(\&amp;t : Node^*; \&amp;d : \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="5" class="if" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t \rightarrow b = 1$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="2" tabindex="0">$balancePP(t, d)$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$t \rightarrow b := t \rightarrow b + 1$
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$d := (t \rightarrow b = 0)$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$balancePP(\&amp;t : Node^*; \&amp;d : \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="6" tabindex="0">$r := t \rightarrow right$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="if" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$r \rightarrow b = -1$</div>
+                            </td>
+                            <td colspan="2" class="if" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$r \rightarrow b = 0$</div>
+                            </td>
+                            <td colspan="2" class="if" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$r \rightarrow b = 1$</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="2" tabindex="0">$balancePPm(t, r)$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$balancePP0(t, r)$</td>
+                            <td colspan="2" rowspan="2" tabindex="0">$balancePPp(t, r)$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$d := false$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$balancePP0(\&amp;t, r : Node^*)$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="5" tabindex="0">$t \rightarrow right := r \rightarrow left$
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$r \rightarrow left := t$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$t \rightarrow b := 1$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$r \rightarrow b := -1$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$t := r$</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 class="mt-2 hidden">del:</h5>
+                <p class="mb-1 hidden">Rekurzívan megkeressük a törlendő elemet. Három eset lehetséges:</p>
+                <ul>
+                    <li>A törlendő csúcsnak nincs bal gyereke, ekkor a helyét a jobb gyerek veszi át.</li>
+                    <li>A törlendő csúcsnak nincs jobb gyereke, ekkor a helyét a bal gyerek veszi át.</li>
+                    <li>A törlendő csúcsnak kettő gyereke van, ekkor a jobb részfa minimuma kerül a
+                        helyére, használva a $remMin()$ eljárást. (Természetesen a bal oldali részfa maximuma is
+                        megfelelő
+                        lenne a törlendő elem helyére.)</li>
+                </ul>
+                <p class="mb-1 hidden">Ez után szükséges a rekurzív hívások szintjén ellenőrizni, hogy van-e szükség
+                    kiegyensúlyozásra. A legrosszabb esetben akár minden szinten is ki kell egyensúlyozni.</p>
+
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$AVLdel(\&amp;t : Node^*, k : \mathcal{T}, \&amp;d : \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="8" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t \neq \emptyset$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$k &lt; t \rightarrow key$</div>
+                            </td>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$k &gt; t \rightarrow key$</div>
+                            </td>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$k = t \rightarrow key$</div>
+                            </td>
+                            <td colspan="2" rowspan="4" tabindex="0">$d := false$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$AVLdel(t
+                                \rightarrow left, k, d)$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$AVLdel(t
+                                \rightarrow right, k, d)$</td>
+                            <td colspan="2" rowspan="3" tabindex="0">$AVLdelRoot(t, d)$
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$d$</div>
+                                <hr class="hrRight">
+                            </td>
+                            <td colspan="2" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$d$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="1" rowspan="1" tabindex="0">$leftSubTreeShrunk(t, d)$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$rightSubTreeShrunk(t, d)$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$AVLdelRoot(\&amp;t : Node^*; \&amp;d : \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="2" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t \rightarrow left = \emptyset$</div>
+                            </td>
+                            <td colspan="2" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t \rightarrow right = \emptyset$</div>
+                            </td>
+                            <td colspan="2" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$t \rightarrow left \neq \emptyset \land t \rightarrow right \neq
+                                    \emptyset$</div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$p := t$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$p := t$</td>
+                            <td colspan="2" rowspan="2" tabindex="0">$rightSubTreeMinToRoot(t, d)$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$t := p \rightarrow right$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$t := p \rightarrow left$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$\text{delete} \space p$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$\text{delete} \space p$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">
+                                <hr class="hrLeft">
+                                <div>$d$</div>
+                                <hr class="hrRight">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" rowspan="1" tabindex="0">$d := true$</td>
+                            <td colspan="2" rowspan="1" tabindex="0">$d := true$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$rightSubTreeShrunk(t, d)$</td>
+                            <td colspan="1" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$rightSubTreeMinToRoot(\&amp;t : Node^*; \&amp;d : \mathbb{B})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20" class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="5" tabindex="0">$AVLremMin(t \rightarrow right, p, d)$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$p \rightarrow left := t \rightarrow left$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$p \rightarrow right := t \rightarrow right$
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$p \rightarrow b := t \rightarrow b$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$\text{delete} \space t$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$t := p$</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h5 class="mt-2 hidden">Példa:</h5>
+                <p class="mb-1 hidden">32 törlése:</p>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img10.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img11.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img12.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img13.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+                <ul>
+                    <li>Beszúrás helyének megkeresése: $log \space n$</li>
+                    <li>AVL tulajdonság ellenőrzése: $log \space n$</li>
+                    <li>Jelzők beállítása: konstans időben megtörténik</li>
+                </ul>
+                <p class="mb-1 hidden">Így a teljes műveletigénye:</p>
+                <ul>
+                    <li>$MT_{insert}(n) \in \Theta(log \space n)$</li>
+                </ul>
+                <p class="mb-1 hidden">Egyetlen kiegyensúlyozás sem tartalmaz se rekurziót, se ciklust, és ezért
+                    konstans számú eljáráshívásból áll. Tehát a $remMin()$ és a $del()$ műveletigényei is:</p>
+                <ul>
+                    <li>$MT_{remMin}(n) \in \Theta(log \space n)$</li>
+                    <li>$MT_{del}(n) \in \Theta(log \space n)$</li>
+                </ul>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+                <p class="mb-1 hidden">AVL fákat használunk minden típusú memóriában tárolt gyűjteményhez, beleértve a
+                    halmazokat és a dictionary-ket is.</p>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="avlTree.js"></script>
+</body>
+
+</html>

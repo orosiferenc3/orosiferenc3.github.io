@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Láncolt hashelés</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/HashTables/directAddressing/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/HashTables/openAddressing/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo1/LinkedList/singlyLinkedList/index.html"
+                    class="link">Egyirányú láncolt listák</a>, <a
+                    href="../../../Algo1/HashTables/hashTableAndHashFunction/index.html" class="link">Hasító tábla és a
+                    hasító függvény</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Hasító táblák > Láncolt
+                        hashelés</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Láncolt hashelés (Collision resolution by chaining)
+            </h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">Ha a direkt címzés nem alkalmazható, vagy nem gazdaságos, hasító függvényt
+                    alkalmazunk. Ez esetben az elem a $h(k)$ helyre kerül, vagyis egy $h$ hasító függvényt használunk
+                    arra,
+                    hogy a rést a $k$ kulcsból meghatározzuk.</p>
+                <p class="mb-1 hidden">A láncolásnál az ugyanarra a résre leképződő elemeket összefogjuk egy láncolt
+                    listába. <b>$m$ darab S1L listában tároljuk az adatrekordokat</b>. Az $i$-edik rés egy pointert
+                    tartalmaz,
+                    mely az $i$ címre leképződő elemek listájának fejére mutat. Ha nincs ilyen elem, akkor a $i$-edik
+                    rés
+                    nullpointert tartalmaz.</p>
+
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img1.png" alt="">
+
+                <p class="mb-1 hidden">Beszúráskor a megfelelő lista elejére szúrjuk be az új elemet azért, hogy a
+                    beszúrás
+                    minél egyszerűbb legyen. A beszúrás előtt ellenőrizzük a megfelelő listát, a duplikált kulcsok
+                    elkerülése céljából.</p>
+                <p class="mb-1 hidden">$T:E1^*[m]$, ahol a $T$ egy $m$ méretű tömb (hasítótábla), amely $E1$ típusú
+                    pointereket tárol.</p>
+
+                <table class="mb-2 hidden w-25">
+                    <tr>
+                        <td>$E1^*$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space key : U$<br>$+ \space next : E1^*$<br>$+ \space ...$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space E1() \{ next := \emptyset \}$</td>
+                    </tr>
+                </table>
+
+                <div class="row">
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$init(T : E1^*[m])$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td forloop="0" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                    <td forloop="0" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$i := 0 \space to \space m-1$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$T[i] := \emptyset$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$insert(T : E1^*[]; p : E1^*) : \mathbb{B}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$k := p \rightarrow key$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$s := h(k)$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$searchS1L(T[s], k) = \emptyset$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$p
+                                        \rightarrow next := T[s]$</td>
+                                    <td colspan="2" rowspan="3" tabindex="0">$\text{return} \space false$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$T[s] := p$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space true$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$search(T : E1^*[]; k : U) : E1^*$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$\text{return} \space searchS1L(T[h(k)], k)$
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-xl-6 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$searchS1L(q : E1^*; k : U) : E1^*$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td forloop="1" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                    <td forloop="1" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$q \neq \emptyset \land q \rightarrow key \neq
+                                        k$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$q := q \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$\text{return} \space q$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$remove(T : E1^*[]; k : U) : E1^*$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$s := h(k)$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$p := \emptyset$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$q := T[s]$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="4" class="loopSidePart rowspan" rowspan="3" tabindex="0"></td>
+                                    <td forloop="4" class="loopUpperPart colspan" colspan="5" tabindex="0"
+                                        >$q \neq \emptyset \land q \rightarrow key \neq
+                                        k$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$p := q$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$q := q \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$q \neq \emptyset$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$p = \emptyset$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                    <td colspan="2" rowspan="3" tabindex="0">$\text{SKIP}$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" rowspan="1" tabindex="0">$T[s] := q
+                                        \rightarrow next$</td>
+                                    <td colspan="1" rowspan="1" tabindex="0">$p
+                                        \rightarrow next := q \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3" tabindex="0">$q \rightarrow next := \emptyset$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$\text{return} \space q$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+
+                <ul class="mb-1 hidden">
+                    <li>$T_{init}(m) \in \Theta(m)$</li>
+                    <li>A másik három művelet futási ideje $mT(n) \in \Theta (1)$, $MT(n) \in \Theta (n)$, $AT(n, m) \in
+                        \Theta (1 + \alpha)$</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+{
+    "tasks": [
+        {
+            "type": "taskCheckbox",
+            "task": {
+                "text": "Melyek igaz állítások a tanult quicksort algoritmussal kapcsolatban?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "A quicksort legkedvezőbb esetben lineáris időben rendez."
+                    },
+                    {
+                        "id": 2,
+                        "text": "A particionálás egy-elemű résztömbre nem hajtódik végre."
+                    },
+                    {
+                        "id": 3,
+                        "text": "A tengely (pivot elem) kiválasztása és a részekre bontás mindig lineáris időben befejeződik."
+                    },
+                    {
+                        "id": 4,
+                        "text": "A tengely (pivot) előtti rész soha nem lehet üres."
+                    },
+                    {
+                        "id": 5,
+                        "text": "A quicksort helyben rendező algoritmus."
+                    },
+                    {
+                        "id": 6,
+                        "text": "A quicksort stabil rendezés."
+                    }
+                ]
+            },
+            "solution": [2,3,5]
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Rendezze a tanult gyorsrendezéssel (quicksort) a [8,7,13,6,11,3,1,9,4] egész számokat tartalmazó tömböt! Adja meg az első $partition(A; p; r)$ segédfüggvény hívása utáni állapotot, vesszővel elválasztva, szóközök nélkül! Feltesszük, hogy a particionálás minden esetben az aktuális résztömb első elemét választja tengelynek (pivot elemnek).",
+                "img": ""
+            },
+            "solution": "4,7,6,3,1,8,11,9,13"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Rendezze a tanult gyorsrendezéssel (quicksort) a [14,12,31,23,20,55,11] egész számokat tartalmazó tömböt! Adja meg a második $partition(A; p; r)$ segédfüggvény hívása utáni állapotot, vesszővel elválasztva, szóközök nélkül! Feltesszük, hogy a particionálás minden esetben az aktuális résztömb első elemét választja tengelynek (pivot elemnek).",
+                "img": ""
+            },
+            "solution": "11,12,14,23,20,55,31"
+        }
+    ]
+}

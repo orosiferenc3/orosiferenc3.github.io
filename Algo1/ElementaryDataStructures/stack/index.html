@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verem</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/DivideAndConquerSorts/mergeSort/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/ElementaryDataStructures/queue/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo1/LinkedList/singlyLinkedList/index.html"
+                    class="link">Egyirányú láncolt listák</a>
+            </h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Elemi adatszerkezetek >
+                        Verem</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Verem (Stack)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">A verem hasonlóan működik, mint egy földbe ásott verem. Az elemeket éppen
+                    fordított sorrendben vesszük ki, mint ahogy betettük.</p>
+                <p class="mb-1 hidden"><b>Adatszerkezet</b> alatt adatok tárolásának és elrendezésének egy lehetséges
+                    módját értjük. Az <b>adattípus</b> a mi értelmezésünkben egy adatszerkezet, a rajta értelmezett
+                    műveletekkel együtt.</p>
+                <p class="mb-1 hidden">A verem <b>LIFO</b> (last-in first-out) adattípus, azaz mindig csak az utoljára
+                    betett
+                    adat elérhető, illetve törölhető. Egyaránt lehet tömbösen és láncoltan is ábrázolni.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Tömbös ábrázolás:</h3>
+
+                <p class="mb-1 hidden">A verem tömbös ábrázolásában a $A: \mathcal{T} []$ (dinamikus tömb) mellett az
+                    $n : \mathbb{N}$ (a verem aktuális mérete) is a verem részét képezi.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>$Stack$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$- \space A: \mathcal{T} []$<br>$- \space n : \mathbb{N}$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space Stack ( m : \mathbb{N} ) \space \{ A := \text{new} \space
+                            \mathcal{T}[m]; n := 0
+                            \}$<br>$+ \space \sim Stack() \space \{ delete \space A \}$<br>$+ \space push(x :
+                            \mathcal{T})$<br>$
+                            + \space pop() :
+                            \mathcal{T}$<br>$+ \space top() : \mathcal{T}$<br>$+ \space isFull() : \mathbb{B} \space \{
+                            \text{return} \space n =
+                            A.length
+                            \}$<br>$+ \space isEmpty() : \mathbb{B} \space \{ \text{return} \space n = 0 \}$<br>$+ \space
+                            setEmpty() \space
+                            \{ n := 0 \}$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Mivel van a veremnek egy maximális mérete, ezért bevezetjük az $IsFull()$
+                    műveletet is.</p>
+
+                <div class="row">
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Stack::push(x: \mathcal{T})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$A.length &gt; n$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$A[n] := x$
+                                    </td>
+                                    <td colspan="2" rowspan="2" tabindex="0">$\text{error}$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$n := n + 1$
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Stack::pop() : \mathcal{T}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$n &gt; 0$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$n := n - 1$
+                                    </td>
+                                    <td colspan="2" rowspan="2" tabindex="0">$\text{error}$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space A[n]$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Stack::top() : \mathcal{T}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$n &gt; 0$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space A[n - 1]$</td>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{error}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden">A $push()$ a verem tetejére teszi a paraméterként kapott elemet. A $pop()$
+                    visszaadja a legfelső elemet a veremből és ki is törli azt a veremből. A $top()$ visszaadja a
+                    legfelső elemet és a veremben hagyja azt.</p>
+                <p class="mb-1 hidden">Ha egy üres veremből próbálunk meg elemet kivenni, a verem <b>alulcsordul</b>,
+                    amit
+                    hibának tekintünk. Ha a tömb betelt és elemet raknánk bele, akkor a verem <b>túlcsodul</b>, amit
+                    szintén hibának tekintünk.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Láncolt ábrázolás:</h3>
+
+                <p class="mb-1 hidden">A verem láncolt reprezentációjában a $L$ pointer nem csak az adattípushoz
+                    biztosít hozzáférést, hanem egyben a verem felső elemére mutat, ugyanis mindig a láncolt lista
+                    elejére szúrjuk be az új elemet. Ezért nem kell külön bevezetni egy felső elemre mutató pointert és
+                    ezért elég lesz az S1L.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>$Stack$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$- \space L : E1^*$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space Stack () \space \{ L := \emptyset \}$<br>$+ \space push(x :
+                            \mathcal{T})$<br>$
+                            + \space pop() :
+                            \mathcal{T}$<br>$+ \space top() : \mathcal{T}$<br>$+ \space isEmpty() : \mathbb{B} \space \{
+                            \text{return} \space L =
+                            \emptyset \}$<br>$+ \space
+                            setEmpty() \space
+                            \{ L := \emptyset \}$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">A láncolt ábrázolású verem műveletei között nem szerepel az $IsFull()$ művelet,
+                    mivel ebben a reprezentációban nem számolunk a tárolókapacitás gyakorlati felső korlátjával. A
+                    destruktor futási ideje, így $\Theta (n)$.</p>
+
+                <div class="row">
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Stack::push(x: \mathcal{T})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$q := \text{new} \space E1$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$q \rightarrow key := x$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$q \rightarrow next := L$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$L := q$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Stack::pop() : \mathcal{T}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$L = \emptyset$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="5" tabindex="0">$\text{SKIP}$</td>
+                                    <td colspan="2" rowspan="1" tabindex="0">$q := L
+                                        \rightarrow key$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$s := L$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$L := L
+                                        \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$delete
+                                        \space s$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space q$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Stack::top() : \mathcal{T}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$L = \emptyset$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="2" tabindex="0">$\text{SKIP}$</td>
+                                    <td colspan="2" rowspan="1" tabindex="0">$q := L
+                                        \rightarrow key$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space q$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden">A $push()$ a lista elejére szúrja be a paraméterként kapott elemet. A $pop()$
+                    visszaadja a lista első elemét és ki is törli a lista elejéről. A $top()$ visszaadja a lista elején
+                    lévő elemet.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+
+                <p class="mb-1 hidden">A tömbös és a láncolt reprezentációban a verem minden művelete konstans időben
+                    végrehajtható, azaz $\Theta (1)$, mivel nem tartalmaz se ciklust, se rekurziót.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">A verem alapvetően egy sorozat megfordítására alkalmas. Ha azonban a verembe
+                    írást és a kivételt nem elkülönítve, egymás után két blokkban, hanem váltakozva alkalmazzuk, akkor
+                    egy sorozatnak számos átrendezését meg tudjuk valósítani. Egy másik alkalmazása a lengyel forma.
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm" class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares" style="height: 140px !important;">
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div id="stack" style="text-align: center;">
+                            <!--<div class="list">$B_0$ = </div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Stack::push(x:T)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id1" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$A.length &gt; n$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id4" tabindex="0">$A[n] := x$</td>
+                                <td colspan="2" rowspan="2" id="id3" tabindex="0">$\text{error}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id2" tabindex="0">$n := n + 1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Stack::pop() : T$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$n &gt; 0$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id6" tabindex="0">$n := n - 1$</td>
+                                <td colspan="2" rowspan="2" id="id7" tabindex="0">$\text{error}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id8" tabindex="0">$\text{return} \space A[n]$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2" style="height: 140px !important;">
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div id="stack2" style="text-align: center;">
+                            <!--<div class="list">$B_0$ = </div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Stack::push(x:T)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$A.length &gt; n$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$A[n] := x$</td>
+                                <td colspan="2" rowspan="2" tabindex="0">$\text{error}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$n := n + 1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Stack::pop() : T$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$n &gt; 0$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$n := n - 1$</td>
+                                <td colspan="2" rowspan="2" tabindex="0">$\text{error}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space A[n]$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="stack.js"></script>
+</body>
+
+</html>

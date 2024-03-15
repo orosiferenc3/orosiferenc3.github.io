@@ -1,0 +1,178 @@
+.navbar {
+    border-bottom: none;
+    box-shadow: 0 5px 25px 0 var(--navbarBackground);
+    background-color: var(--navbarBackground);
+    width: 100%;
+}
+
+.navbar-nav {
+    flex-direction: unset;
+}
+
+.nav-item {
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    font-size: 1.3em;
+    font-weight: 1000;
+}
+
+.navbar-toggler {
+    z-index: 10;
+    margin-left: 0.5em;
+    box-shadow: none;
+    border: none;
+    border-color: var(--navbarBackground) !important;
+    background-color: var(--background);
+    color: var(--white);
+}
+
+.navbar-toggler:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.navbar-toggler:hover {
+    z-index: 10;
+    /*background-color: var(--main);*/
+    /*color: var(--navbarBackground);*/
+}
+
+.navbarAppearance {
+    margin: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    position: absolute;
+}
+
+@media (max-width: 768px) {
+    #navbarButtons {
+        margin: auto;
+    }
+
+    .navbarAppearance {
+        visibility: hidden;
+    }
+}
+
+@media (max-width: 1200px) {
+    .navbarAppearance {
+        justify-content: end;
+    }
+}
+
+.nav-link:hover {
+    color: var(--main) !important;
+    transform: scale(1.1);
+}
+
+.nav-link:focus {
+    color: var(--bs-nav-link-color) !important;
+
+}
+
+.nav-link.active {
+    color: var(--main) !important;
+    transform: scale(1.1);
+
+}
+
+body .bg-dark,
+.accordion-button,
+.accordion-item {
+    background-color: var(--navbarBackground) !important;
+}
+
+.accordion {
+    --bs-accordion-active-color: var(--main) !important;
+    --bs-accordion-border-color: var(--navbarBackground) !important;
+}
+
+/* Change svg color */
+.accordion-button:not(.collapsed)::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23d16f48'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+/* Change svg color */
+.accordion-button::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+/* Change svg color */
+.btn-close {
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23ffffff'%3e%3cpath d='M.293.293a1 1 0 0 1 1.414 0L8 6.586 14.293.293a1 1 0 1 1 1.414 1.414L9.414 8l6.293 6.293a1 1 0 0 1-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 0 1-1.414-1.414L6.586 8 .293 1.707a1 1 0 0 1 0-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+}
+
+/* Remove blue outline on focus */
+.accordion-button:focus,
+.btn-close:focus {
+    box-shadow: none;
+    border-color: var(--navbarBackground) !important;
+}
+
+.accordion-button {
+    color: var(--gray);
+    text-align: start;
+    inline-size: -webkit-fill-available;
+    white-space: normal;
+    word-break: break-word;
+}
+
+.accordionTitle {
+    border: none;
+    font-size: 0.8em;
+    background-color: var(--navbarBackground) !important;
+    color: var(--white);
+    text-align: start;
+    inline-size: -webkit-fill-available;
+    white-space: normal;
+    word-break: break-word;
+    text-decoration: none;
+    padding-left: 0.5rem;
+}
+
+.accordionTitle:hover {
+    background-color: var(--navbarBackground) !important;
+    color: var(--main) !important;
+}
+
+.navMainPage {
+    border: none;
+    background-color: var(--navbarBackground) !important;
+    text-align: start;
+    inline-size: -webkit-fill-available;
+    white-space: normal;
+    word-break: break-word;
+    text-decoration: none;
+    padding-left: 0.5rem;
+    color: var(--gray);
+    font-weight: 700;
+    padding: var(--bs-accordion-btn-padding-y) var(--bs-accordion-btn-padding-x);
+}
+
+.navMainPage:hover {
+    background-color: var(--navbarBackground) !important;
+    color: var(--main) !important;
+}
+
+.navbarHomeNextPrevButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    background-color: var(--main);
+    border-radius: 50%;
+    border: none;
+    box-shadow: none;
+    text-decoration: none;
+    color: var(--white);
+    cursor: pointer !important;
+}
+
+.navbarHomeNextPrevButton:hover {
+    transform: scale(1.1);
+    text-decoration: none;
+    color: var(--white);
+}

@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sor</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/ElementaryDataStructures/stack/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/PostfixExpression/postfixExpression/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo1/LinkedList/singlyLinkedList/index.html"
+                    class="link">Egyirányú láncolt listák</a>
+            </h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Elemi adatszerkezetek >
+                        Sor</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Sor (Queue)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">A sor hasonlóan működik, mint egy emberekből álló sor a pénztár előtt. Az
+                    elemeket abban a sorrendben vesszük ki, mint ahogy betettük.</p>
+                <p class="mb-1 hidden"><b>Adatszerkezet</b> alatt adatok tárolásának és elrendezésének egy lehetséges
+                    módját értjük. Az <b>adattípus</b> a mi értelmezésünkben egy adatszerkezet, a rajta értelmezett
+                    műveletekkel együtt.</p>
+                <p class="mb-1 hidden">A sor <b>FIFO</b> (first-in first-out) adattípus, azaz mindig az első betett elem
+                    elérhető, illetve törölhető. Egyaránt lehet tömbösen és láncoltan is ábrázolni.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Tömbös ábrázolás:</h3>
+
+                <p class="mb-1 hidden">Kezdetben a sor a tömb elején kezdődik, később azonban, ahogy kiveszünk belőle
+                    elemeket, a tömb „belsejébe húzódik”, majd elérve a tömb végét, a beszúrás ciklikusan folytatódik a
+                    tömb elején.</p>
+                <p class="mb-1 hidden">A sor tömbös ábrázolásában az $Z : \mathcal{T} []$ tömb mellett a $k :
+                    \mathbb{N}$ (az első elem indexe) és a $n : \mathbb{N}$ (a sor aktuális mérete) is a sor részét
+                    képezi.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>$Queue$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$- \space Z : \mathcal{T}[]$<br>$- \space n : \mathbb{N}$<br>$- \space k
+                            : \mathbb{N}$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space Queue ( m : \mathbb{N} ) \space \{ Z := \text{new} \space
+                            \mathcal{T}[m]; n :=
+                            0; k := 0
+                            \}$<br>$+ \space \sim Queue() \space \{ delete \space Z \}$<br>$+ \space add(x :
+                            \mathcal{T})$<br>$
+                            + \space rem() :
+                            \mathcal{T}$<br>$+ \space first() : \mathcal{T}$<br>$+ \space length() : \mathbb{N} \space
+                            \{
+                            \text{return} \space n
+                            \}$<br>$+ \space isFull() : \mathbb{B} \space \{ \text{return} \space n =
+                            Z.length
+                            \}$<br>$+ \space isEmpty() : \mathbb{B} \space \{ \text{return} \space n = 0 \}$<br>$+ \space
+                            setEmpty() \space
+                            \{ n := 0 \}$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Mivel van a sornak egy maximális mérete, ezért bevezetjük az $IsFull()$ műveletet
+                    is.</p>
+
+                <div class="row">
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Queue::add(x: \mathcal{T})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$Z.length &gt; n$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$Z[(k+n) \space mod \space Z.length] :=
+                                        x$
+                                    </td>
+                                    <td colspan="2" rowspan="2" tabindex="0">$\text{error}$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$n := n + 1$
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Queue::rem() : \mathcal{T}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$n &gt; 0$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$n := n - 1$
+                                    </td>
+                                    <td colspan="2" rowspan="4" tabindex="0">$\text{error}$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$i := k$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$k := (k+1) \space mod \space Z.length$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space Z[i]$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Queue::first() : \mathcal{T}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$n &gt; 0$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space Z[k]$</td>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{error}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden">Az $add()$ a sor végére rakja a paraméterként kapott elemet, amennyiben nincs
+                    tele a sor. A $rem()$ visszaadja a legelső elemet a sorból és ki is törli azt a sorból, ezzel arrébb
+                    csúszik a sor kezdete. A $first()$ visszaadja a legelső elemet és a sorban hagyja azt.</p>
+                <p class="mb-1 hidden">Ha egy üres sorból próbálunk meg elemet kivenni, a sor <b>alulcsordul</b>, amit
+                    hibának tekintünk. Ha a sor tele van és elemet szeretnénk belerakni, akkor a sor <b>túlcsodul</b>,
+                    amit
+                    szintén hibának tekintünk.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Láncolt ábrázolás:</h3>
+
+                <p class="mb-1 hidden">A sor láncolt reprezentációjában a $first$ pointer nem csak az adattípushoz
+                    biztosít hozzáférést, hanem egyben a sor első elemére is mutat. Bevezetjük a $last$ pointert is,
+                    amely egy „joker” (végelem vagy trailer) elemre mutat, amiben nincs adat. Új elem beszúrásakor a
+                    beszúrandó kulcsot a végelemben tároljuk el és készítünk egy új végelemet. Üres sor esetén $first =
+                    last$, mivel a konstruktor létrehozza a „joker” elemet és a $first$ erre az elemre mutat kezdetben.
+                </p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>$Queue$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$- \space first, last : E1^*$<br>$- \space size : \mathbb{N}$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space Queue () \space \{ first := last := \text{new} \space E1; size := 0
+                            \}$<br>$+ \space \sim Queue()$<br>$+ \space add(x :
+                            \mathcal{T})$<br>$
+                            + \space rem() :
+                            \mathcal{T}$<br>$+ \space first() : \mathcal{T}$<br>$+ \space length() : \mathbb{N} \space
+                            \{
+                            \text{return} \space size
+                            \}$<br>$+ \space isEmpty() : \mathbb{B} \space \{ \text{return} \space size = 0 \}$<br>$+ \space
+                            setEmpty()$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">A láncolt ábrázolású sor műveletei között nem szerepel az $IsFull()$ művelet,
+                    mivel ebben a reprezentációban nem számolunk a tárolókapacitás gyakorlati felső korlátjával. A
+                    destruktor és a $setEmpty()$ műveletek futási ideje, így $\Theta (n)$.</p>
+
+                <div class="row">
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Queue::add(x: \mathcal{T})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$last \rightarrow key := x$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$last \rightarrow next := \text{new} \space
+                                        E1$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$last := last \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$size := size + 1$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Queue::rem() : \mathcal{T}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$size = 0$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="6" tabindex="0">$\text{error}$</td>
+                                    <td colspan="2" rowspan="1" tabindex="0">$x := first
+                                        \rightarrow key$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$s := first$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$first :=
+                                        first \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$delete
+                                        \space s$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$size := size
+                                        - 1$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space x$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Queue::first() : \mathcal{T}$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$size = 0$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{error}$</td>
+                                    <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space first \rightarrow key$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Queue:: \sim Queue()$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td forloop="0" class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                    <td forloop="0" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$first \neq null$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$p := first$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$first := first \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$\text{delete} \space p$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-12 col-lg-4 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$Queue::setEmpty()$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td forloop="2" class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                    <td forloop="2" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$first \neq last$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$p := first$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$first := first \rightarrow next$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$\text{delete} \space p$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$size:=0$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden">Az $add()$ a lista végére szúrja be a paraméterként kapott elemet. A $rem()$
+                    visszaadja a lista első elemét és ki is törli a lista elejéről. A $first()$ visszaadja a lista
+                    elején lévő elemet.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+
+                <p class="mb-1 hidden">A tömbös és a láncolt reprezentációban a sor minden művelete konstans időben
+                    végrehajtható, azaz $\Theta (1)$, mivel nem tartalmaz se ciklust, se rekurziót.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">A sor adatszerkezetettel sok algoritmusban találkozhatunk, pl.: bináris fák
+                    szintfolytos bejárásánál, gráfok szélességi bejárásánál, sor alapú Bellman-Ford algoritmusnál.</p>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm" class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares" style="height: 140px !important;">
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div id="queue" style="text-align: center;">
+                            <!--<div class="list">$B_0$ = </div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Queue::add(x: \mathcal{T})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id1" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$Z.length &gt; n$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id2" tabindex="0">$Z[(k+n) \space mod \space Z.length]
+                                    :=
+                                    x$
+                                </td>
+                                <td colspan="2" rowspan="2" id="id3" tabindex="0">$\text{error}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id4" tabindex="0">$n := n + 1$
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Queue::rem() : \mathcal{T}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$n &gt; 0$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id6" tabindex="0">$n := n - 1$
+                                </td>
+                                <td colspan="2" rowspan="4" id="id7" tabindex="0">$\text{error}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id8" tabindex="0">$i := k$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id9" tabindex="0">$k := (k+1) \space mod \space
+                                    Z.length$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id10" tabindex="0">$\text{return} \space Z[i]$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2" style="height: 140px !important;">
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div id="queue2" style="text-align: center;">
+                            <!--<div class="list">$B_0$ = </div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Queue::add(x: \mathcal{T})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$Z.length &gt; n$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$Z[(k+n) \space mod \space Z.length] :=
+                                    x$
+                                </td>
+                                <td colspan="2" rowspan="2" tabindex="0">$\text{error}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$n := n + 1$
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Queue::rem() : \mathcal{T}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$n &gt; 0$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$n := n - 1$
+                                </td>
+                                <td colspan="2" rowspan="4" tabindex="0">$\text{error}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$i := k$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$k := (k+1) \space mod \space Z.length$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space Z[i]$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="queue.js"></script>
+</body>
+
+</html>

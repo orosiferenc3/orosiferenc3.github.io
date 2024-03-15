@@ -1,0 +1,74 @@
+{
+    "tasks": [
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Milyen adattípus a sor?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "LIFO (last-in first-out)"
+                    },
+                    {
+                        "id": 2,
+                        "text": "FIFO (first-in first-out)"
+                    }
+                ]
+            },
+            "solution": 2
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Melyik nem a sor művelete az alábbiak közül? ($add$, $first$, $rem$, $top$, $isEmpty$)",
+                "img": ""
+            },
+            "solution": "top"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Ha $Z.length=4$ és $k=3$ és $n=3$, akkor hányas indexű helyen van a sor utolsó eleme?",
+                "img": ""
+            },
+            "solution": "1"
+        },
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Ha $(k+n) \\space mod \\space Z.length = k$, akkor tele a sor.",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "Igaz."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Hamis."
+                    }
+                ]
+            },
+            "solution": 1
+        },
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Az $n$ adattag értéke soha sem lesz egyenlő $Z.length$-el.",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "Igaz."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Hamis."
+                    }
+                ]
+            },
+            "solution": 2
+        }
+    ]
+}

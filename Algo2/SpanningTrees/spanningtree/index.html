@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimális feszítőfák bevezetés</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo2/ShortestPathsAlgorithms/qbf/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo2/SpanningTrees/kruskal/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo2/GraphRepresentations/weightedGraphs/index.html"
+                    class="link">Élsúlyozott gráfok és ábrázolásaik</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 2. > Minimális feszítőfák >
+                        Minimális feszítőfák bevezetés</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Minimális feszítőfák bevezetés (Spanning tree
+                algorithms)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">Célunk az, hogy találjunk az éleknek egy olyan részhalmazát, amely
+                    <b>körmentes</b>
+                    és
+                    amelynek segítségével <b>az összes pont összekapcsolható</b>, és a <b>teljes súlya a lehető
+                        legkisebb</b>.
+                    A
+                    körmentes és minden csúcspontot összekapcsoló élek részhalmaza egy fa, amelyik kifeszíti a gráfot,
+                    ezért
+                    <b>feszítőfának</b> nevezzük.
+                </p>
+                <p class="mb-1 hidden"><b>Összefüggő, irányítatlan, élsúlyozott gráf</b> minimális feszítőfáját
+                    keressük.
+                    Tehát
+                    a cél, hogy találjunk a lehető legkisebb összsúllyal rendelkező feszítőfák közül egyet, amellyel
+                    tetszőleges csúcsból bármelyik másikba el lehet jutni. <b>Lehet több minimális feszítőfája is egy
+                        gráfnak</b>, ha vannak azonos élsúlyú élek.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Alapfogalmak:</h3>
+
+                <h5 class="mt-2 hidden">Feszítő erdő:</h5>
+                <p class="mb-1 hidden">A $G = (V, E)$ irányítatlan gráf feszítő erdeje a $T = (V, F)$ gráf, ha $F
+                    \subseteq
+                    E$ és $T$ olyan irányítatlan gráf, aminek mindegyik komponense irányítatlan fa, a fák páronként
+                    diszjunktak, és együtt éppen lefedik a $G$ csúcshalmazát.</p>
+
+                <h5 class="mt-2 hidden">Feszítőfa:</h5>
+                <p class="mb-1 hidden">A $G = (V, E)$ irányítatlan, összefüggő gráf feszítőfája a $T = (V, F)$ gráf, ha
+                    $F
+                    \subseteq E$, és $T$ fa.</p>
+
+                <h5 class="mt-2 hidden">Minimális feszítőfa:</h5>
+                <p class="mb-1 hidden">A $G$ irányítatlan, összefüggő, élsúlyozott gráf minimális feszítőfája $T$, ha
+                    $T$
+                    feszítőfája $G$-nek és bármely másik feszítőfára igaz, hogy az élek összsúlya nagyobb vagy egyenlő,
+                    mint
+                    $T$ összsúlya.</p>
+
+                <h5 class="mt-2 hidden">Biztonságos él:</h5>
+                <p class="mb-1 hidden">Biztonságos az él, ha ezzel bővítve egy $A$ élhalmazt, $G$ összefüggő,
+                    irányítatlan,
+                    élsúlyozott gráf valamelyik minimális feszítőfája élhalmazának a részhalmaza marad $A$. ( $A
+                    \subseteq
+                    G$ ).</p>
+
+                <h5 class="mt-2 hidden">Vágás:</h5>
+                <p class="mb-1 hidden">Ha $G = (V, E)$ gráf és $\{\} \subsetneq S \subsetneq V$ , akkor a $G$ gráfon
+                    $(S,
+                    V
+                    \setminus S)$ egy vágás.</p>
+
+                <h5 class="mt-2 hidden">Keresztező él:</h5>
+                <p class="mb-1 hidden">A $G = (V, E)$ gráfon az $(u, v) \in E$ él keresztezi az $(S, V \setminus S)$
+                    vágást,
+                    ha $(u \in S \land v \in V \setminus S) \lor (u \in V \setminus S \land v \in S)$.</p>
+
+                <h5 class="mt-2 hidden">Könnyű él a vágásban:</h5>
+                <p class="mb-1 hidden">Az $(u, v) \in E$ könnyű él az $(S, V \setminus S)$ vágásban, ha $(u, v)$
+                    keresztezi
+                    a vágást, és $\forall (p, q)$ vágást keresztező élre igaz, hogy $w(u, v) \leq w(p, q)$.</p>
+
+                <h5 class="mt-2 hidden">Élhalmazt elkerüli a vágás:</h5>
+                <p class="mb-1 hidden">A $G = (V, E)$ gráfban az $A \subseteq E$ élhalmazt elkerüli az $(S, V \setminus
+                    S)$
+                    vágás, ha az $A$ egyetlen éle sem keresztezi a vágást.</p>
+
+                <h5 class="mt-2 hidden">Tétel:</h5>
+                <p class="mb-1 hidden">Ha a $G = (V, E)$ irányítatlan, összefüggő, élsúlyozott gráfon</p>
+                <ul class="mb-1 hidden">
+                    <li>$A$ részhalmaza a $G$ valamelyik minimális feszítőfája élhalmazának,</li>
+                    <li>az $(S, V \setminus S)$ vágás elkerüli az $A$ élhalmazt,</li>
+                    <li>az $(u, v) \in E$ könnyű él az $(S, V \setminus S)$ vágásban,</li>
+                </ul>
+                <p class="mb-1 hidden">akkor az $(u, v)$ él biztonságosan hozzávehető az $A$ élhalmazhoz.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Általános minimális feszítőfa algoritmus:</h3>
+
+                <p class="mb-1 hidden">Az algoritmus az éleknek, azt az $A$-val jelölt halmazát kezeli, amelyre az
+                    alábbi
+                    invariáns állítás teljesül:</p>
+                <ul>
+                    <li>Az iterációk előtt az $A$ valamelyik minimális feszítőfának a részhalmaza.</li>
+                </ul>
+                </p>
+                <p class="mb-1 hidden">Az algoritmus minden lépésben, azt az $(u, v)$ élt határozza meg, amelyiket az
+                    $A$-hoz téve, továbbra is fennáll az előbbi invariáns állítás, miszerint $A \cup {(u, v)}$ is egy
+                    részhalmaza az egyik minimális feszítőfának. Egy ilyen élt $A$-ra nézve <b>biztonságos élnek</b>
+                    hívunk,
+                    mivel $A$-hoz történő hozzávétele biztosan nem rontja el az $A$-ra vonatkozó invariáns állítást. Egy
+                    kezdetben üres $A$ élhalmazt újabb és újabb biztonságos éllel bővítünk, akkor $|G.V |−1$ bővítés
+                    után
+                    éppen a $G$ egyik minimális feszítőfáját kapjuk meg.</p>
+
+                <table id="struktogrammHeader">
+                    <tbody>
+                        <tr>
+                            <td>$GenMST(G : \mathcal{G}_{w} ; \space A : \mathcal{E}\{\})$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr id="verticalLine" width="1" size="20"
+                    class="hrBetweenHeaderAndBody">
+                <table id="struktogram">
+                    <tbody>
+                        <tr>
+                            <td colspan="5" tabindex="0">$A := \{\}$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$k := |G.V| - 1$</td>
+                        </tr>
+                        <tr>
+                            <td forloop="3" class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                            <td forloop="3" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                >$k &gt; 0$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$find \space an \space edge \space (u, v)
+                                \space that \space is \space safe \space for \space A$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$A := A \cup \{(u, v)\}$</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5" tabindex="0">$k-−$</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

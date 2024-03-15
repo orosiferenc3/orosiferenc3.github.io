@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gyorsrendezés</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/SimpleSorts/maxSort/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/DivideAndConquerSorts/mergeSort/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Oszd meg és uralkodj elven
+                        alapuló gyors
+                        rendezések > Gyorsrendezés</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Gyorsrendezés (Quicksort)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+
+                <p class="mb-1 hidden">A quicksort az <i>oszd-meg-és-uralkodj</i> elvén alapuló rendezés, azaz a
+                    feladatot
+                    több kisebb részfeladatra bontja, amelyek hasonlóak az eredetihez és rekurzív módon oldják meg a
+                    részfeladatokat, amelyeket összevonva adódik a feladat megoldása. Minden algoritmus, amely ezen az
+                    elven alapul 3 lépésből áll. <b>Felosztja</b> a feladatot több kisebb részfeladatra,
+                    <b>"uralkodik"</b> a
+                    részfeladatokon való megoldásukkal és <b>összevonja</b> a részfeladatokat, hogy megkapja az eredeti
+                    feladat megoldását.
+                </p>
+                <p class="mb-1 hidden">A quicksort egy <b>helyben rendező</b> algoritmus, azaz a rendezés a tömbön belül
+                    történik, legfeljebb csak állandó számú elem tárolódik a tömbön kívül.</p>
+                <p class="mb-1 hidden">Továbbá <b>nem stabil</b> rendezés, azaz az azonos
+                    kulcsú elemek egymáshoz viszonyított sorrendjét nem feltétlenül őrzi meg. Például, ha van kettő
+                    32-es, akkor nem biztos, hogy ugyanabban a sorrendben lesznek a
+                    rendezés végén, mint rendezés előtt voltak.</p>
+                <p class="mb-1 hidden">Az <b>összehasonlító rendezések</b> közé tartozik, azaz az elemek sorrendjét azok
+                    összehasonlításával állapítja meg.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Működése:</h3>
+
+                <p class="mb-1 hidden">Az algoritmus kulcsa a felosztás, amely mindig kiválaszt véletlenszerűen egy $x$
+                    pivot (tengely vagy őrszem) elemet. Ez lehet a tömb első eleme, utolsó eleme, középső eleme, vagy
+                    egy random elem. Azért érdemes random elemet választani pivot elemnek, mert ezzel a „balszerencsés”
+                    bemenetek valószínűségét csökkenteni tudjuk. Ezután ezt az elemet kimentjük egy $x$ változóba és a
+                    legutolsó elemet az $x$ helyére rakjuk. A felosztás során 4 részre bonjuk a tömböt: $x$-nél kisebbek
+                    vagy egyenlőek, $x$-nél nagyobbak, a még meg nem vizsgált elemek és maga a pivot elem.</p>
+
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img1.png" alt="">
+
+                <p class="mb-1 hidden">Egy rekurzív folyamat végén a tömb elemei 3 részben lesznek: $x$-nél nagyobbak,
+                    $x$-nél kisebbek vagy egyenlőek és maga a pivot elem, amelyet behelyezünk a nagyobbak és a kisebbek
+                    vagy egyenlőek közé, oly módon, hogy a legbaloldalibb $x$-nél nagyobb elemet a tömb végére helyezzük
+                    és a helyére berakjuk a pivotot.</p>
+
+                <p class="mb-1 hidden">Két fő részből áll: a rekurzív rendezés és a particionálás.</p>
+
+                <h5 class="mt-2 hidden">Particionálás:</h5>
+                <ol class="mb-4 hidden">
+                    <li>Kiválasztunk egy pivot elemet és kirakjuk egy $x$ nevű változóba.</li>
+                    <li>A pivot elem helyére rakjuk a tömb legutolsó elemét.</li>
+                    <li>A tömb elejétől elindulunk $i$-vel és addig megyünk, amíg nem találunk a pivot elemnél nagyobb
+                        elemet. Ha találtunk ilyet megállunk.</li>
+                    <li>Elindítjuk $j$-t, ami $j = i + 1$-től indul. Addig megyünk $j$-vel, amíg nem találunk a pivot
+                        elemnél kisebbet.</li>
+                    <li>Ekkor az $i$-nél egy a pivotnál nagyobb elem van, $j$-nél a pivotnál egy kisebb elem van, tehát
+                        meg kell cserélni őket.</li>
+                    <li>A csere után megnöveljük $i$-t eggyel és a $j$-vel folytatjuk tovább a tömb bejárását.</li>
+                    <li>Ha $j=r$, azaz végig értünk, $i$-edik helyen lévő elemet (a nagyobbak legbaloldalibb elemét) a
+                        tömb végére helyezzük. Helyére bekerül a pivot elem, ami pont a nagyobbak és a kisebb egyenlőek
+                        közé fog kerülni.</li>
+                    <li>Majd visszatér $i$-vel, innen fogjuk tudni, hogy meddig tart a kisebb egyenlőek
+                        résztömbje és honnan indul a nagyobbak résztömbje. A particionálást ezekre a résztömbökre is
+                        lefuttatjuk rekurzívan.</li>
+                </ol>
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+
+                <p class="mb-1 hidden">A gyorsrendezés viselkedése nem a bemenő elemektől, hanem azok egymáshoz
+                    viszonyított helyétől függ. A legrosszabb felosztás, ha a felosztó algoritmus az eredeti tömböt egy
+                    $n-1$ és
+                    egy $0$ elemű tömbre osztja fel. A legjobb felosztás, ha a felosztó algoritmus az eredeti tömböt két
+                    $\frac{n}{2}$
+                    elemű tömbnél nem nagyobb tömböt hoz létre. A gyorsrendezés átlagos futási ideje sokkal közelebb áll
+                    a legjobb futási időhöz.
+                </p>
+
+                <ul class="mb-1 hidden">
+                    <li>$MT(n) \in \Theta(n^2)$, ez ritkán fordul elő, mivel véletlen a pivot elem választása.</li>
+                    <li>$AT(n) \in O(n \cdot log \space n)$</li>
+                    <li>$mT(n) \in \Theta(n \cdot log \space n)$</li>
+                </ul>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">A vegyes rendezésben szokták használni, ahol összekombinálják a beszúró rendezést
+                    egy gyors rendezéssel (merge sort, quicksort, heap sort). Ha kevés elemet kell rendezni, akkor a
+                    beszúró rendezés fut le, ha sok elemet kell rendezni, akkor a gyors rendezést használja a vegyes
+                    rendezés.</p>
+                <p class="mb-1 hidden">A C++ beépített rendező algoritmusa (std::sort) egy introsort-nak nevezett
+                    rendezést használ, amely quicksortttal indul és átvált heapsortra, ha a rekurzió mélysége elér egy
+                    bizonyos szintet.</p>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares">
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$QuickSort(A : \mathcal{T}[n])$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id1" tabindex="0">$quicksort(A, 0, n - 1)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$quicksort(A : \mathcal{T}[]; p, r : \mathbb{N})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id2" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$p &lt; r$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id3" tabindex="0">$q := partition(A, p, r)$</td>
+                                <td colspan="2" rowspan="3" id="id4" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id5" tabindex="0">$quicksort(A, p, q - 1)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id6" tabindex="0">$quicksort(A, q + 1, r)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$partition(A : \mathcal{T}[]; p, r : \mathbb{N}) : \mathbb{N}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id7" tabindex="0">$i := random(p, r)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id9" tabindex="0">$swap(A[i], A[r])$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id10" tabindex="0">$i := p$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="1" class="loopSidePart rowspan" rowspan="2" id="id11" tabindex="0"></td>
+                                <td forloop="1" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$i &lt; r \land A[i] \leq A[r]$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id12" tabindex="0">$i := i + 1$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id13" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$i &lt; r$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" id="id14" tabindex="0">$j := i + 1$</td>
+                                <td colspan="1" rowspan="7" id="id15">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="2" class="loopSidePart rowspan" rowspan="5" id="id16" tabindex="0"></td>
+                                <td forloop="2" class="loopUpperPart colspan" colspan="3" tabindex="0"
+                                    >$j &lt; r$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" id="id17" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$A[j] &lt; A[r]$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="1" id="id18" tabindex="0">$swap(A[i], A[j])$</td>
+                                <td colspan="2" rowspan="2" id="id19" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="1" id="id20" tabindex="0">$i := i + 1$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" id="id21" tabindex="0">$j := j + 1$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" id="id23" tabindex="0">$swap(A[i], A[r])$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id24" tabindex="0">$\text{return} \space i$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2">
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$QuickSort(A : \mathcal{T}[n])$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">$quicksort(A, 0, n - 1)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$quicksort(A : \mathcal{T}[]; p, r : \mathbb{N})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$p &lt; r$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$q := partition(A, p, r)$</td>
+                                <td colspan="2" rowspan="3" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$quicksort(A, p, q - 1)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$quicksort(A, q + 1, r)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$partition(A : \mathcal{T}[]; p, r : \mathbb{N}) : \mathbb{N}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">$i := random(p, r)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$swap(A[i], A[r])$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$i := p$</td>
+                            </tr>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$i &lt; r \land A[i] \leq A[r]$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$i := i + 1$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$i &lt; r$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" tabindex="0">$j := i + 1$</td>
+                                <td colspan="1" rowspan="7">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="5" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="3" tabindex="0"
+                                    >$j &lt; r$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$A[j] &lt; A[r]$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="1" tabindex="0">$swap(A[i], A[j])$</td>
+                                <td colspan="2" rowspan="2" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="1" tabindex="0">$i := i + 1$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3" tabindex="0">$j := j + 1$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" tabindex="0">$swap(A[i], A[r])$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\text{return} \space i$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="quickSort.js"></script>
+</body>
+
+</html>

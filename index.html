@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="./js/jquery-3.6.3.min.js"></script>
+    <script>
+        /*$(function () {
+            $("#offcanvasNavbar").load("../../../navbar.html");
+        });*/
+
+        $(function () {
+            $("footer").load("./html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Főoldal</title>
+    <link href="bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/color.css">
+    <link rel="stylesheet" href="./css/navbar.css">
+    <link rel="stylesheet" href="./css/scrollbarAndScrollAnimation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="" class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button"
+                    style="visibility: hidden;">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="./Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#requirements">Követelmények</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#lectureNotes">Előadás jegyzetek</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#notes">Segédanyagok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title fw-bolder headerStyle" id="offcanvasNavbarLabel">Algoritmusok és
+                        adatszerkezetek</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <!-- OFFCANVAS BODY -->
+                <div class="offcanvas-body lead">
+                    <div class="accordion" id="algo">
+                        <div class="accordion-item bg-dark">
+                            <!-- MAIN PAGE -->
+                            <h2 class="accordion-header bg-dark">
+                                <a href="./index.html" class="btn navMainPage" type="button" role="button">Főoldal</a>
+                            </h2>
+
+                            <h2 class="accordion-header bg-dark" id="algo1">
+                                <button class="accordion-button fw-bold collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#algo1Collapse" aria-expanded="false"
+                                    aria-controls="algo1Collapse">
+                                    Algoritmusok és adatszerkezetek 1.
+                                </button>
+                            </h2>
+                            <!-- FIRST ACCORDION -->
+                            <div id="algo1Collapse" class="accordion-collapse collapse" aria-labelledby="algo1"
+                                data-bs-parent="#algo">
+                                <div class="accordion-body">
+
+                                    <!-- FIRST ACCORDION's ACCORDION -->
+                                    <div class="accordion" id="firstAccordion">
+
+                                        <!-- Aszimptotika és jelölések -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="aszimptotika">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#aszimptotikaCollapse"
+                                                    aria-expanded="false" aria-controls="aszimptotikaCollapse">
+                                                    Aszimptotika és jelölések
+                                                </button>
+                                            </h2>
+                                            <div id="aszimptotikaCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="aszimptotika" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Jelölések</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Függvények
+                                                                aszimptotikus viselkedése</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Egyszerű rendezések -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="rendezesek">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#rendezesekCollapse"
+                                                    aria-expanded="false" aria-controls="rendezesekCollapse">
+                                                    Egyszerű rendezések
+                                                </button>
+                                            </h2>
+                                            <div id="rendezesekCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="rendezesek" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/SimpleSorts/bubbleSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Buborékrendezés</a></li>
+                                                        <li><a href="./Algo1/SimpleSorts/improvedBubbleSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Javított buborékrendezés</a></li>
+                                                        <li><a href="./Algo1/SimpleSorts/insertionSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Beszúró
+                                                                rendezés</a></li>
+                                                        <li><a href="./Algo1/SimpleSorts/maxSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Maximum-kiválasztásos
+                                                                rendezés</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Oszd meg és uralkodj elven alapuló gyors rendezések -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="gyorsRendezesek">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#gyorsRendezesekCollapse"
+                                                    aria-expanded="false" aria-controls="gyorsRendezesekCollapse">
+                                                    Oszd meg és uralkodj elven alapuló gyors rendezések
+                                                </button>
+                                            </h2>
+                                            <div id="gyorsRendezesekCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="gyorsRendezesek" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/DivideAndConquerSorts/quicksort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Gyorsrendezés</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/DivideAndConquerSorts/mergeSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Összefésűlő
+                                                                rendezés</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Elemi adatszerkezetek -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="elemiAdatszerkezetek">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#elemiAdatszerkezetekCollapse" aria-expanded="false"
+                                                    aria-controls="elemiAdatszerkezetekCollapse">
+                                                    Elemi adatszerkezetek
+                                                </button>
+                                            </h2>
+                                            <div id="elemiAdatszerkezetekCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="elemiAdatszerkezetek" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/ElementaryDataStructures/stack/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Verem</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/ElementaryDataStructures/queue/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Sor</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Lengyel forma -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="lengyelForma">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#lengyelFormaCollapse"
+                                                    aria-expanded="false" aria-controls="lengyelFormaCollapse">
+                                                    Lengyel forma
+                                                </button>
+                                            </h2>
+                                            <div id="lengyelFormaCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="lengyelForma" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/PostfixExpression/postfixExpression/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Lengyel
+                                                                forma</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Láncolt listák -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="lancoltListak">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#lancoltListakCollapse"
+                                                    aria-expanded="false" aria-controls="lancoltListakCollapse">
+                                                    Láncolt listák
+                                                </button>
+                                            </h2>
+                                            <div id="lancoltListakCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="lancoltListak" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/LinkedList/singlyLinkedList/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Egyirányú
+                                                                láncolt listák</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/LinkedList/doublyLinkedList/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Kétirányú
+                                                                láncolt listák</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Fák -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="fak">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#fakCollapse"
+                                                    aria-expanded="false" aria-controls="fakCollapse">
+                                                    Fák
+                                                </button>
+                                            </h2>
+                                            <div id="fakCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="fak" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/Trees/binaryTree/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Bináris
+                                                                fa</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/Trees/binarySearchTree/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Bináris
+                                                                keresőfa</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/Trees/heapDataStructure/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Kupac</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/Trees/priorityQueue/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Prioritásos
+                                                                sor</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Rendezések lineáris időben -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="rendezesekLinIdoben">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#rendezesekLinIdobenCollapse" aria-expanded="false"
+                                                    aria-controls="rendezesekLinIdobenCollapse">
+                                                    Rendezések lineáris időben
+                                                </button>
+                                            </h2>
+                                            <div id="rendezesekLinIdobenCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="rendezesekLinIdoben" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/LinearSorts/radixSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Radix
+                                                                rendezés</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/LinearSorts/distributingSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Szétválogató
+                                                                rendezés</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/LinearSorts/countingSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Leszámláló
+                                                                rendezés</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/LinearSorts/bucketSort/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Edényrendezés</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Hasító táblák -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="hasito">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#hasitoCollapse"
+                                                    aria-expanded="false" aria-controls="hasitoCollapse">
+                                                    Hasító táblák
+                                                </button>
+                                            </h2>
+                                            <div id="hasitoCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="hasito" data-bs-parent="#firstAccordion">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo1/HashTables/hashTableAndHashFunction/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Hasító tábla és a hasító függvény</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/HashTables/directAddressing/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Direkt
+                                                                címzés</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/HashTables/collisionResolutionByChaining/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Láncolt hashelés</a>
+                                                        </li>
+                                                        <li><a href="./Algo1/HashTables/openAddressing/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Nyílt
+                                                                címzés</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- SECOND ACCORDION -->
+                        <div class="accordion-item bg-dark">
+                            <h2 class="accordion-header bg-dark" id="algo2">
+                                <button class="accordion-button fw-bold collapsed" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#algo2Collapse" aria-expanded="false"
+                                    aria-controls="algo2Collapse">
+                                    Algoritmusok és adatszerkezetek 2.
+                                </button>
+                            </h2>
+                            <div id="algo2Collapse" class="accordion-collapse collapse" aria-labelledby="algo2"
+                                data-bs-parent="#algo">
+                                <div class="accordion-body">
+
+                                    <!-- SECOND ACCORDION's ACCORDION -->
+                                    <div class="accordion" id="accordionExample2">
+
+                                        <!-- Tömörítés -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="tomorites">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#tomoritesCollapse"
+                                                    aria-expanded="false" aria-controls="tomoritesCollapse">
+                                                    Tömörítés
+                                                </button>
+                                            </h2>
+                                            <div id="tomoritesCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="tomorites" data-bs-parent="#accordionExample2">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo2/Compressions/compression/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Tömörítés bevezetés</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/Compressions/naive/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Naív
+                                                                módszer</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/Compressions/huffman/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Huffman-kódolás</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/Compressions/lempelZivWelch/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Lempel-Ziv-Welch
+                                                                (LZW)</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Fák -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="fak2">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#fak2Collapse"
+                                                    aria-expanded="false" aria-controls="fak2Collapse">
+                                                    Fák
+                                                </button>
+                                            </h2>
+                                            <div id="fak2Collapse" class="accordion-collapse collapse"
+                                                aria-labelledby="fak2" data-bs-parent="#accordionExample2">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo2/Trees/avlTree/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">AVL
+                                                                fa</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/Trees/n-aryTree/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Általános
+                                                                fa</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/Trees/bTree/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">B+ fa</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Gráf Ábrazolások -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="grafAbrazolasok">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#grafAbrazolasokCollapse"
+                                                    aria-expanded="false" aria-controls="grafAbrazolasokCollapse">
+                                                    Gráf Ábrazolások
+                                                </button>
+                                            </h2>
+                                            <div id="grafAbrazolasokCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="grafAbrazolasok" data-bs-parent="#accordionExample2">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo2/GraphRepresentations/simpleGraphs/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Egyszerű gráfok
+                                                                és ábrázolásaik</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/GraphRepresentations/weightedGraphs/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Élsúlyozott
+                                                                gráfok és ábrázolásaik</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Elemi gráfalgoritmusok -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="elemiGrafalgoritmusok">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#elemiGrafalgoritmusokCollapse"
+                                                    aria-expanded="false" aria-controls="elemiGrafalgoritmusokCollapse">
+                                                    Elemi gráfalgoritmusok
+                                                </button>
+                                            </h2>
+                                            <div id="elemiGrafalgoritmusokCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="elemiGrafalgoritmusok"
+                                                data-bs-parent="#accordionExample2">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo2/ElementaryGraphAlgorithms/bfs/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Szélességi
+                                                                keresés (BFS)</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/ElementaryGraphAlgorithms/dfs/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Mélységi
+                                                                keresés (DFS)</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Legrövidebb utak egy forrásból -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="legrovidebb">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#legrovidebbCollapse"
+                                                    aria-expanded="false" aria-controls="legrovidebbCollapse">
+                                                    Legrövidebb utak egy forrásból
+                                                </button>
+                                            </h2>
+                                            <div id="legrovidebbCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="legrovidebb" data-bs-parent="#accordionExample2">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo2/ShortestPathsAlgorithms/shortestpath/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Legrövidebb út
+                                                                kereső algoritmusok bevezetés</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/ShortestPathsAlgorithms/dijkstra/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Dijkstra
+                                                                algoritmusa</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/ShortestPathsAlgorithms/dag/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">DAG legrövidebb
+                                                                utak egy forrásból</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/ShortestPathsAlgorithms/qbf/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Sor-alapú
+                                                                Bellman-Ford algoritmus (QBF)</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Minimális feszítőfák -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="minimalisFeszitofak">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#minimalisFeszitofakCollapse" aria-expanded="false"
+                                                    aria-controls="minimalisFeszitofakCollapse">
+                                                    Minimális feszítőfák
+                                                </button>
+                                            </h2>
+                                            <div id="minimalisFeszitofakCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="minimalisFeszitofak"
+                                                data-bs-parent="#accordionExample2">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo2/SpanningTrees/spanningtree/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Minimális feszítőfák bevezetés</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/SpanningTrees/kruskal/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Kruskal
+                                                                algoritmusa</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/SpanningTrees/prim/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Prim
+                                                                algoritmusa</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Utak minden csúcspárra -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="utakMindenCsucsparra">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse"
+                                                    data-bs-target="#utakMindenCsucsparraCollapse" aria-expanded="false"
+                                                    aria-controls="utakMindenCsucsparraCollapse">
+                                                    Utak minden csúcspárra
+                                                </button>
+                                            </h2>
+                                            <div id="utakMindenCsucsparraCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="utakMindenCsucsparra"
+                                                data-bs-parent="#accordionExample2">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo2/AllPairsShortestPathsAlgorithms/floydWarshallAlgorithm/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Floyd-Warshall
+                                                                algoritmus</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/AllPairsShortestPathsAlgorithms/transitiveClosure/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Gráf tranzitív
+                                                                lezártja</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Mintaillesztés -->
+                                        <div class="accordion-item bg-dark">
+                                            <h2 class="accordion-header bg-dark" id="mintaillesztes">
+                                                <button class="accordion-button fw-semibold collapsed" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#mintaillesztesCollapse"
+                                                    aria-expanded="false" aria-controls="mintaillesztesCollapse">
+                                                    Mintaillesztés
+                                                </button>
+                                            </h2>
+                                            <div id="mintaillesztesCollapse" class="accordion-collapse collapse"
+                                                aria-labelledby="mintaillesztes" data-bs-parent="#accordionExample2">
+                                                <div class="accordion-body">
+                                                    <ul>
+                                                        <li><a href="./Algo2/PatternSearching/patternsearching/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Mintaillesztés bevezetés</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/PatternSearching/bruteForce/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Brute-force</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/PatternSearching/quickSearch/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Quick
+                                                                search</a>
+                                                        </li>
+                                                        <li><a href="./Algo2/PatternSearching/knuthMorrisPratt/index.html"
+                                                                class="btn accordionTitle" type="button"
+                                                                role="button">Knuth-Morris-Pratt
+                                                                (KMP)</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <div class="px-4 py-5 mt-4 mb-1">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Algoritmusok és adatszerkezetek</h1>
+
+            <!-- Követelmények -->
+            <div id="requirements" class="col-sm-11 col-md-9 col-lg-7 mx-auto">
+                <h3 class="mt-5 mb-2 hidden">Előadás követelményei:</h3>
+                <p class="mb-1 hidden">Az előadások látogatása kötelező, kivéve ha a hallgató rendelkezik a kötelező
+                    előadás látogatás alóli felmentéssel. A tárgyból <b>vizsgát</b> kell tenni a vizsgaidőszakban. Erre
+                    a
+                    neptunban kell jelentkezni. A vizsga 4 feladatból áll. Minden feladat 25 pontot ér.</p>
+                <h5 class="mt-2 hidden">Ponthatárok:</h5>
+                <ul class="mb-1 hidden">
+                    <li>85-100 jeles</li>
+                    <li>70-84 jó</li>
+                    <li>55-69 közepes</li>
+                    <li>40-54 elégséges</li>
+                    <li>0-39 elégtelen</li>
+                </ul>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlat követelményei:</h3>
+                <p class="mb-1 hidden">A gyakorlatok legalább háromnegyedén a részvétel kötelező. A félév során
+                    <b>két zárthelyi</b> dolgozatot kell teljesíteni. Mindkét
+                    zárthelyi 60
+                    pontos
+                    , amelyeken külön-külön legalább 20 pont elérése szükséges, ahhoz, hogy sikeres legyen.
+                    Csalás
+                    esetén a zárthelyi 0 pontos. A félév végén lesz lehetőség a zárthelyi dolgozatok
+                    javítására/pótlására. A javító zárthelyi eredménye felülírja a korábbi ZH eredményt.
+                </p>
+                <p class="mb-1 hidden">Minden héten kvízeket kell megoldani, mindegyiket legalább 70%-osra kell
+                    teljesíteni, azaz minden <b>kis kvízen</b> legalább 7 pontot el kell érni.</p>
+                <p class="mb-1 hidden">A gyakorlatokon kiírásra kerülhetnek szorgalmi házi feladatok, ezek
+                    megoldása nem
+                    kötelező,
+                    gyakorlásra szolgálnak. A <b>szorgalmi házi feladatokra</b> kapott pontokból legfeljebb 20 pont
+                    számítható
+                    be a gyakorlati jegybe. A
+                    kiadott feladatok közül bármennyi megoldható, lehet válogatni közöttük. Az elkészített feladatokat
+                    Canvas-ba lehet feltölteni a megfelelő feladatokhoz.</p>
+                <h5 class="mt-2 hidden">Ponthatárok:</h5>
+                <ul class="mb-1 hidden">
+                    <li>100-120 jeles</li>
+                    <li>80-99 jó</li>
+                    <li>60-79 közepes</li>
+                    <li>40-59 elégséges</li>
+                    <li>0-39 elégtelen</li>
+                </ul>
+            </div>
+
+            <!-- Segédanyagok -->
+            <div id="lectureNotes" class="col-sm-11 col-md-9 col-lg-7 mx-auto">
+                <h3 class="mt-5 mb-2 hidden">Előadás jegyzetek:</h3>
+                <ul class="mb-1 hidden">
+                    <!--<li><a class="link" target="_blank"
+                            href="http://aszt.inf.elte.hu/~asvanyi/ad/ad1jegyzet/ad1jegyzet.pdf">Algo1 előadás
+                            jegyzet</a></li>-->
+                    <li><a class="link" target="_blank"
+                            href="http://aszt.inf.elte.hu/~asvanyi/ad/ad2jegyzet/ad2jegyzetFak.pdf">Algo2 előadás
+                            jegyzet I. (Fák)</a></li>
+                    <li><a class="link" target="_blank"
+                            href="http://aszt.inf.elte.hu/~asvanyi/ad/ad2jegyzet/ad2jegyzetGrafok1.pdf">Algo2 előadás
+                            jegyzet II. (Elemi gráfalgoritmusok)</a></li>
+                    <li><a class="link" target="_blank"
+                            href="http://aszt.inf.elte.hu/~asvanyi/ad/ad2jegyzet/ad2jegyzetGrafok2.pdf">Algo2 előadás
+                            jegyzet III. (Élsúlyozott gráfok és algoritmusaik)</a></li>
+                    <li><a class="link" target="_blank"
+                            href="http://aszt.inf.elte.hu/~asvanyi/ad/ad2jegyzet/ad2jegyzetMintak.pdf">Algo2 előadás
+                            jegyzet IV. (Mintaillesztés, tömörítés)</a></li>
+                    <li><a class="link" target="_blank"
+                            href="http://aszt.inf.elte.hu/~asvanyi/ad/ad2jegyzet/B+%20fa.pdf">Algo2 előadás
+                            jegyzet B+ fák</a></li>
+                </ul>
+            </div>
+
+            <!-- Segédanyagok -->
+            <div id="notes" class="col-sm-11 col-md-9 col-lg-7 mx-auto">
+                <h3 class="mt-5 mb-2 hidden">Segédanyagok:</h3>
+                <p class="mb-1 hidden"><i>(Ezekben a segédanyagokban a jelölések, az algoritmusok és néhány helyen a
+                        fogalmak is eltérhetnek az előadás jegyzettől.)</i></p>
+                <ul class="mb-1 hidden">
+                    <li><a class="link" target="_blank"
+                            href="https://people.inf.elte.hu/fekete/algoritmusok_jegyzet/">Fekete István jegyzetei</a>
+                    </li>
+                    <li><a class="link" target="_blank"
+                            href="https://dl.ebooksworld.ir/books/Introduction.to.Algorithms.4th.Leiserson.Stein.Rivest.Cormen.MIT.Press.9780262046305.EBooksWorld.ir.pdf">Introduction
+                            to Algorithms könyv 4. kiadás</a></li>
+                    <li><a class="link" target="_blank"
+                            href="http://www.informatom.hu/sze/01/LGB_SZ001/Cormen-Lieserson-Rivest-Stein.-.Uj.algoritmusok.pdf">Új
+                            algoritmusok könyv</a></li>
+                    <li><a class="link" target="_blank" href="https://people.inf.elte.hu/veanna/">Veszprémi Anna
+                            weboldala</a>
+                    </li>
+                    <li><a class="link" target="_blank"
+                            href="https://www.cs.usfca.edu/~galles/visualization/Algorithms.html">San Francisco egyetem
+                            által készített animációk</a></li>
+                    <li><a class="link" target="_blank" href="https://www.youtube.com/@Reducible">Reducible youtube
+                            csatorna</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="anime-master/lib/anime.min.js"></script>
+    <script src="./js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

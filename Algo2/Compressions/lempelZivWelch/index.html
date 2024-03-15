@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/proofread.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lempel-Ziv-Welch (LZW)</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo2/Compressions/huffman/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo2/Trees/avlTree/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo2/Compressions/compression/index.html"
+                    class="link">Tömörítés bevezetés</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 2. > Tömörítés > Lempel-Ziv-Welch
+                        (LZW)</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Lempel-Ziv-Welch (LZW)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">A betűnkénti kódolás hatékonysága korlátozott, könnyen találhatunk
+                    olyan adatot, amit sokkal tömörebb formában lehet reprezentálni, ha a kódolás nem karakterenként
+                    történik. Ezt használják ki a <b>szótárkódok</b> úgy, hogy egy kódszó nem csak egy karakter képe
+                    lehet,
+                    hanem egy szóé is. Az algoritmus a szöveg bizonyos szavaiból szótárat épít.</p>
+                <h3 class="mt-5 mb-2 hidden">LZW tulajdonságai:</h3>
+                <p class="mb-1 hidden">A szótárról három dolgot feltételezünk. A <b>bemeneti abc minden betűje</b>
+                    szerepel benne. Ha egy szó benne van a szótárban, akkor annak <b>minden kezdődarabja is benne
+                        van</b>. A
+                    tárolt szavaknak <b>fix hosszúságú kódjuk</b> van.</p>
+                <p class="mb-1 hidden">A tömörítendő szöveget a szótárbeli szavak egymásutánjára bontjuk. Az
+                    eredeti szöveg olvasásakor egyidőben épül a szótár és alakul ki a felbontás. Az LZW <b>csak egyszer
+                        dolgozza fel az inputot</b>.</p>
+                <h3 class="mt-5 mb-2 hidden">Kódolás működése:</h3>
+                <p class="mb-1 hidden">Az LZW kódolás egy kezdeti kódtáblát bővít lépésről-lépésre úgy, hogy
+                    egyre hosszabb már látott szavakhoz rendel új kódszót. A kezdeti kódtábla a bemeneti abc <b>minden
+                        betűjét</b> tartalmazza.</p>
+                <p class="mb-1 hidden">Az algoritmus karakterről karakterre halad végig a szövegen. Beolvas
+                    egy karaktert. Ezt hozzá vesszük az eddig beolvasott szavunkhoz. Ha a szavunkkal és az imént
+                    beolvasott karakterrel kapott új szó benne van a szótárban, beolvasunk még egy betűt. Ha nincs benne
+                    belerakjuk a szótárba és a szavunk most a legutoljára beolvasott karakter lesz önmagában.</p>
+                <h5 class="mt-2 hidden">Példa:</h5>
+                <p class="mb-1 hidden">Legyen a tömörítendő szöveg: $ABABABAAC$. A kezdeti kódtábla (a
+                    szöveg karakterei alapján):</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Beolvasunk egy karaktert, ez az $A$. Ez már szerepel a kódtáblában,
+                    ezért beolvasunk még egyet, így a beolvasott szavunk az $AB$. Ez már nem szerepel a kódtáblában,
+                    ezért hozzávesszük és közben a tömörítendő szövegben jelöljük a leghosszabb olyan részt, ami
+                    szerepelt a kódtáblában, ez az $A$ volt. Ezek alapján a tömörítendő szöveg: $A|BABABAAC$, a kódtábla
+                    pedig a következő:</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Az eddig beolvasott szavunk most a $B$. A $B$ szerepel a kódtáblában,
+                    ezért olvasunk tovább. $BA$ nem szerepel a kódtáblában. ($A|B|ABABAAC$)</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                    <tr>
+                        <td>$BA$</td>
+                        <td>$5$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Az eddig beolvasott szavunk, most az $A$. $A$ szerepel a kódtáblában,
+                    $AB$ is, $ABA$ még nem szerepel a kódtáblában. ($A|B|AB|ABAAC$)</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                    <tr>
+                        <td>$BA$</td>
+                        <td>$5$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABA$</td>
+                        <td>$6$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Az eddig beolvasott szavunk, most az $A$. $A$ szerepel a kódtáblában,
+                    $AB$ is, $ABA$ is, $ABAA$ még nem szerepel a kódtáblában. ($A|B|AB|ABA|AC$)</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                    <tr>
+                        <td>$BA$</td>
+                        <td>$5$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABA$</td>
+                        <td>$6$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABAA$</td>
+                        <td>$7$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Az eddig beolvasott szavunk, most az $A$. $A$ szerepel a kódtáblában,
+                    $AC$ viszont nem, ezért hozzávesszük. Ezek alapján a tömörítendő szöveget, így tudtuk felbontani:
+                    $A|B|AB|ABA|A|C$. A tömörített szöveg a következő lesz: $1|2|4|6|1|3$.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                    <tr>
+                        <td>$BA$</td>
+                        <td>$5$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABA$</td>
+                        <td>$6$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABAA$</td>
+                        <td>$7$</td>
+                    </tr>
+                    <tr>
+                        <td>$AC$</td>
+                        <td>$8$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Az eredeti LZW-nél előre meghatározzuk, hogy a kódszavak
+                    hány bitesek, pl. $12$. Így persze a tömörítés során elfogyhatnak a lehetséges kódok. Ha pl. $12$
+                    bitesek a kódok, akkor a legnagyobb lehetséges kód a $2^{12}-1=4095$. A legegyszerűbb, ha ilyenkor
+                    nem
+                    bővítjük tovább a szótárat, de vannak más módszerek is.</p>
+
+                <p class="mb-1 hidden">Mivel a Huffman-kódolás csak a betűnkénti kódolások között optimális
+                    az LZW eljárás könnyen eredményezhet rövidebb kódot. Az LZW eljárás egyszerűnek nevezhető
+                    összehasonlítva például a Huffman kódolással, mivel <b>csak egyszer kell olvasni a bemenetet</b>.
+                    Hatékony is amennyiben a kódszavak tárolása hatékony.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Dekódolás működése:</h3>
+
+                <p class="mb-1 hidden">A dekódoláshoz ugyanazt a kezdeti kódtáblát használjuk, amelyben a
+                    bemeneti abc minden betűje benne van.</p>
+
+                <h5 class="mt-2 hidden">Példa:</h5>
+
+                <p class="mb-1 hidden">Kezdetben ismerjük a kódolt szöveget, $124613$, és a kezdeti
+                    kódtáblát.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">A kódolt szövegünk elejét könnyedén vissza tudjuk fejteni a kódtábla
+                    alapján.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Vegyük a második kódot. A második kódot is könnyen dekódolni tudjuk.
+                </p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$B$</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Az első dekódolás kivételével minden lépésben frissíteni kell a kódtáblát.
+                    Ehhez vegyük az első dekódolt szót és a második dekódolt szó első karakterét és ezzel kell
+                    frissítenünk a kódtáblát. Ez jelen esetben az $AB$.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Vegyük a harmadik kódot. Ezt is könnyen tudjuk dekódolni a frissített
+                    kódtáblával. Most is frissíteni kell a kódtáblát. Vegyük a második dekódolt szót és a harmadik
+                    dekódolt szó első karakterét és ezzel frissítsük a kódtáblát. Ez jelen esetben a $BA$.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$B$</td>
+                        <td>$AB$</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                    <tr>
+                        <td>$BA$</td>
+                        <td>$5$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Most egy olyan esethez értünk, amikor nem ismerjük a kódhoz tartozó
+                    szót. Ilyenkor vegyük az előző szót ($AB$) és konkatenáljuk hozzá az első karakterét, tehát az így
+                    kapott szó ($ABA$) lesz a kódhoz tartozó szó. Ez azért van így, mert ha fordítva gondolkozunk és
+                    kódolni szeretnénk az eddigi szöveget, akkor pont $ABA$ kerülne a kódtáblába.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$B$</td>
+                        <td>$AB$</td>
+                        <td>$ABA$</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                    <tr>
+                        <td>$BA$</td>
+                        <td>$5$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABA$</td>
+                        <td>$6$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Innen már gyorsan megkaphatjuk az eredeti szöveget, de közben
+                    frissíteni kell a kódtáblát is.</p>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$B$</td>
+                        <td>$AB$</td>
+                        <td>$ABA$</td>
+                        <td>$A$</td>
+                        <td></td>
+                    </tr>
+                </table>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                    <tr>
+                        <td>$BA$</td>
+                        <td>$5$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABA$</td>
+                        <td>$6$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABAA$</td>
+                        <td>$7$</td>
+                    </tr>
+                </table>
+
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>1</td>
+                        <td>2</td>
+                        <td>4</td>
+                        <td>6</td>
+                        <td>1</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$B$</td>
+                        <td>$AB$</td>
+                        <td>$ABA$</td>
+                        <td>$A$</td>
+                        <td>$C$</td>
+                    </tr>
+                </table>
+
+                <table class="mb-2 hidden">
+                    <tr>
+                        <td>Szó</td>
+                        <td>Kód</td>
+                    </tr>
+                    <tr>
+                        <td>$A$</td>
+                        <td>$1$</td>
+                    </tr>
+                    <tr>
+                        <td>$B$</td>
+                        <td>$2$</td>
+                    </tr>
+                    <tr>
+                        <td>$C$</td>
+                        <td>$3$</td>
+                    </tr>
+                    <tr>
+                        <td>$AB$</td>
+                        <td>$4$</td>
+                    </tr>
+                    <tr>
+                        <td>$BA$</td>
+                        <td>$5$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABA$</td>
+                        <td>$6$</td>
+                    </tr>
+                    <tr>
+                        <td>$ABAA$</td>
+                        <td>$7$</td>
+                    </tr>
+                    <tr>
+                        <td>$AC$</td>
+                        <td>$8$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">A gyakorlatban a <b>kódszavak halmazát a fix kódhossz miatt korlátozzuk</b>.</p>
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+                <p class="mb-1 hidden">LZW tömörítést alkalmaznak például a GIF-ek tömörítésénél, és opcionálisan a PDF
+                    és TIFF formátumú fájlok tömörítésénél is.</p>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-12 col-lg-12 col-md-12 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div class="row">
+                            <div class="col-12">
+                                <p id="inputText" class="my-1"></p>
+                            </div>
+                            <div class="col-12">
+                                <table id="codeTable">
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="col-12">
+                                <p class="my-1 text-start ps-3">Jelenlegi karakter: <span id="info1"></span></p>
+                                <p class="my-1 text-start ps-3">Jelenlegi szó: <span id="info2"></span></p>
+                                <p class="my-1 text-start ps-3">Leghosszabb illeszkedés: <span id="info3"></span></p>
+                            </div>
+                            <div class="col-12">
+                                <p id="outputText" class="my-1"></p>
+                            </div>
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div class="row">
+                            <div class="col-12">
+                                <p id="inputText2" class="my-1"></p>
+                            </div>
+                            <div class="col-12">
+                                <table id="codeTable2">
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <div class="col-12">
+                                <p class="my-1 text-start ps-3">Jelenlegi karakter: <span id="info21"></span></p>
+                                <p class="my-1 text-start ps-3">Jelenlegi szó: <span id="info22"></span></p>
+                                <p class="my-1 text-start ps-3">Leghosszabb illeszkedés: <span id="info23"></span></p>
+                            </div>
+                            <div class="col-12">
+                                <p id="outputText2" class="my-1"></p>
+                            </div>
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="lzw.js"></script>
+</body>
+
+</html>

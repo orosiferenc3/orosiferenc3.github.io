@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hasító tábla és a hasító függvény</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/LinearSorts/bucketSort/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/HashTables/directAddressing/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Hasító táblák > Hasító tábla és
+                        a hasító függvény</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Hasító tábla és a hasító függvény (Hash table and
+                hash function)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">A hasító táblák célja egy olyan adattárolási eljárás megvalósítása, amelyben <b>a
+                        keresés, beszúrás és törlés nagyon hatékonyak</b>. Akár 1-2 lépéssel megtalálható minden
+                    keresett
+                    kulcs.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Jelölések:</h3>
+
+                <ul class="mb-1 hidden">
+                    <li><b>$m$</b> hasító tábla mérete</li>
+                    <li><b>$T[0..m)$</b> hasító tábla</li>
+                    <li><b>$T[x]$</b> hasító tábla $x$-edik helye, más néven rése</li>
+                    <li><b>$\emptyset$</b> üres rés a hasító táblában</li>
+                    <li><b>$n$</b> hasító táblában tárolt adatok száma</li>
+                    <li><b>$\alpha = \frac{n}{m}$</b> tábla kitöltöttségi aránya</li>
+                    <li><b>$U$</b> kulcsok univezuma</li>
+                    <li><b>$h : U \rightarrow 0..(m-1)$</b> hasító függvény</li>
+                </ul>
+                <ul class="mb-1 hidden">
+                    <li><b>$E$</b> nyílt címzésnél üres rés</li>
+                    <li><b>$D$</b> nyílt címzésnél törölt rés</li>
+                </ul>
+
+                <h3 class="mt-5 mb-2 hidden">Hasító függvények:</h3>
+
+                <p class="mb-1 hidden">A hasító függvényt arra használjuk, hogy meghatározzuk a rést a $k$ kulcsból. A
+                    kulcsok nem feltétlenül természetes számok, viszont természetes számokként kell megjeleníteni őket.
+                    A $k$ kulcsú elem, így a $h(k)$ résre <b>képződik le</b>. A hasító függvény célja még, hogy
+                    csökkentsük
+                    a szükséges tömbindexek tartományát. Fontos az is, hogy <b>gyorsan számolható legyen</b>,
+                    kiszámítása ne legyen túlságosan költséges. Továbbá fontos az is, hogy <b>korlátos</b> legyen. Egy
+                    jó hasító függvény <b>egyszerű egyenletes hasítás</b>, ha minden kulcs
+                    egyforma
+                    valószínűséggel képződik le az $m$ rés bármelyikére függetlenül attól, hova képződik le a többi
+                    kulcs. Tetszőleges hasító függvénnyel kapcsolatos elvárás, hogy egyszerű egyenletes hasítás legyen.
+                    Ha a kulcsaink nem számok, hanem például stringek, akkor valamely egyszerű
+                    transzformációval könnyen képezhetünk belőlük egészeket, amelyhez aztán az osztó vagy szorzó
+                    módszerrel készíthetünk alkalmas hasító függvényeket.</p>
+
+                <h5 class="mt-2 hidden">Osztó módszer:</h5>
+
+                <p class="mb-1 hidden">Ha a kulcsok egész számok, gyakran választják a <b>$h(k) = k \space mod \space
+                        m$</b> hasító függvényt, ami gyorsan és egyszerűen számolható. Egyenletessége nagyban függ az
+                    $m$
+                    megválasztásától. Érdemes olyan prímnek választani, amely nincs közel a kettő hatványokhoz.</p>
+
+                <h5 class="mt-2 hidden">Kulcsok a $[0 ; 1)$ intervallumon:</h5>
+
+                <p class="mb-1 hidden">Ha egyenletesen oszlanak el, a <b>$h(k) = \lfloor k \cdot m \rfloor$</b> függvény is
+                    kielégíti az egyszerű, egyenletes hasítás feltételét.</p>
+
+                <h5 class="mt-2 hidden">Szorzó módszer:</h5>
+
+                <p class="mb-1 hidden">Ha a kulcsok valós számok, tetszőleges $0 < A < 1$ konstanssal alkalmazható a <b>
+                        $h(k)=\lfloor \{k \cdot A \} \cdot m \rfloor$</b> hasító függvény (<i>{x} az x törtrészét jelöli</i>).
+                        Kihívást jelent a jó $A$ konstans értékének megválasztása. Nem minden lehetséges konstanssal
+                        szór egyformán jól. Az $m$ megválasztása kevésbé jelentőségteljes az egyenletes hasítás
+                        eléréséhez.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">Egy programozási nyelv fordítóprogramja szimbólumtáblát használ, melyben
+                    az elemek kulcsai a nyelv azonosítóinak megfelelő karakterláncok. A hasító táblázat hatékony
+                    adatszerkezet szótárak megvalósítására.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

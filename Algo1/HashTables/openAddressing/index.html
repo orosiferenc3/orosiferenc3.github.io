@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nyílt címzés</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/HashTables/collisionResolutionByChaining/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="" class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button"
+                    style="visibility: hidden;">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo1/HashTables/hashTableAndHashFunction/index.html"
+                    class="link">Hasító tábla és a
+                    hasító függvény</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Hasító táblák > Nyílt
+                        címzés</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Nyílt címzés (Open addressing)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">Ha a direkt címzés nem alkalmazható, vagy nem gazdaságos, hasító függvényt
+                    alkalmazunk. Ez esetben az elem a $h(k)$ helyre kerül, vagyis egy $h$ hasító függvényt használunk
+                    arra, hogy a rést a $k$ kulcsból meghatározzuk.</p>
+                <p class="mb-1 hidden">A nyílt címzés esetében <b>az elemeket magában a hasító táblában tároljuk</b>. A
+                    hasító táblában $R$ típusú rekordokat tárolunk. Az $R$ típusú elemeknek van egy kulcsmezőjük, és
+                    lehetnek járulékos mezőik. A kulcshalmazhoz hozzáveszünk egy $E$ és egy $D$ extremális konstanst,
+                    amelyekkel azt fogjuk jelölni, hogy a tábla adott rése még üres, vagy már volt benne adat, de
+                    töröltük.</p>
+
+                <table class="mb-2 hidden w-25">
+                    <tr>
+                        <td>$R$</td>
+                    </tr>
+                    <tr>
+                        <td class="text-start">$+ \space k : U \cup \{ E, D \}$<br>$+ \space ...$</td>
+                    </tr>
+                </table>
+
+                <p class="mb-1 hidden">Egy elem keresésénél végig nézzük a tábla réseit mindaddig, amíg vagy megtaláltuk
+                    a kívánt elemet, vagy pedig világossá nem vált, hogy az nincs benne a táblában. A nyílt címzésnél
+                    nincsenek táblán kívül tárolt elemek és listák, mint a láncolásnál, ezért a nyílt címzéses hasító
+                    tábla egy idő után betelhet, és ilyenkor további elemek már nem szúrhatók bele. Ebből persze adódik,
+                    hogy az $\alpha$ kitöltöttségi arány soha nem haladhatja meg az 1-et.</p>
+
+                <img class="mb-2 hidden w-50 mx-auto d-block" src="img1.png" alt="">
+
+                <p class="mb-1 hidden">Mivel a résekben közvetlenül helyezzük el az adatrekordokat, ezért kezelnünk kell
+                    a <b>kulcsütközéseket</b>. Emiatt vezetjük be a <b>próbafüggvény</b> fogalmát. A próbasorozat mentén
+                    hajtjuk végre a táblák alapműveleteit: a keresést, beszúrást, törlést. A próbasorozat első elemét
+                    egy <b>elsődleges hasító függvény</b> adja meg: $h(k,0) = h_{1}(k)$.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Hasítótáblák műveletei:</h3>
+
+                <h5 class="mt-2 hidden">Beszúrás:</h5>
+
+                <p class="mb-1 hidden">Ha a $k$ kulcsú elemet akarjuk beszúrni a táblába, akkor először megnézzük, hogy
+                    szabad-e a $h(k,0)$ indexű rés. Amennyiben igen, beszúrjuk, ha nem, akkor megnézzük szabad-e a
+                    $h(k,1)$ indexű rés. És így tovább, egészen addig, amíg nem találunk neki egy szabad helyet vagy
+                    végig nem próbáltuk a táblát.</p>
+                <p class="mb-1 hidden">Ha közben a beszúrandó kulccsal találkozunk, vagy a potenciális próbasorozat
+                    végéig sem találunk szabad rést, a beszúrás meghiúsul.</p>
+                <p class="mb-1 hidden">Ha törlést is megengedünk a táblában, megváltozik a beszúrás algoritmusa. Az első
+                    üres helyig tartó keresés közben megjegyezzük az első törölt rés indexét (ha van ilyen), mert
+                    érdemes lesz oda beszúrni a rekordot.</p>
+
+                <h5 class="mt-2 hidden">Keresés:</h5>
+
+                <p class="mb-1 hidden">A $k$ kulcsú elemet keresésekor elkezdjük sorban végignézni a réseket egészen
+                    addig, amíg meg nem találjuk a keresett elemet, vagy üres helyet nem találunk.</p>
+                <p class="mb-1 hidden">Ha törlést is megengedünk a táblában, a törölt réseket kereséskor úgy kezeljük,
+                    mintha foglaltak lennének és folytatjuk a keresést az első üres résig.</p>
+
+                <h5 class="mt-2 hidden">Törlés:</h5>
+
+                <p class="mb-1 hidden">Egy elem törlése során először megkeressük a törlendő adatrekord helyét. Ha a
+                    tábla tartalmazza a törlendő adatrekordot, akkor az ott tárolt kulcsot lecseréljük a $D$ (deleted)
+                    értékre, ami jelzi, hogy a résben elhelyezhetünk új adatrekordot, de korábban ez már foglalt volt.
+                </p>
+
+                <h3 class="mt-5 mb-2 hidden">Lineáris próba:</h3>
+
+                <p class="mb-1 hidden">Lineáris próba esetén a próbasorozat egy számtani sorozatot alkot.</p>
+
+                <ul class="mb-1 hidden">
+                    <li>$h(k,i) = (h_{1}(k) + i) \space mod \space m$</li>
+                </ul>
+
+                <p class="mb-1 hidden"><b>Elsődleges csomósodás jelensége:</b> A kulcsütközés esetén az azonos
+                    próbasorozatok miatt nagyon besűrűsödik a táblának egy-egy szakasza, így megnő a keresés, beszúrás,
+                    törlés lépésszáma. Gyakorlatban akkor használható, ha a kulcsütközés valószínűsége nagyon kicsi.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Négyzetes próba:</h3>
+
+                <p class="mb-1 hidden">Négyzetes próba esetén a próbasorozat egy másodfokú függvény segítségével írható
+                    le.</p>
+                <ul class="mb-1 hidden">
+                    <li>$h(k, i) = (h_{1}(k) + c_{1}i + c_{2}i^2 ) \space mod \space m$</li>
+                </ul>
+
+                <p class="mb-1 hidden">$c_{1}$ és $c_{2}$ valós konstansok, amelyeket úgy kell megválasztani, hogy a
+                    próbasorozat a teljes táblát kiadja. Például, ha $m$ egy kettőhatvány, akkor $c_{1} = c_{2} =
+                    \frac{1}{2}$
+                    egy jó választás. Sajnos ennél a módszernél is jelentkezik probléma, az úgynevezett <b>másodlagos
+                        csomósodás:</b> az azonos próbasorozatok mentén keletkeznek a táblában csomók, amelyek itt is
+                    azt
+                    eredményezik, hogy megnő a keresések, beszúrások, törlések lépésszáma.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Kettős hasítás:</h3>
+
+                <p class="mb-1 hidden">Ebben az esetben a próbasorozat egy számtani sorozat, viszont kettő
+                    hasítófüggvényt használunk.</p>
+                <ul class="mb-1 hidden">
+                    <li>Az elsődleges hasító függvény megadja a kulcs helyét a táblában: $h_{1}: U \rightarrow 0..(m -
+                        1)$</li>
+                    <li>A másodlagos hasító függvény megadja a lépések hosszát: $h_{2}: U \rightarrow 1..(m - 1)$</li>
+                </ul>
+
+                <p class="mb-1 hidden">Két fontos elvárás van $h_{2}$ hasító függvénnyel kapcsolatban: ne adjon
+                    semmilyen $k$ értékre nullát és legyen tetszőleges $k$ érték esetén relatív prím a tábla méretéhez
+                    képest.</p>
+
+
+                <p class="mb-1 hidden">A próbasorozat általános képlete: $h(k,i) = (h_{1}(k) + i \cdot h_{2}(k)) \space mod
+                    \space m$</p>
+
+                <p class="mb-1 hidden">Kulcsütközés esetén, ha $h_{1}(k_{1})=h_{1}(k_{2})$, akkor várhatóan
+                    $h_{2}(k_{1}) \neq h_{2}(k_{2})$, azaz nem ugyanazon próbasorozat mentén próbálkozunk.</p>
+
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció (Lineáris próba)</h1>
+                    <div class="mx-auto">
+                        <div class="my-4">
+                            <table id="taskTable">
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$insert(T:R[m];x:R)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id1" tabindex="0">$j := h_{1}(k)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id2" tabindex="0">$i := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="0" class="loopSidePart rowspan" rowspan="4" id="id3" tabindex="0"></td>
+                                <td forloop="0" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >
+                                    $i &lt; m \land T[j].k \notin \{E, D\}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id4" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$T[j].k = x.k$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="2" id="id5" tabindex="0">$\text{return} false$</td>
+                                <td colspan="2" rowspan="1" id="id6" tabindex="0">$i++$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id7" tabindex="0">$j :=
+                                    (j+1) \space mod \space m$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id8" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$i &lt; m$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id9" tabindex="0">$ide :=
+                                    j$</td>
+                                <td colspan="2" rowspan="1" id="id10" tabindex="0">$\text{return} false$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="1" class="loopSidePart rowspan" rowspan="4" id="id11" tabindex="0"></td>
+                                <td forloop="1" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >
+                                    $i &lt; m \land T[j].k \neq E$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id12" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$T[j].k = x.k$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="2" id="id13" tabindex="0">$\text{return} false$</td>
+                                <td colspan="2" rowspan="1" id="id14" tabindex="0">$i++$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id15" tabindex="0">$j :=
+                                    (j+1) \space mod \space m$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id16" tabindex="0">$T[ide] := x$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id17" tabindex="0">$\text{return} \space true$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$search(T:R[m];k:U):\mathbb{Z}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id18" tabindex="0">$j := h_{1}(k)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id19" tabindex="0">$i := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="2" class="loopSidePart rowspan" rowspan="4" id="id20" tabindex="0"></td>
+                                <td forloop="2" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >
+                                    $i &lt; m \land T[j].k \neq E$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id21" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$T[j].k = k$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="2" id="id22" tabindex="0">$\text{return} \space j$
+                                </td>
+                                <td colspan="2" rowspan="1" id="id23" tabindex="0">$i++$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id24" tabindex="0">$j := (j
+                                    + 1) \space mod \space m$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id25" tabindex="0">$\text{return} \space -1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$delete(T:R[m];k:U):\mathbb{Z}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id26" tabindex="0">$j := h_{1}(k)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id27" tabindex="0">$i := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="3" class="loopSidePart rowspan" rowspan="4" id="id28" tabindex="0"></td>
+                                <td forloop="3" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >
+                                    $i &lt; m \land T[j].k \neq E$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id29" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$T[j].k = k$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id30" tabindex="0">$T[j] :=
+                                    D$</td>
+                                <td colspan="2" rowspan="1" id="id31" tabindex="0">$i++$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id32" tabindex="0">$\text{return} \space j$
+                                </td>
+                                <td colspan="2" rowspan="1" id="id33" tabindex="0">$j := (j
+                                    + 1) \space mod \space m$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id34" tabindex="0">$\text{return} \space -1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció (Lineáris próba)</h1>
+                    <div class="mx-auto">
+                        <div class="my-4">
+                            <table id="taskTable2">
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram (Lineáris próba)</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$insert(T:R[m];x:R)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">$j := h_{1}(k)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$i := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="4" class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                <td forloop="4" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >
+                                    $i &lt; m \land T[j].k \notin \{E, D\}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$T[j].k = x.k$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="2" tabindex="0">$\text{return} false$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$i++$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$j :=
+                                    (j+1) \space mod \space m$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$i &lt; m$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$ide :=
+                                    j$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$\text{return} false$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="5" class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                <td forloop="5" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >
+                                    $i &lt; m \land T[j].k \neq E$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$T[j].k = x.k$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="2" tabindex="0">$\text{return} false$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$i++$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$j :=
+                                    (j+1) \space mod \space m$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$T[ide] := x$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\text{return} \space true$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$search(T:R[m];k:U):\mathbb{Z}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">$j := h_{1}(k)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$i := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="6" class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                <td forloop="6" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >
+                                    $i &lt; m \land T[j].k \neq E$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$T[j].k = k$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="2" tabindex="0">$\text{return} \space j$
+                                </td>
+                                <td colspan="2" rowspan="1" tabindex="0">$i++$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$j := (j
+                                    + 1) \space mod \space m$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\text{return} \space -1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$delete(T:R[m];k:U):\mathbb{Z}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">$j := h_{1}(k)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$i := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="7" class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                <td forloop="7" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >
+                                    $i &lt; m \land T[j].k \neq E$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$T[j].k = k$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$T[j] :=
+                                    D$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$i++$
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\text{return} \space j$
+                                </td>
+                                <td colspan="2" rowspan="1" tabindex="0">$j := (j
+                                    + 1) \space mod \space m$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\text{return} \space -1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="probe.js"></script>
+</body>
+
+</html>

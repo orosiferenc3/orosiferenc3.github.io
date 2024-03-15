@@ -1,0 +1,26 @@
+{
+    "tasks": [
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "A keresőfa rákövetkező műveletének segítségével készítsünk iteratív algoritmust, mely eldönti egy bináris fáról, hogy keresőfa-e. A fát láncoltan ábrázoltuk, Node3 típussal, azaz szülő pointer is van.",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img1.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "A bináris keresőfa alakja nagyon el tud romlani, egyes ágai túl hosszúra nőhetnek (akár listává torzulhat a fa), így elveszíti a benne történő keresés a hatékonyságát. Erre a problémára tudnak megoldást adni az „önkiegyensúlyozó” bináris keresőfák, például az AVL fák vagy a piros-fekete fák. Most nem ezeket fogjuk használni. Érdekes viszont a következő ötlet: ha nagyon elromlik a fa alakja, járjuk be inorder bejárással, írjuk egy tömbbe a csúcsok címeit, majd az így kapott, a csúcsok kulcsai szerint szigorúan monoton növekvően rendezett tömbből, építsük fel újra bináris keresőfát úgy, hogy alakja optimális legyen.",
+                "img": ""
+            },
+            "solution": {
+                "text": "Építsük fel rekurzívan a következő módon: gyökérnek vegyük a tömb középső eleme által hivatkozott csúcsot, majd a tőle balra és jobbra lévő elemekből hasonló módon építsünk bináris keresőfát, és csatoljuk be a fákat a gyökér alá. Ezt folytatjuk rekurzívan, míg a levelekig nem érünk. Láttuk, hogy bináris keresőfák esetén szükség lehet a szülő pointerre is, így a fát Node3 elemekből építjük, úgy, hogy a szülő pointert is beállítjuk.",
+                "img": "./img2.png"
+            }
+        }
+    ]
+}

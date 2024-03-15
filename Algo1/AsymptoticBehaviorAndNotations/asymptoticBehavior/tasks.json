@@ -1,0 +1,101 @@
+{
+    "tasks": [
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az alábbi függvény nagyságrendjét! (Pl.: Theta(n \\cdot log n) vagy Theta(n!) vagy Theta(n^2.01) vagy Theta(sqrt(n))) (Logaritmusa után tegyen szóközt: log n)<br>$n^4 - 1$",
+                "img": ""
+            },
+            "solution": "Theta(n^4)"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az alábbi függvény nagyságrendjét! (Pl.: Theta(n \\cdot log n) vagy Theta(n!) vagy Theta(n^2.01) vagy Theta(sqrt(n))) (Logaritmusa után tegyen szóközt: log n)<br>$n  \\cdot  ln(n+1)$",
+                "img": ""
+            },
+            "solution": "Theta(n \\cdot log n)"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az alábbi függvény nagyságrendjét! (Pl.: Theta(n \\cdot log n) vagy Theta(n!) vagy Theta(n^2.01) vagy Theta(sqrt(n))) (Logaritmusa után tegyen szóközt: log n)<br>$log \\space 2^n = n  \\cdot  log \\space 2$",
+                "img": ""
+            },
+            "solution": "Theta(n)"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az alábbi függvény nagyságrendjét! (Pl.: Theta(n \\cdot log n) vagy Theta(n!) vagy Theta(n^2.01) vagy Theta(sqrt(n))) (Logaritmusa után tegyen szóközt: log n)<br>$(n+1)  \\cdot  log \\space n$",
+                "img": ""
+            },
+            "solution": "Theta(n \\cdot log n)"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az alábbi függvény nagyságrendjét! (Pl.: Theta(n \\cdot log n) vagy Theta(n!) vagy Theta(n^2.01) vagy Theta(sqrt(n))) (Logaritmusa után tegyen szóközt: log n)<br>$5  \\cdot  \\sqrt{n} - 100$",
+                "img": ""
+            },
+            "solution": "Theta(sqrt(n))"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az alábbi függvények nagyságrendjét vesszővel elválasztva, szóköz nélkül! (Pl.: Theta(n \\cdot log n),Theta(n!),Theta(n^2.01),Theta(sqrt(n)))<br>$log (n!)$,<br>$n^{1.01}$,<br> $n^{0.03} + 2  \\cdot  ln \\space n$,<br>$(\\frac{2}{3})^n$",
+                "img": ""
+            },
+            "solution": "Theta(n \\cdot log n),Theta(n^1.01),Theta(n^0.03),Theta((2/3)^n)"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az alábbi függvények nagyságrendjét vesszővel elválasztva, szóköz nélkül! (Pl.: Theta(n \\cdot log n),Theta(n!),Theta(n^2.01),Theta(sqrt(n)))<br> $100  \\cdot  n^{100} + 3^n$,<br> $3^n + 2^n$,<br> $4  \\cdot  log (n + 5)$,<br> $n!$,<br> $n^{\\frac{3}{2}}$",
+                "img": ""
+            },
+            "solution": "Theta(3^n),Theta(3^n),Theta(log n),Theta(n!),Theta(n^(3/2))"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Rendezze növekvő sorrendbe az alábbi nagyságrendeket! Csak a sorszámokat kell használni vesszővel elválasztva, szóköz nélkül! (Pl.: 3,2,4,6,1,5)<br>1. $n^4 - 1$,<br>2. $n  \\cdot  ln(n+1)$,<br>3. $log \\space 2^n$, <br>4. $100 \\cdot n^2 + 2n$, <br>5. $5  \\cdot  \\sqrt{n} - 100$, <br>6. $5  \\cdot  n^{\\frac{1}{3}} + ln \\space n$",
+                "img": ""
+            },
+            "solution": "6,5,3,2,4,1"
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Vizsgáljuk meg a ciklusiterációk $it(n)$, a szorzások $S(n)$ és az összeadások $Ö(n)$ számát, a polinom fokszámának függvényében.",
+                "img": "./img2.png"
+            },
+            "solution": {
+                "text": "",
+                "img": "./img3.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Vizsgáljuk meg a ciklusiterációk $it(n)$, a szorzások $S(n)$ és az összeadások $Ö(n)$ számát, a polinom fokszámának függvényében.",
+                "img": "./img4.png"
+            },
+            "solution": {
+                "text": "",
+                "img": "./img5.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Vizsgáljuk meg a ciklusiterációk $it(n)$, a szorzások $S(n)$ és az összeadások $Ö(n)$ számát, a polinom fokszámának függvényében.",
+                "img": "./img6.png"
+            },
+            "solution": {
+                "text": "",
+                "img": "./img7.png"
+            }
+        }
+    ]
+}

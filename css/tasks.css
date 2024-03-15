@@ -1,0 +1,23 @@
+input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.form-check-input:checked {
+    background-color: var(--link);
+    border-color: var(--link);
+}
+
+.showSolution {
+    background-color: var(--darkMain) !important;
+    border-color: var(--darkMain) !important;
+}
+
+.checkTaskButton {
+    background-color: var(--main) !important;
+    border-color: var(--main) !important;
+}
+
+.checkTaskButton:hover, .showSolution:hover {
+    transform: scale(1.05);
+}

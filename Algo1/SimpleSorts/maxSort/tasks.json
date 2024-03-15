@@ -1,0 +1,42 @@
+{
+    "tasks": [
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Melyik az igaz állítás?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "A maximum-kiválasztásos rendezésnél először a tömb eleje válik rendezetté."
+                    },
+                    {
+                        "id": 2,
+                        "text": "A maximum-kiválasztásos rendezés stabil rendezés."
+                    },
+                    {
+                        "id": 3,
+                        "text": "Lehetséges olyan eset, amikor a maximális elem és a rendezetlen résztömb utolsó eleme ugyanaz, ilyenkor az elemet „önmagával cseréljük meg”."
+                    },
+                    {
+                        "id": 4,
+                        "text": "A maximum-kiválasztásos rendezés nem helyben rendező algoritmus."
+                    },
+                    {
+                        "id": 5,
+                        "text": "A maximum-kiválasztásos rendezés minimális múveletigénye $\\Theta(n)$."
+                    }
+                ]
+            },
+            "solution": 3
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "[4,1,5,2,3]. Az alábbi tömbre elindítjuk a maximum-kiválasztásos rendezést. Adja meg a tömböt a külső ciklus 3. iterációjának lefutása után, vesszővel elválasztva, szóközök nélkül!",
+                "img": ""
+            },
+            "solution": "2,1,3,4,5"
+        }
+    ]
+}

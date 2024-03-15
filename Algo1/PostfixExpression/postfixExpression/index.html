@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lengyel forma</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/ElementaryDataStructures/queue/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/LinkedList/singlyLinkedList/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo1/ElementaryDataStructures/stack/index.html"
+                    class="link">Verem</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Lengyel forma > Lengyel
+                        forma</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Lengyel forma (Postfix expression)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <h3 class="mt-5 mb-2 hidden">Aritmetikai kifejezés:</h3>
+
+                <p class="mb-1 hidden">Az aritmetikai kifejezésben lehetnek matematikai műveleti jelek (operátorok),
+                    kerek
+                    zárójelek, operandusok (változók, konstansok). Például $a = b + 1$ vagy $c = d * 2$.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Aritmetikai kifejezés alakjai:</h3>
+
+                <ul class="mb-1 hidden">
+                    <li><b>infix:</b> $A + B$, az egyes műveleti jelek az operandusaik között helyezkednek el</li>
+                    <li><b>postfix:</b> $AB+$, az egyes műveleti jelek az operandusaik mögött helyezkednek el</li>
+                    <li><b>prefix:</b> $+AB$, az egyes műveleti jelek az operandusaik előtt helyezkednek el</li>
+                </ul>
+
+                <p class="mb-1 hidden">Az emberek számára kényelmes és könnyen átlátható az infix alak, de a
+                    fordítóprogramoknak egy olyan alakra van szükségük, amelyekből a műveletek elvégzésének a sorrendje
+                    egyértelműen adódik.</p>
+                <p class="mb-1 hidden"><b>A lengyel forma az aritmetikai kifejezés postfix alakja.</b></p>
+
+                <h3 class="mt-5 mb-2 hidden">Lengyel forma jellemzői:</h3>
+
+                <p class="mb-1 hidden">A lengyel forma az <b>aritmetikai kifejezés postfix alakja.</b> Nincsenek benne
+                    zárójelek, a kiértékelés mégis egyértelmű. Operandusok sorrendje nem változik. Operátorok sorrendje
+                    az elvégzésük sorrendjében szerepel, tehát balról jobbra. Minden operátort közvetlen megelőznek az
+                    operandusai, (az operandus lehet változó, konstans, de
+                    lehet postfix kifejezés is).
+                </p>
+
+                <h3 class="mt-5 mb-2 hidden">Operátorok precedenciája (elsősége):</h3>
+
+                <p class="mb-1 hidden">Legkisebb precedenciájútól a legnagyobbig a sorrend a következő:</p>
+                <ul class="mb-1 hidden">
+                    <li>$=$</li>
+                    <li>$+$ és $-$ (azonos rangúak)</li>
+                    <li>$*$ és $/$ (azonos rangúak)</li>
+                    <li>^</li>
+                </ul>
+
+                <p class="mb-1 hidden">Balról jobbra típusú (bal asszociatív) operátorok: $+$, $-$, $*$, $/$</p>
+                <p class="mb-1 hidden">Jobbról balra típusú (jobb asszociatív) operátorok: $=$, ^</p>
+
+                <h3 class="mt-5 mb-2 hidden">Lengyel forma (postfix alak) előállítása:</h3>
+
+                <p class="mb-1 hidden">A bemenet egy helyesen zárójelezett aritmetikai kifejezés. A kimenet maga a
+                    lengyel forma. Az inputot szekvenciálisan dolgozzuk fel, és egy <b>verem segítségével</b>
+                    állítjuk
+                    elő a
+                    lengyelformát.</p>
+                <p class="mb-1 hidden">Ha a soron következő karakter operandus (karakter, szám, stb.), kiírjuk a
+                    kimenetre. Ha a soron következő karakter operátor ($+$, $-$, $*$, $/$, $=$, ^), bekerül a
+                    verembe. Minden beolvasott operátor bekerül a verembe. De mielőtt bekerülne a verembe meg kell
+                    vizsgálni
+                    magát az operátort, amit bele szeretnék helyezni a verembe és meg kell vizsgálni a már veremben lévő
+                    operátorokat is precedencia szerint. (A verem tetején lévő operátort és a beolvasott operátorokat
+                    hasonlítjuk össze.)</p>
+
+                <ul class="mb-1 hidden">
+                    <li><b>azonos rangúak</b> $\implies$ kiírjuk a verem tetején lévő operátort a kimenetre (ezzel
+                        együtt ki is
+                        vesszük a veremből), feltéve, hogy balról jobbra típusú, ha jobbról balra, akkor nem történik
+                        semmi,
+                        mehet bele a verembe a beolvasott operátorunk</li>
+                    <li><b>beolvasott operátor magasabb precedenciájú</b> $\implies$ berakjuk a verembe</li>
+                    <li><b>beolvasott operátor alacsonyabb precedenciájú</b> $\implies$ kiírjuk a verem tetején lévő
+                        operátort
+                        és megvizsgáljuk az újdonsült verem tetején lévő elemet</li>
+                </ul>
+
+                <ul class="mb-1 hidden">
+                    <li><b>nyitó zárójel</b> $\implies$ a verembe kerül</li>
+                    <li><b>csukó zárójel</b> $\implies$ a nyitó zárójelig mindent kiírunk a veremből sorrendben, a
+                        zárójelek
+                        nem kerülnek kiírásra, csak eldobjuk őket</li>
+                </ul>
+
+                <p class="mb-1 hidden">Amikor az input végére értünk, a veremben levő összes maradék operátort kivesszük
+                    és
+                    kiírjuk a kimenetre.</p>
+
+                <div class="row">
+                    <div class="col-12 mb-2 mx-auto hidden">
+                        <table id="struktogrammHeader" style="font-size: small;">
+                            <tbody>
+                                <tr>
+                                    <td>$LengyelForma()$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram" style="font-size: small;">
+                            <tbody>
+                                <tr>
+                                    <td colspan="9" tabindex="0">$V : Stack$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="0" class="loopSidePart rowspan" rowspan="6" tabindex="0"></td>
+                                    <td forloop="0" class="loopUpperPart colspan" colspan="8" tabindex="0"
+                                        >$read(x)$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$Operandus(x)$</div>
+                                    </td>
+                                    <td colspan="1" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$x = '('$</div>
+                                    </td>
+                                    <td colspan="2" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$x = ')'$</div>
+                                    </td>
+                                    <td colspan="4" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$Operátor(x)$</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" rowspan="4" tabindex="0">$write(x)$
+                                    </td>
+                                    <td colspan="1" rowspan="4" tabindex="0">$V.push(x)$
+                                    </td>
+                                    <td forloop="1" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                    <td forloop="1" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                        >$V.top() \neq '('$</td>
+                                    <td colspan="4" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$BalJobbOperátor(x)$</div>
+                                        <hr class="hrRight">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="1" rowspan="1" tabindex="0">
+                                        $write(V.pop())$</td>
+
+                                    <td forloop="2" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                    <td forloop="2" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                        >$\neg V.IsEmpty() \land V.top() \neq
+                                        '('$<br>$\land
+                                        pr(V.top())
+                                        \geq pr(x)$</td>
+                                    <td forloop="3" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                    <td forloop="3" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                        >$\neg V.IsEmpty() \land V.top() \neq
+                                        '('$<br>$\land
+                                        pr(V.top())
+                                        &gt; pr(x)$</td>
+
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="2" tabindex="0">$V.pop()$
+                                    </td>
+                                    <td colspan="1" rowspan="1" tabindex="0">
+                                        $write(V.pop())$</td>
+                                    <td colspan="1" rowspan="1" tabindex="0">
+                                        $write(V.pop())$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$V.push(x)$
+                                    </td>
+                                    <td colspan="2" rowspan="1" tabindex="0">$V.push(x)$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td forloop="4" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                    <td forloop="4" class="loopUpperPart colspan" colspan="8" tabindex="0"
+                                        >$\neg V.IsEmpty()$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="8" tabindex="0">$write(V.pop())$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3 class="mt-5 mb-2 hidden">Példák:</h3>
+
+                <ol class="mb-4 hidden">
+                    <li>$a + b \implies ab+$</li>
+                    <li>$a * b + c \implies ab * c+$</li>
+                    <li>$a + b * c \implies abc * +$</li>
+                    <li>$a * (b + c) \implies abc + *$</li>
+                    <li>$a + b - c \implies ab+c-$</li>
+                    <li>$a / b * c \implies ab / c *$</li>
+                    <li>$a$ ^ $b$ ^ $c$ $\implies$ $abc$^^</li>
+                </ol>
+
+                <h3 class="mt-5 mb-2 hidden">Lengyel forma kiértékelése (teljesen zárójelezett alak előállítása):</h3>
+
+                <p class="mb-1 hidden">A bemenet egy postfix alakú aritmetikai kifejezés (lengyel forma), a kimenet
+                    pedig egy teljesen zárójelezett infix
+                    aritmetikai
+                    kifejezés. Az inputot szekvenciálisan dolgozzuk fel, és egy <b>verem segítségével</b> értékeljük
+                    ki a
+                    lengyelformát.</p>
+                <p class="mb-1 hidden">Ha a soron következő karakter operandus (karakter, szám, stb.), verembe rakjuk.
+                    Ha a soron következő karakter operátor ($+$, $-$, $*$, $/$, $=$, ^), kivesszük a
+                    veremből az operátor aritásának megfelelő számú elemet, azaz annyi elemet veszünk, ahány operandusa
+                    van
+                    egy adott operátornak. (Pl.: az összeadás 2 operandusú művelet, 2 számot adunk össze. A többi is,
+                    amiket
+                    láttunk korábban, hasonlóan 2 aritású operátorok, de vannak 1 aritású operátorok is, pl.: $++, --$).
+                    Miután ez megtörtént visszarakjuk őket az operátorral és a zárójelekkel együtt a verembe, pl.: $(x_1
+                    +
+                    x_2)$ kerül a verembe. Végül a veremben csak a teljesen zárójelezett alak lesz.</p>
+
+                <div class="row">
+                    <div class="col-12 mb-2 mx-auto hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$LengyelKiertekeles(S)$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$V:Stack$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$x := read(S)$</td>
+                                </tr>
+                                <tr>
+                                    <td forloop="5" class="loopSidePart rowspan" rowspan="6" tabindex="0"></td>
+                                    <td forloop="5" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$x \neq \varepsilon$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$Operator(x)$</div>
+                                    </td>
+                                    <td colspan="2" tabindex="0">
+                                        <hr class="hrLeft">
+                                        <div>$Operandus(x)$</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$jobb :=
+                                        V.pop()$</td>
+                                    <td colspan="2" rowspan="3" tabindex="0">$V.push(x)$
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$bal:=
+                                        V.pop()$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" rowspan="1" tabindex="0">$V.push(bal
+                                        \otimes jobb)$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$x := read(S)$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">$write(V.pop())$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3 class="mt-5 mb-2 hidden">Példák:</h3>
+
+                <ol class="mb-4 hidden">
+                    <li>$ab*c+ \implies ((a*b)+c)$</li>
+                    <li>$ab + c * d - \implies 17$, ha ($a=2, b=4, c=3, d=1$)</li>
+                </ol>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">A fordítóprogramoknál használják, ugyanis a fordítóprogramoknak egy olyan alakra
+                    van
+                    szükségük, amelyekből a műveletek elvégzésének a sorrendje egyértelműen, könnyen adódik.</p>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-6 col-lg-6 col-md-5 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares" style="height: 70px;">
+                            <!--<div class="square"></div>-->
+                        </div>
+                        <div class="blankDiv" style="height: 80px;"></div>
+                        <div id="stack" style="text-align: center;">
+                            <!--<div class="list">$B_0$ = </div>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-6 col-lg-6 col-md-7 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center table-responsive">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <table id="struktogrammHeader" style="font-size: small;">
+                        <tbody>
+                            <tr>
+                                <td>$LengyelForma()$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram" style="font-size: small;">
+                        <tbody>
+                            <tr>
+                                <td colspan="9" id="id1" tabindex="0">$V : Stack$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="6" class="loopSidePart rowspan" rowspan="6" id="id2" tabindex="0"></td>
+                                <td forloop="6" class="loopUpperPart colspan" colspan="8" tabindex="0"
+                                    >$read(x)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" id="id3" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$Operandus(x)$</div>
+                                </td>
+                                <td colspan="1" id="id4" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$x = '('$</div>
+                                </td>
+                                <td colspan="2" id="id5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$x = ')'$</div>
+                                </td>
+                                <td colspan="4" id="id6" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$Operátor(x)$</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="4" id="id7" tabindex="0">$write(x)$</td>
+                                <td colspan="1" rowspan="4" id="id8" tabindex="0">$V.push(x)$</td>
+                                <td forloop="7" class="loopSidePart rowspan" rowspan="2" id="id9" tabindex="0"></td>
+                                <td forloop="7" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                    >$V.top() \neq '('$</td>
+                                <td colspan="4" id="id10" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$BalJobbOperátor(x)$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="1" id="id11" tabindex="0">$write(V.pop())$</td>
+
+                                <td forloop="8" class="loopSidePart rowspan" rowspan="2" id="id12" tabindex="0"></td>
+                                <td forloop="8" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                    >$\neg V.IsEmpty() \land V.top() \neq
+                                    '('$<br>$\land
+                                    pr(V.top())
+                                    \geq pr(x)$</td>
+                                <td forloop="9" class="loopSidePart rowspan" rowspan="2" id="id13" tabindex="0"></td>
+                                <td forloop="9" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                    >$\neg V.IsEmpty() \land V.top() \neq
+                                    '('$<br>$\land
+                                    pr(V.top())
+                                    &gt; pr(x)$</td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="2" id="id14" tabindex="0">$V.pop()$</td>
+                                <td colspan="1" rowspan="1" id="id15" tabindex="0">$write(V.pop())$</td>
+                                <td colspan="1" rowspan="1" id="id16" tabindex="0">$write(V.pop())$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id17" tabindex="0">$V.push(x)$</td>
+                                <td colspan="2" rowspan="1" id="id18" tabindex="0">$V.push(x)$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="10" class="loopSidePart rowspan" rowspan="2" id="id19" tabindex="0"></td>
+                                <td forloop="10" class="loopUpperPart colspan" colspan="8" tabindex="0"
+                                    >$\neg V.IsEmpty()$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" id="id20" tabindex="0">$write(V.pop())$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2" style="height: 70px;">
+                            <!--<div class="square"></div>-->
+                        </div>
+                        <div class="blankDiv" style="height: 80px;"></div>
+                        <div id="stack2" style="text-align: center;">
+                            <!--<div class="list">$B_0$ = </div>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 table-responsive">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram</h1>
+                    <table id="struktogrammHeader" style="font-size: small;">
+                        <tbody>
+                            <tr>
+                                <td>$LengyelForma()$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram" style="font-size: small;">
+                        <tbody>
+                            <tr>
+                                <td colspan="9" tabindex="0">$V : Stack$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="11" class="loopSidePart rowspan" rowspan="6" tabindex="0"></td>
+                                <td forloop="11" class="loopUpperPart colspan" colspan="8" tabindex="0"
+                                    >$read(x)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$Operandus(x)$</div>
+                                </td>
+                                <td colspan="1" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$x = '('$</div>
+                                </td>
+                                <td colspan="2" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$x = ')'$</div>
+                                </td>
+                                <td colspan="4" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$Operátor(x)$</div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="4" tabindex="0">$write(x)$</td>
+                                <td colspan="1" rowspan="4" tabindex="0">$V.push(x)$</td>
+                                <td forloop="12" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                <td forloop="12" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                    >$V.top() \neq '('$</td>
+                                <td colspan="4" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$BalJobbOperátor(x)$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="1" rowspan="1" tabindex="0">$write(V.pop())$</td>
+
+                                <td forloop="13" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                <td forloop="13" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                    >$\neg V.IsEmpty() \land V.top() \neq
+                                    '('$<br>$\land
+                                    pr(V.top())
+                                    \geq pr(x)$</td>
+                                <td forloop="14" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                <td forloop="14" class="loopUpperPart colspan" colspan="1" tabindex="0"
+                                    >$\neg V.IsEmpty() \land V.top() \neq
+                                    '('$<br>$\land
+                                    pr(V.top())
+                                    &gt; pr(x)$</td>
+
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="2" tabindex="0">$V.pop()$</td>
+                                <td colspan="1" rowspan="1" tabindex="0">$write(V.pop())$</td>
+                                <td colspan="1" rowspan="1" tabindex="0">$write(V.pop())$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$V.push(x)$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$V.push(x)$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="15" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                <td forloop="15" class="loopUpperPart colspan" colspan="8" tabindex="0"
+                                    >$\neg V.IsEmpty()$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="8" tabindex="0">$write(V.pop())$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="postfixExpression.js"></script>
+</body>
+
+</html>

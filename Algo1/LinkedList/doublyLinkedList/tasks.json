@@ -1,0 +1,37 @@
+{
+    "tasks": [
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Készítsünk egy függvényt, ami a paraméterül kapott szigorúan monoton növekően rendezett C2L listából törli a paraméterül kapott kulcsú elemet, amennyiben ilyen van. A függvény logikai értékkel tér vissza, ami a törlés sikerességét jelzi. Használjuk ki a lista rendezettségét!",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img2.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Készítsünk egy eljárást, ami egy C2L lista maximális kulcsú elemét a lista végére fűzi. Tegyük fel, hogy a listában minden kulcs csak egyszer szerepel.",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img3.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Adott két szigorúan monoton növekően rendezett C2L lista (halmazt ábrázolnak): L1, L2. L1-ben állítsuk elő a két halmaz unióját. L2 elemeit vagy átfűzzük, vagy felszabadítjuk. Mikor valamelyik lista végére érünk, akkor az összefésülő ciklusból kilépve, konstans számú lépésben fejezzük be az algoritmust!",
+                "img": ""
+            },
+            "solution": {
+                "text": "A megoldás során összefuttatjuk a két listát, kihasználva azok rendezettségét. Az azonos kulcsú elemeket töröljük L2 listából. Ha az L1 lista végére érünk, de L2 listában még maradnak elemek, akkor az L2 elemeit (a fejelem kivételével) az L1 végére fűzzük, konstans számú lépésben. Mivel L2 valamennyi elemét kiszedtük a listából, végül L2 fejelemének pointereit az üres listának megfelelően önmagára állítjuk.",
+                "img": "./img4.png"
+            }
+        }
+    ]
+}

@@ -1,0 +1,81 @@
+{
+    "tasks": [
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Egy nem teljes bináris fa preorder + inorder, vagy postorder + inorder bejárásából rekonstruáljuk, hogyan nézett ki a fa. Miért nem lehet rekonstruálni a preorder + postorder bejárásból?<br>preorder: D E M L A H P B K G N Q C F<br>inorder: L M H A E D B G K N P C F Q",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img11.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Adjunk algoritmust, amely kiszámolja hány levele van a fának?",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img12.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Mi a legnagyobb kulcsa egy bináris fának? A fa esetleg lehet üres, azaz $t=\\emptyset$ eset is előfordulhat. Kell egy „indító” algoritmus, mert le kell ellenőrizni, hogy a fa nem üres-e? Ne használjuk a maximum kezdőértékének $-\\infty$ értéket! Ha nem üres a fa, induljunk a gyökér kulcsával, ha üres a fa, jelezzünk hibát!",
+                "img": ""
+            },
+            "solution": {
+                "text": "A fő eljárás ellenőrzi az előfeltételt, és ha a fa nem üres, akkor gondoskodik a $max$ változó kezdőértékéről, majd elindít egy bejáró algoritmust. A bejárás végeztével $max$ változó a legnagyobb kulcs értékét fogja tartalmazni, így azzal visszatér. A bejáró algoritmus viszi magával a $max$ változót, ha kell, módosítja. Fontos, hogy $max$ cím szerint átadott paraméter legyen!",
+                "img": "./img13.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Keressünk egy negatív kulcsot a fában. (A fa kulcsai egész számok.) Ha találtunk, adjuk vissza a címét, ha nem találtunk, adjunk 0 értéket vissza. Ügyeljünk a hatékonyságra, ha sikeres a keresés, minél hamarabb térjen vissza a rekurzió!",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img14.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Hány egy gyerekes csúcsa van a bináris fának a k-nál nagyobb szinteken?",
+                "img": "./img15.png"
+            },
+            "solution": {
+                "text": "",
+                "img": "./img16.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Kifejezés fa. Az egy és két operandusú műveletekből álló kifejezést ábrázolhatjuk egy bináris fával. Hogyan rajzolhatjuk fel a kifejezés fát egy tetszőleges kifejezés esetén? (A legutoljára elvégzendő művelet lesz a fa gyökere, majd ezt rekurzívan alkalmazzuk a bal és jobb oldalán álló kifejezésre.) Ha egy operandusú műveleteket is megengedünk (például: -x, vagy ++x), akkor ezeket hogyan ábrázolná a fa? Bal, vagy jobb gyerek lesz az operandus? (Preorder és postorder szerint bármelyik lehetne, de az inorder akkor ad helyes kifejezést, ha az operátornak jobb gyereke az operandus.) Adott egy láncoltan ábrázolt kifejezés fa. Készítsünk rekurzív algoritmust, mely kiírja a kifejezés teljesen zárójelezett alakját.",
+                "img": "./img17.png"
+            },
+            "solution": {
+                "text": "",
+                "img": "./img18.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Hanyadik szinten van a legfelső levél a fában?",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img19.png"
+            }
+        }
+    ]
+}

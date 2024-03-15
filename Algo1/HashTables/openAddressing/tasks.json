@@ -1,0 +1,26 @@
+{
+    "tasks": [
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Szemléltesse a négyzetes próbát az alábbi táblázat segítségével! $h_{1}(k) = k$ mod $8$ és $c_{1} = c_{2} = \\frac{1}{2}$.",
+                "img": "./img2.png"
+            },
+            "solution": {
+                "text": "",
+                "img": "./img3.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Szemléltesse a kettős hasítást az alábbi táblázat segítségével! $h_{1}(k) = k$ mod $11$ és $h_{2}(k) = 1 + (k$ mod $10)$.",
+                "img": "./img4.png"
+            },
+            "solution": {
+                "text": "",
+                "img": "./img5.png"
+            }
+        }
+    ]
+}

@@ -1,0 +1,114 @@
+#struktogramm {
+    background-color: var(--darkMain);
+    align-items: center;
+    display: flex;
+    justify-content: center;
+}
+
+#struktogrammHeader {
+    background-color: transparent;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+#struktogrammHeader>tbody>tr>td {
+    background-color: var(--white);
+    border-radius: 0.9em;
+}
+
+table {
+    width: auto;
+    padding: 0;
+    margin: auto;
+    align-items: center;
+    empty-cells: show;
+    border-collapse: collapse;
+    background-color: var(--white);
+    font-size: initial;
+}
+
+tr {
+    padding: 0;
+    margin: 0;
+}
+
+td {
+    color: var(--navbarBackground);
+    text-align: center;
+    border: 1px solid var(--navbarBackground);
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+    overflow: hidden;
+}
+
+.rowspan {
+    width: 30px;
+    height: 120px;
+}
+
+.colspan {
+    width: 90px;
+    height: 30px;
+}
+
+.loopUpperPart {
+    border-left-color: var(--white);
+    padding-right: 40px;
+}
+
+.loopSidePart {
+    border-right: none;
+}
+
+.hrLeft {
+    position: relative;
+    bottom: -30px;
+    left: -20px;
+    margin: 0;
+    width: 60px;
+    border: 0;
+    border-top: 1px solid var(--navbarBackground);
+    opacity: 1;
+    transform: rotate(45deg);
+}
+
+.hrRight {
+    float: right;
+    position: relative;
+    right: -20px;
+    margin: 0;
+    width: 60px;
+    border: 0;
+    border-top: 1px solid var(--navbarBackground);
+    opacity: 1;
+    transform: rotate(-45deg);
+}
+
+.hrBetweenHeaderAndBody {
+    border-width: 0px 0px 0px 1px;
+    border-top-style: initial;
+    border-right-style: initial;
+    border-bottom-style: initial;
+    border-top-color: initial;
+    border-right-color: initial;
+    border-bottom-color: initial;
+    border-image: initial;
+    opacity: 1;
+    border-left-style: solid;
+    border-left-color: black;
+    margin: auto;
+    visibility: visible;
+}
+
+#struktogram td:hover[id] {
+    background-color: var(--animationColor4) !important;
+}
+
+#struktogram tr:has(td[forloop][id]):hover{
+    background-color: var(--animationColor4) !important;
+}
+
+#struktogram tr:has(td[forloop][id]):hover td:nth-child(2){
+    border-left-color: var(--animationColor4) !important;
+}

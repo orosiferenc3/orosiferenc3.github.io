@@ -1,0 +1,82 @@
+{
+    "tasks": [
+        {
+            "type": "taskCheckbox",
+            "task": {
+                "text": "Jelölje be az igaz állításokat!",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "Maximum kupac segítségével csökkenő sorrendben lehet rendezni."
+                    },
+                    {
+                        "id": 2,
+                        "text": "A kezdeti kupac süllyesztésekkel lesz kialakítva."
+                    },
+                    {
+                        "id": 3,
+                        "text": "A kezdeti kupac emelésekkel lesz kialakítva."
+                    },
+                    {
+                        "id": 4,
+                        "text": "A kupacrendezés stabil rendezés."
+                    }
+                ]
+            },
+            "solution": [2]
+        },
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Kupac-e a következő tömb: [20, 18, 8, 7, 10]",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "Igen."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Nem."
+                    }
+                ]
+            },
+            "solution": 1
+        },
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Kupac-e a következő tömb: [12, 8, 11, 9, 7]",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "Igen."
+                    },
+                    {
+                        "id": 2,
+                        "text": "Nem."
+                    }
+                ]
+            },
+            "solution": 2
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "A tanult kupacrendezéssel rendezzük az alábbi tömböt: [8,12,3,7,15,4,31,14,2,24]. Adja meg mi lett a tömb tartalma a kezdő kupac kialakítása után. Az elemeket vesszővel elválasztva, szóköz nélkül írja be.",
+                "img": ""
+            },
+            "solution": "31,24,8,14,15,4,3,7,2,12"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "A tanult kupacrendezéssel rendezzük az alábbi tömböt: [8,12,3,7,15,4,31,14,2,24]. Adja meg az első süllyesztés után a tömb tartalmát. Az elemeket vesszővel elválasztva, szóköz nélkül írja be.",
+                "img": ""
+            },
+            "solution": "24,15,8,14,12,4,3,7,2,31"
+        }
+    ]
+}

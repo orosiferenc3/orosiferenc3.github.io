@@ -1,0 +1,52 @@
+{
+    "tasks": [
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg a lengyel formáját az alábbi infix alaknak! Ne használjon szóközöket!<br>$a - (b + c * (d - f)) + h$",
+                "img": ""
+            },
+            "solution": "abcdf-*+-h+"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg a lengyel formáját az alábbi infix alaknak! Ne használjon szóközöket!<br>$a + b + c * d / 2 - e * f$",
+                "img": ""
+            },
+            "solution": "ab+cd*2/+ef*-"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg a lengyel formáját az alábbi infix alaknak! Ne használjon szóközöket!<br>$(a + b * c / 2) + (e * f$^$2$^$3-1)$",
+                "img": ""
+            },
+            "solution": "abc*2/+ef23^^*1-+"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg a lengyel formáját az alábbi infix alaknak! Ne használjon szóközöket!<br>$x = a + (b * c + x) / a - (b + (c$^$d-f))$",
+                "img": ""
+            },
+            "solution": "xabc*x+a/+bcd^f-+-="
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az infix alakját az alábbi lengyelformának! Ne használjon szóközöket! Ahol kell, használjon zárójeleket!<br>$ab + cd * 2 / + ef * -$",
+                "img": ""
+            },
+            "solution": "(((a+b)+((c*d)/2))-(e*f))"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adja meg az infix alakját az alábbi lengyelformának! Ne használjon szóközöket! Ahol kell, használjon zárójeleket!<br>$xabc * x + a / + bcd$^$f-+-=$",
+                "img": ""
+            },
+            "solution": "(x=((a+((b*c)+x)/a)-(b+((c^d)-f))))"
+        }
+    ]
+}

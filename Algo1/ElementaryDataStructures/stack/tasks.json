@@ -1,0 +1,63 @@
+{
+    "tasks": [
+        {
+            "type": "taskRadio",
+            "task": {
+                "text": "Milyen adattípus a verem?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "LIFO (last-in first-out)"
+                    },
+                    {
+                        "id": 2,
+                        "text": "FIFO (first-in first-out)"
+                    }
+                ]
+            },
+            "solution": 1
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Melyik nem a verem művelete az alábbiak közül? ($push$, $pop$, $add$, $top$, $isEmpty$)",
+                "img": ""
+            },
+            "solution": "add"
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Adott egy zárójelekből álló, legfeljebb $n$ hosszú karaktersorozat a bemeneten. Olvassuk be, és döntsük el róla, hogy helyes zárójelezést határoz-e meg! (Vagyis, hogy párbaállíthatók-e a zárójelek úgy, hogy minden nyitó zárójelnek egy olyan csukó zárójel a párja, amely később következik a sorozatban.)",
+                "img": ""
+            },
+            "solution": {
+                "text": "A beolvasáshoz az előadásjegyzetben is használt $read(\\&x : \\mathcal{T}) : \\mathbb{B}$ függvény használtuk, de ettől eltérhetünk. Ez a függvény beolvassa az $x$-be a következő értéket a bemenetről, és ha ez sikeres, akkor igaz, ha pedig a végére értünk az inputnak, akkor hamis lesz. Vegyük észre, hogy a fenti módszerhez valójában nincs szükség verem használatára. Elég lenne egyetlen számláló változóval nyilvántartani azt, hogy eddig mennyivel több nyitó zárójellel találkoztunk, mint csukóval.",
+                "img": "./img1.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Adott egy zárójelekből álló, legfeljebb $n$ hosszú karaktersorozat a bemeneten. Olvassuk be, és döntsük el róla, hogy helyes zárójelezést határoz-e meg! Írassuk ki az összetartozó zárójelpárok indexeit!",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img2.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "A bemenetről karakterenként beolvasunk egy (legfeljebb $n$ karakterekből álló) névsort, ahol a nevek egymástól vesszővel vannak elválasztva. Írjuk ki a neveket fordított sorrendben!",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img3.png"
+            }
+        }
+    ]
+}

@@ -1,0 +1,20 @@
+{
+    "tasks": [
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adott a következő lista (d = 3, r = 4): <201,122,322,120,333,123,200,312,111>. Futtassa le a szétválogató radix rendezést a tanult módon és adja meg hogy néz ki a lista, a második számjegy szerinti rendezés (második menet) után. Az elemeket vesszővel elválasztva, szóközök nélkül adja meg!",
+                "img": ""
+            },
+            "solution": "200,201,111,312,120,122,322,123,333"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Adott a következő lista (d = 3, r = 4): <210,331,213,010,112,123,132,222,001,300>. Futtassa le a szétválogató radix rendezést a tanult módon és adja meg hogy néz ki a lista, az első számjegy szerinti rendezés (első menet) után. Az elemeket vesszővel elválasztva, szóközök nélkül adja meg!",
+                "img": ""
+            },
+            "solution": "210,010,300,331,001,112,132,222,213,123"
+        }
+    ]
+}

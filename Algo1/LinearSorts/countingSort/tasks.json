@@ -1,0 +1,15 @@
+{
+    "tasks": [
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Szemléltesse a leszámláló rendezést az alábbi tömbön: [01, 03, 31, 22, 13, 10]",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img1.png"
+            }
+        }
+    ]
+}

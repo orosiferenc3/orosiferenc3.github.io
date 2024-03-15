@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mélységi keresés</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo2/ElementaryGraphAlgorithms/bfs/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo2/ShortestPathsAlgorithms/shortestpath/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo2/GraphRepresentations/simpleGraphs/index.html"
+                    class="link">Egyszerű gráfok és ábrázolásaik</a>, <a
+                    href="../../../Algo1/LinkedList/singlyLinkedList/index.html" class="link">Egyirányú láncolt
+                    listák</a>, <a href="../../../Algo1/ElementaryDataStructures/stack/index.html"
+                    class="link">Verem</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 2. > Elemi gráfalgoritmusok >
+                        Mélységi keresés</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Mélységi keresés (Depth first search)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">A mélységi keresés egy <b>gráfbejáró algoritmus</b>. A gráfban a lehető
+                    legmélyebben keresünk, azaz <b>a gráf összes élét és csúcsát érintjük</b>. A bemeneti gráf lehet
+                    <b>irányított vagy irányítatlan, összefüggő vagy nem összefüggő</b> is. A mélységi keresés gyakran
+                    egy másik algoritmus eljárása szokott lenni.
+                </p>
+
+                <h3 class="mt-5 mb-2 hidden">Keresés menete:</h3>
+
+                <p class="mb-1 hidden">A mélységi keresés során az utoljára elért, új kivezető élekkel rendelkező $v$
+                    csúcsból még nem vizsgált éleket derítjük fel. Ha a $v$ csúcshoz tartozó összes élt
+                    megvizsgáltuk, akkor a keresés visszalép, és megvizsgálja annak a csúcsnak a kivezető éleit,
+                    amelyből $v$-t elértük. Ezt addig folytatja, amíg el nem éri az összes csúcsot, amely elérhető az
+                    eredeti kezdő csúcsból. Ha marad olyan csúcs, amelyet nem értünk el, akkor ezek közül valamelyiket
+                    kiválasztjuk, mint új kezdő csúcsot, és az eljárást ebből kiindulva megismételjük. Ezt egészen addig
+                    folytatjuk, amíg az összes csúcsot el nem érjük.</p>
+                <p class="mb-1 hidden">A végeredmény egy <b>mélységi feszítőfa</b> vagy egy <b>mélységi feszítőerdő</b>
+                    lesz, attól függően, hogy a gráf összefüggő volt-e. Ahány különböző kezdőcsúcsból indítottunk
+                    keresést, annyi mélységi fát hoz létre az algoritmus. Együtt ezek egy mélységi feszítőerdőt fognak
+                    alkotni.</p>
+                <p class="mb-1 hidden">A keresés eredményét befolyásolja, hogy milyen sorrendben vizsgáljuk meg az
+                    aktuális csúcsot követő csúcsokat, de alapvetően ekvivalens eredményeket kapunk.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Csúcsok állapotai:</h3>
+
+                <p class="mb-1 hidden">A bejáró algoritmusok, hogy ne „körözzenek” gyakran <b>színezést</b> használnak.
+                    Így nem „látogathatunk meg” többször egy csúcsot. A szélességi kereséshez hasonlóan itt is színezzük
+                    a csúcsokat, ezzel tartjuk számon egy csúcs állapotát.</p>
+
+                <ul class="mb-1 hidden">
+                    <li><b>fehér</b> még el nem ért csúcs (kezdetben mindegyik fehér)</li>
+                    <li><b>szürke</b> elértük a csúcsot és a belőle elérhető csúcsokat járjuk be éppen</li>
+                    <li><b>fekete</b> befejeztük a csúcsot</li>
+                </ul>
+
+                <p class="mb-1 hidden">A mélységi keresés minden csúcshoz időpontot rendel. A $time$ globális változót
+                    használjuk az időpontok feljegyzéséhez. Minden csúcshoz két időpont tartozik:</p>
+
+                <ul class="mb-1 hidden">
+                    <li><b>$d$</b> a csúcs elérési ideje, mikor értük el</li>
+                    <li><b>$f$</b> a csúcs befejezési ideje, mikor fejeztük be</li>
+                </ul>
+
+                <p class="mb-1 hidden">Ezek az időpontok $1$ és $2 \cdot |V|$ közötti egész számok, hiszen minden csúcsot
+                    pontosan egyszer érünk el, illetve hagyunk el. Továbbá minden csúcsra igaz lesz, hogy az elérési
+                    ideje kisebb, mint a befejezési ideje.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Élek osztályozása:</h3>
+
+                <p class="mb-1 hidden">A bemeneti gráf éleit osztályokba sorolhatjuk. Az élek osztályozását
+                    felhasználhatjuk a gráfra vonatkozó fontos információk meghatározására.</p>
+                <p class="mb-1 hidden">4 féle élt különböztetünk meg. Legyen $(u,v)$ egy éle a gráfnak:</p>
+
+                <ul class="mb-1 hidden">
+                    <li><b>Fa-él ( $\Rightarrow$ )</b> a mélységi erdő egyik éle</li>
+                    <li><b>Vissza-él ( $\xrightarrow{V}$ )</b> $v$ az $u$ őse egy mélységi fában, irányított gráfokban
+                        előforduló hurokéleket is visszaéleknek tekintjük</li>
+                    <li><b>Előre-él ( $\xrightarrow{E}$ )</b> $v$ az $u$ leszármazottja egy mélységi fában</li>
+                    <li><b>Kereszt-él ( $\xrightarrow{K}$ )</b> $u$ és $v$ két olyan csúcs, amelyek ugyanannak a
+                        mélységi
+                        fának két különböző ágán vannak, vagy két különböző mélységi fában találhatók</li>
+                </ul>
+
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img1.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">Élek felismerése:</h3>
+
+                <ul class="mb-1 hidden">
+                    <li><b>Fa-él ( $\Rightarrow$ )</b> fehér csúcsba megyünk</li>
+                    <li><b>Vissza-él ( $\xrightarrow{V}$ )</b> szürke csúcsba megyünk</li>
+                    <li><b>Előre-él ( $\xrightarrow{E}$ )</b> fekete csúcsba megyünk és $d(u) < d(v)$</li>
+                    <li><b>Kereszt-él ( $\xrightarrow{K}$ )</b> fekete csúcsba megyünk és $d(u) > d(v)$</li>
+                </ul>
+
+                <p class="mb-1 hidden">(Irányítatlan gráf esetén előfordulhat, hogy az osztályozás nem egyértelmű,
+                    ugyanis $(u, v)$ és $(v, u)$ valójában ugyanaz az él. Az él osztálya az első olyan lesz az
+                    osztályozási listából, amelybe besorolható. Irányítatlan gráfok mélységi keresése során nem találunk
+                    előre-élt, illetve kereszt-élt.)</p>
+
+                <h3 class="mt-5 mb-2 hidden">Működése:</h3>
+
+                <p class="mb-1 hidden">A csúcsokat konvenció szerint $abc$ sorrendben vagy indexek szerint növekvően
+                    dolgozzuk fel. Sorrendben vesszük az első csúcsot, ami még fehér. Növeljük a $time$ változó értékét
+                    (most 1) és beállítjuk a csúcs elérési idejét a $time$ változó értékére. Ezután beszínezzük szürkére
+                    a csúcsot. Utána vesszük sorrendben a gyerekeit. Ha a gyereke fehér, akkor fa él, ha szürke visszaél
+                    és így tovább. A gyereken is megcsináljuk az előző lépéseket, növeljük a $time$ változó értékét
+                    (most 2) és beállítjuk a csúcs elérési idejét a $time$ változó értékére. Ezután beszínezzük szürkére
+                    a csúcsot. Utána vesszük sorrendben a gyerekeit. Ha egy csúcsnak nincs több gyereke, befejezzük.
+                    Növeljük a $time$ változó értékét és beállítjuk a csúcs befejezési idejét a $time$ változó értékére
+                    és visszalépünk az ősére.</p>
+                <p class="mb-1 hidden">Ha a kezdőcsúcsot is befejeztük, akkor létrejött egy mélységi feszítőfa és az
+                    algoritmus keres egy újabb fehér csúcsot és kezdődik az egész elölről. Akkor van vége az
+                    algoritmusnak, ha már nincs több fehér csúcs.</p>
+
+                <h5 class="mt-2 hidden">Lépések összefoglalva:</h5>
+
+                <ol class="mb-4 hidden">
+                    <li>Elérünk egy fehér csúcsot.</li>
+                    <li>Növeljük a $time$ változó értékét.</li>
+                    <li>Beállítjuk a csúcs elérési idejét a $time$ változó értékére.</li>
+                    <li>Szürkére színezzük a csúcsot.</li>
+                    <li>Vesszük sorrendben a gyerekeit.</li>
+                    <li>Ha gyereke fehér, fa él, ha szürke, visszaél stb.</li>
+                    <li>Miután végéig néztük az összes gyerekét növeljük a $time$ változó értékét, és beállítjuk a csúcs
+                        befejezési idejét a $time$ változó értékére.</li>
+                    <li>Feketére színezzük a csúcsot és visszalépünk a szülőjére.</li>
+                    <li>Ha a kezdőcsúcsot is befejeztük, keresünk egy újabb fehér csúcsot és kezdődik az egész elölről.</li>
+                </ol>
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+
+                <ul class="mb-1 hidden">
+                    <li>$n = |G.V|$ (csúcsok száma), $m = |G.E|$ (élek száma)</li>
+                    <li>$mT(n, m), MT(n, m) \in \Theta(n+m)$</li>
+                </ul>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">A mélységi keresés felhasználható kör detektálására, DAG tulajdonság
+                    ellenőrzésére, topologikus rendezésre, erősen összefüggő komponensek és irányított gráfok félig
+                    összefüggőségének meghatározására.</p>
+
+                <h3 class="mt-5 mb-2 hidden">DAG (directed acyclic graph) tulajdonság:</h3>
+
+                <p class="mb-1 hidden">A $G$ irányított gráf <b>DAG</b>, ha nem tartalmaz irányított kört, vagyis a
+                    mélységi keresés során nem találtunk benne visszaélt.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Topologikus rendezés:</h3>
+
+                <p class="mb-1 hidden"><b>Irányított gráfoknak pontosan akkor van topologikus rendezése, ha nincs a
+                        gráfban irányított kör</b>, azaz DAG tulajdonságú. Irányított gráf topologikus rendezése alatt a
+                    gráf csúcsainak olyan sorba rendezését értjük, amelyben minden él egy-egy később jövő csúcsba mutat.
+                    Egy gráf topologikus rendezését elképzelhetjük úgy is, hogy a gráf csúcsait egy vízszintes vonal
+                    mentén helyezzük sorba, és az irányított élek balról jobbra mutatnak. Több topologikus rendezése is
+                    lehet egy gráfnak.</p>
+
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img2.png" alt="">
+
+                <p class="mb-1 hidden">Egy lehetséges topologikus rendezést kapunk, ha a mélységi bejárás során kapott
+                    <b>befejezési idők szerint csökkenő sorrendbe rakjuk a csúcsokat</b>. Ezt csinálhatjuk
+                    többféleképpen pl.: ha befejeztünk egy csúcsot beszúrjuk egy láncolt lista elejére, így csökkenő
+                    sorrendet kapunk vagy befejezéskor egy verembe rakjuk az érintett csúcsot, és a végén ezen verem
+                    elemeit írjuk ki.
+                </p>
+                <p class="mb-1 hidden">A topologikus rendezés elvégezhető $\Theta (V + E)$ időben, hiszen a mélységi
+                    keresés ideje $\Theta(V + E)$, és minden csúcs $O(1)$ idő alatt beszúrható a láncolt lista elejére.
+                </p>
+
+                <p class="mb-1 hidden">A topologikus rendezést sok féleképpen meghatározhatjuk, akár DFS nélkül is.
+                    Ebben az esetben a befokok segítségével fogjuk ezt megtenni.</p>
+                <p class="mb-1 hidden">Először meghatározzuk a csúcsok befokait (hány él vezet beléjük). Utána
+                    kiválasztunk egy csúcsot, aminek a befoka $0$, majd berakjuk a rendezésbe. Ilyen csúcsot mindig tudunk
+                    találni, ha a gráf DAG. Majd töröljük a kiválasztott csúcsot, az éleivel együtt. Csökkentsük ennek
+                    alapján a többi csúcs befokát. Ezt ismételjük, amíg el nem fogynak a csúcsok.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Erősen összefüggő komponensek (Kosaraju algoritmus):</h3>
+
+                <p class="mb-1 hidden">A mélységi bejárás egy másik klasszikus alkalmazása egy irányított gráf erősen
+                    összefüggő komponenseinek meghatározása. Sok algoritmus a bemeneti gráfot első lépésben erősen
+                    összefüggő komponensekre bontja, így gyakran az eredeti feladat részfeladatokra osztható az erősen
+                    összefüggő komponenseknek megfelelően.</p>
+                <p class="mb-1 hidden">Egy irányított gráf (vagy annak egy komponense) <b>erősen összefüggő</b>, ha
+                    minden $u, v$ csúcsára igaz, hogy van irányított út $u$-ból $v$-be és $v$-ből $u$-ba is.</p>
+                <p class="mb-1 hidden">Futtassuk le a mélységi bejárást a gráfra. Tegyük verembe a csúcsokat
+                    befejezéskor, hasonlóan a topologikus rendezéshez. Készítsünk egy olyan gráfot, ami az eredeti
+                    transzponáltja, (azaz ugyanazok a csúcsok, de fordított irányúak az élek). Futtassuk le újra a
+                    mélységi bejárást, de most a transzponált gráfon. A csúcsokat kifejezetten a verembeli sorrend
+                    alapján válasszuk meg. Azaz kezdjük a veremtető csúcsával, és amikor a $visit()$ függvény teljesen
+                    visszatér, folytassuk a verem legfelső még fehér csúcsával. A második bejárás szerint egy mélységi
+                    fába tartozó csúcsok definiálnak egy erősen összefüggő komponenst. Akkor kezdünk új mélységi fát,
+                    amikor a rekurzió visszatér a $dfs()$ ciklusába és új csúcsot veszünk ki a veremből. Vigyázat, bár a
+                    transzponált gráf szerint végezzük a második DFS-t, de nyilván a kapott komponensek az eredeti
+                    gráfra vonatkoznak.</p>
+
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img3.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img4.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img5.png" alt="">
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img6.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">Irányított gráf félig összefüggő:</h3>
+
+                <p class="mb-1 hidden">Egy irányított gráf <b>félig összefüggő</b>, ha minden $u, v$ csúcsára igaz, hogy
+                    van irányított út $u$-ból $v$-be vagy $v$-ből $u$-ba. Ha $u$ és $v$ között van oda-vissza út, az is
+                    elfogadható.</p>
+                <p class="mb-1 hidden">Határozzuk meg a gráf erősen összefüggő komponenseit. Ebből készítsük el a
+                    <b>komponensgráfot</b>, azaz az erősen összefüggő komponenseket vonjuk össze egy csúcsba, a köztük
+                    levő éleket hagyjuk el, a belőlük kimenő/bemenő éleket tartsuk meg egyszeres számossággal.
+                </p>
+
+                <img class="mb-2 hidden w-50 mx-auto d-block" src="img7.png" alt="">
+
+                <p class="mb-1 hidden">Ha van két olyan komponens, ami között nincs út, biztosan nem lesz félig
+                    összefüggő a gráf. Az algoritmus topologikus rendezéssel határozza meg, hogy a gráf félig
+                    összefüggő-e. Mindig csak egy komponens befoka lehet $0$. Ha ezt elhagyjuk, megint csak egy
+                    komponensnek lehet $0$ a befoka. Ezt folytatjuk, amíg el nem hagyjuk az összes komponenst. Ha kettő
+                    vagy több komponens befoka lesz $0$, akkor nem félig összefüggő a gráf.</p>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares">
+                            <!--<div class="square"></div>-->
+                            <canvas></canvas>
+                        </div>
+                        <br>
+                        <table id="taskTable">
+                            <tbody></tbody>
+                        </table>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$DFS(G : \mathcal{G})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td forloop="2" class="loopSidePart rowspan" rowspan="2" id="id8" tabindex="0"></td>
+                                <td forloop="2" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall u \in G.V$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id9" tabindex="0">$color(u) := white$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id10" tabindex="0">$time := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="3" class="loopSidePart rowspan" rowspan="4" id="id11" tabindex="0"></td>
+                                <td forloop="3" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall r \in G.V$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="if" id="id12" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$color(r) = white$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id13" tabindex="0">$\pi (r) := \emptyset$</td>
+                                <td colspan="2" rowspan="2" id="id14" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id15" tabindex="0">$DFvisit(G, r, time)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$DFvisit(G : \mathcal{G};u : \mathcal{V}; \&amp;time : \mathbb{N})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id42" tabindex="0">$d(u) := ++time$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id43" tabindex="0">$color(u) := grey$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="7" class="loopSidePart rowspan" rowspan="4" id="id44" tabindex="0"></td>
+                                <td forloop="7" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall v \in G.A(u)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="if" id="id45" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$color(v) = white$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id46" tabindex="0">$\pi (v) := u$</td>
+                                <td colspan="2" rowspan="1" id="id47" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$color(v) = grey$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id48" tabindex="0">$DFvisit(G, v, time)$</td>
+                                <td colspan="1" rowspan="1" id="id49" tabindex="0">$backEdge(u,v)$</td>
+                                <td colspan="1" rowspan="1" id="id50" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id51" tabindex="0">$f(u) := ++time$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id52" tabindex="0">$color(u) := black$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2">
+                            <canvas></canvas>
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$DFS(G : \mathcal{G})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall u \in G.V$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$color(u) := white$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$time := 0$</td>
+                            </tr>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall r \in G.V$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="if" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$color(r) = white$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi (r) := \emptyset$</td>
+                                <td colspan="2" rowspan="2" tabindex="0">$skip$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$DFvisit(G, r, time)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$DFvisit(G : \mathcal{G};u : \mathcal{V}; \&amp;time : \mathbb{N})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">$d(u) := ++time$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$color(u) := grey$</td>
+                            </tr>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall v \in G.A(u)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="if" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$color(v) = white$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi (v) := u$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$color(v) = grey$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$DFvisit(G, v, time)$</td>
+                                <td colspan="1" rowspan="1" tabindex="0">$backEdge(u,v)$</td>
+                                <td colspan="1" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$f(u) := ++time$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$color(u) := black$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/graph.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="dfs.js"></script>
+</body>
+
+</html>

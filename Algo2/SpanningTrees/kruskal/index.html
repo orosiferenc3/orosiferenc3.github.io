@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kruskal algoritmusa</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo2/SpanningTrees/spanningtree/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo2/SpanningTrees/prim/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo2/GraphRepresentations/weightedGraphs/index.html"
+                    class="link">Élsúlyozott gráfok és ábrázolásaik</a>, <a
+                    href="../../../Algo1/Trees/priorityQueue/index.html" class="link">Prioritásos sor</a>, <a
+                    href="../../../Algo2/SpanningTrees/spanningtree/index.html" class="link">Minimális feszítőfák
+                    bevezetés</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 2. > Minimális feszítőfák >
+                        Kruskal algoritmusa</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Kruskal algoritmusa (Kruskal's algorithm)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">Kruskal algoritmusa egy <b>mohó algoritmus</b>, tehát az adott pillanatban
+                    legjobbnak
+                    látszó élt részesíti előnyben. A gráf éleit súlyuk szerint monoton növekvő sorrendben veszi sorba.
+                    <b>A
+                        kört képző éleket eldobja.</b> A többit hozzáveszi $A$-hoz. Kruskal algoritmusának invariánsa:
+                </p>
+                <ul>
+                    <li>A $G = (V, E)$ összefüggő, irányítatlan, élsúlyozott gráf feszítő erdeje $(V,
+                        A)$,
+                        és $A$ részhalmaza a $G$ valamelyik minimális feszítőfája élhalmazának.</li>
+                </ul>
+
+                <p class="mb-1 hidden">Az algoritmus <b>ellenőrzi, hogy a gráf összefüggő-e</b>. Ha összefüggő, $k = 1$
+                    értékkel tér vissza. Ha nem, $k > 1$ értékkel tér vissza.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Működése:</h3>
+
+                <p class="mb-1 hidden">Kruskal algoritmusában az $(V,A)$ egy <b>erdő</b>. Kezdetben az erdőben minden
+                    egyes
+                    csúcs egy komponens (fa), ezt a $makeSet(v)$ függvény végzi. Az éleket monoton növekvő sorrendben
+                    vesszük sorba. Ehhez egy minimum prioritásos sort használunk.</p>
+
+                <p class="mb-1 hidden">Az algoritmus kiveszi a minimum prioritású sorból a legkisebb súlyú élt. Ha ez
+                    <b>az
+                        erdő két tetszőleges komponensét összekötő legkisebb súlyú él</b>, akkor ezt <b>hozzávesszük az
+                        $A$
+                        élhalmazhoz</b>, és ezzel együtt összevonjuk a két komponenst a $union(x, y)$ függvény
+                    segítségével.
+                    Ha
+                    nem két különböző komponenst köt össze, akkor eldobjuk az élt, mivel kör keletkezne. $|G.V |−1$
+                    bővítés
+                    után éppen a $G$ egyik minimális feszítőfáját kapjuk meg. Az invariáns igaz marad végig, mivel két
+                    különböző komponenst köt össze az él és
+                    a
+                    legkisebb súlyú, így biztonságos.
+                </p>
+
+                <img class="mb-2 hidden w-50 mx-auto d-block" src="img1.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">Kruskal algoritmus halmazműveletei:</h3>
+
+                <p class="mb-1 hidden">A $makeSet(v)$ beállítja mindegyik komponens (fa) gyökerének önmagát és a fa
+                    méretét
+                    beállítja $1$-re. Mindegyik csúcsból egy egyelemű irányított fát képez.</p>
+
+                <div class="mb-2 hidden">
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$makeSet(v : \mathcal{V})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\pi (v) := v$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$s(v) := 1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="mb-1 hidden">A $findSet(v)$ megkeresi a csúcsot tartalmaző irányított fa gyökércsúcsát.
+                    Keresés
+                    közben a $v$ csúcs minden ősének beállítja a gyökércsúcsot ezzel növeli a hatékonyságot, mivel a
+                    legközelebbi keresésnél $1$ lépéssel megkaphatjuk a gyökércsúcsot.</p>
+
+                <div class="mb-2 hidden">
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$findSet(v : \mathcal{V}) : \mathcal{V}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$\pi (v) \neq v$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi (v) := findSet(\pi (v))$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\text{return} \space \pi (v)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="mb-1 hidden">A $union(x, y)$ az irányított fák gyökércsúcsait köti össze. A kisebb méretű
+                    irányított fát a nagyobb vagy vele egyenlő méretű irányított fa gyökere alá köti.</p>
+
+                <div class="mb-2 hidden">
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$union(x, y : \mathcal{V})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$s(x) &lt; s(y)$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi (x) := y$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi (y) := x$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$s(y) += s(x)$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$s(x) += s(y)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+
+                <p class="mb-1 hidden">Kruskal algoritmusának futási ideje a $Q$ prioritásos sor megvalósításától függ.
+                    Most kupaccal valósítjuk meg.</p>
+
+                <ul class="mb-1 hidden">
+                    <li>$findset(v)$ műveletigénye: $O(log \space n)$</li>
+                    <li>$makeSet(v)$ és a $union(x, y)$ műveletigénye: $\Theta(1)$</li>
+                </ul>
+                <ul class="mb-1 hidden">
+                    <li>$n = |G.V|$ (csúcsok száma), $m = |G.E|$ (élek száma)</li>
+                    <li>$T(n, m) \in O(m \cdot log \space n)$</li>
+                </ul>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">Városok közötti utak tervezésénél, elektromos hálózatok tervezésénél,
+                    számítógépes
+                    hálózatoknál használják.</p>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares">
+                            <canvas></canvas>
+                        </div>
+
+                        <table id="taskTable">
+                            <tbody></tbody>
+                        </table>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Kruskal(G : \mathcal{G}_{w};A : \mathcal{E}\{\}) : \mathbb{N}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td forloop="14" class="loopSidePart rowspan" rowspan="2" id="id100" tabindex="0"></td>
+                                <td forloop="14" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall u \in G.V$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id101" tabindex="0">$makeSet(v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id102" tabindex="0">$A = \{\}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id103" tabindex="0">$k := |G.V|$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id104" tabindex="0">$Q : minPrQ(G.E, G.w)$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="15" class="loopSidePart rowspan" rowspan="9" id="id105" tabindex="0"></td>
+                                <td forloop="15" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$k &gt; 1 \land \lnot Q.isEmpty()$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id106" tabindex="0">$e : \mathcal{E}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id107" tabindex="0">$e := Q.remMin()$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id108" tabindex="0">$x := findSet(e.u)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id109" tabindex="0">$y := findSet(e.v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="if" id="id110" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$x \neq y$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id111" tabindex="0">$A := A \cup \{ e
+                                    \}$</td>
+                                <td colspan="2" rowspan="3" id="id112" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id113" tabindex="0">$union(x,y)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id114" tabindex="0">$k--$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id115" tabindex="0">$\text{return} \space k$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$makeSet(v : \mathcal{V})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id116" tabindex="0">$\pi (v) := v$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id117" tabindex="0">$s(v) := 1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$findSet(v : \mathcal{V}) : \mathcal{V}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$\pi (v) \neq v$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id118" tabindex="0">$\pi (v) := findSet(\pi (v))$</td>
+                                <td colspan="2" rowspan="1" id="id119" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0" id="id120">$\text{return} \space \pi (v)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$union(x, y : \mathcal{V})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$s(x) &lt; s(y)$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id121" tabindex="0">$\pi (x) := y$</td>
+                                <td colspan="2" rowspan="1" id="id122" tabindex="0">$\pi (y) := x$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id123" tabindex="0">$s(y) += s(x)$</td>
+                                <td colspan="2" rowspan="1" id="id124" tabindex="0">$s(x) += s(y)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2">
+                            <canvas></canvas>
+                        </div>
+
+                        <table id="taskTable2">
+                            <tbody></tbody>
+                        </table>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Kruskal(G : \mathcal{G}_{w};A : \mathcal{E}\{\}) : \mathbb{N}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall u \in G.V$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$makeSet(v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$A = \{\}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$k := |G.V|$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$Q : minPrQ(G.E, G.w)$</td>
+                            </tr>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="9" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$k &gt; 1 \land \lnot Q.isEmpty()$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$e : \mathcal{E}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$e := Q.remMin()$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$x := findSet(e.u)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$y := findSet(e.v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" class="if" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$x \neq y$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$A := A \cup \{ e
+                                    \}$</td>
+                                <td colspan="2" rowspan="3" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$union(x,y)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$k--$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\text{return} \space k$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$makeSet(v : \mathcal{V})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\pi (v) := v$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$s(v) := 1$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$findSet(v : \mathcal{V}) : \mathcal{V}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$\pi (v) \neq v$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi (v) := findSet(\pi (v))$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$\text{return} \space \pi (v)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$union(x, y : \mathcal{V})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$s(x) &lt; s(y)$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi (x) := y$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi (y) := x$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$s(y) += s(x)$</td>
+                                <td colspan="2" rowspan="1" tabindex="0">$s(x) += s(y)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/graph.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="kruskal.js"></script>
+</body>
+
+</html>

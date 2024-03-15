@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Legrövidebb út kereső algoritmusok bevezetés</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo2/ElementaryGraphAlgorithms/dfs/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo2/ShortestPathsAlgorithms/dijkstra/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo2/GraphRepresentations/weightedGraphs/index.html"
+                    class="link">Élsúlyozott gráfok és ábrázolásaik</a>, <a
+                    href="../../../Algo2/ElementaryGraphAlgorithms/bfs/index.html" class="link">Szélességi keresés</a>
+            </h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 2. > Legrövidebb utak egy forrásból >
+                        Legrövidebb út kereső algoritmusok bevezetés</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Legrövidebb út kereső algoritmusok bevezetés (Shortest
+                path algorithms)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">Gyakori feladat, hogy <b>egy gráf egy tetszőleges csúcsából bármelyik más
+                        csúcsokba
+                        vezető legrövidebb utakat keresünk</b>. Gondolhatunk például navigációs rendszerre, ahol a
+                    feladat két
+                    város
+                    közti legrövidebb út meghatározása. Ezt egy gráf segítségével modellezhetjük, a városokat
+                    csúcsokkal, a
+                    köztük vezető utakat súlyozott élekkel reprezentálhatjuk.</p>
+                <p class="mb-1 hidden">Az élsúlyok a távolságokétól eltérő metrikákat is kifejezhetnek. Gyakran
+                    használják
+                    idő, költség, büntetés, veszteség vagy más olyan mennyiség megjelenítésére, amely egy út mentén
+                    lineárisan halmozódik, és amelyet minimalizálni szeretnénk. Korábban a szélességi bejárásnál az élek
+                    száma jelentette az út hosszát, most az
+                    élek
+                    súlyozását fogjuk figyelembe venni.</p>
+                <p class="mb-1 hidden">A megoldandó feladat általánosan: Adott egy $G : \mathcal{G}_{w}$
+                    tetszőleges
+                    <b>élsúlyozott gráf</b> és $s$ start csúcs. Keressük a start csúcsból induló legrövidebb utakat
+                    minden
+                    olyan csúcsba, amely elérhető $s$-ből.
+                </p>
+                <p class="mb-1 hidden">Befejezéskor <b>egy legrövidebb utak fáját</b> kapunk, azaz egy olyan $s$ gyökerű fát,
+                    amely
+                    az $s$-ből elérhető bármelyik $G$-beli csúcsba, egy $s$-ből kiinduló legrövidebb utat tartalmaz. Egy
+                    legrövidebb utak fája hasonló a szélességi keresés fájához, csak itt a kezdőcsúcsból kiinduló
+                    legrövidebb utakat az élek súlya szerint, nem pedig az élek száma szerint értjük.</p>
+
+                <img class="mb-2 hidden w-50 mx-auto d-block" src="img1.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">Negatív súlyú élek:</h3>
+
+                <p class="mb-1 hidden">A Bellman-Ford és a DAG negatív élsúlyokkal is tud dolgozni, a Dijkstra nem.
+                    Amennyiben a gráf tartalmaz a start csúcsból elérhető <b>negatív összsúlyú kört</b>, akkor a
+                    legrövidebb
+                    utak problémának <b>nincs megoldása</b>. Egy negatív összsúlyú körön újra és újra végighaladva
+                    folyamatosan
+                    legrövidebb utakat találnánk megállás nélkül. Amennyiben negatív élsúlyú gráfokkal dolgozunk, az
+                    algoritmusnak fel kell tudnia ismerni a negatív összsúlyú kört (Bellman-Ford algoritmus), ellenkező
+                    esetben végtelen működésbe kezdhet.</p>
+                <p class="mb-1 hidden">Alapvetően <b>irányított gráfokkal foglalkozunk, de a feladat irányítatlan gráfok
+                        esetén is megoldható</b>. Ebben az esetben <b>nem engedhetünk meg negatív éleket</b> egy
+                    forrásból sem,
+                    mivel
+                    ha az irányítatlan gráfban $(u, v)$ $s$-ből elérhető negatív él, akkor $< u, v, u>$ egy $s$-ből
+                        elérhető
+                        negatív kör.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Fokozatos közelítés:</h3>
+
+                <p class="mb-1 hidden"><b>Minden $u \in G.V$ csúcs esetén nyilvántartjuk az oda vezető eddig talált
+                        legrövidebb út hosszát</b>: ezt $d(u)$ jelöli, valamint az $u$ csúcs közvetlen megelőzőjét, amit
+                    $\pi(u)$
+                    jelöl. Az algoritmus működése során amennyiben egy $v \in G.V$ csúcs esetén az eddigieknél rövidebb
+                    utat
+                    találunk, akkor módosítjuk a csúcshoz tartozó $d(v)$ és $\pi(v)$ értékeket. A start csúcsra $d(s) =
+                    0$
+                    és $\pi(s) = \emptyset$, ha pedig egy $v \in G.V$ csúcs nem érhető el $s$-ből, akkor $d(v) = \infty$
+                    és
+                    $\pi(v) = \emptyset$.</p>
+
+                <div class="col-12 mb-2 hidden">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$d(v) &gt; d(u) + G.w(u, v)$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$\pi(v) := u$</td>
+                                <td colspan="2" rowspan="2" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" tabindex="0">$d(v) := d(u) + G.w(u, v)$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="mb-1 hidden">Az alábbi algoritmusok közös vonása, hogy ismételten kiválasztanak és kivesznek
+                    egy
+                    csúcsot a feldolgozandó csúcsok halmazából, és a csúcsból kimenő összes élre végeznek
+                    <b>közelítést</b>.
+                    Ezeket a közelítéseket együtt a csúcs <b>kiterjesztésének</b> nevezzük, míg a csúcs kiválasztását a
+                    kiterjesztésével együtt a <b>feldolgozásának</b> nevezzük.
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

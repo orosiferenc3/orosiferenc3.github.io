@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radix rendezés</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/Trees/priorityQueue/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/LinearSorts/distributingSort/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo1/Trees/binaryTree/index.html"
+                    class="link">Bináris fa</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Rendezések lineáris időben >
+                        Radix rendezés</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Radix rendezés (Radix sort)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <h3 class="mt-5 mb-2 hidden">Összehasonlításon alapuló rendezések:</h3>
+
+                <p class="mb-1 hidden">Az eddigi rendezések összehasonlító rendezések voltak. Bármely összehasonlító
+                    algoritmusnak a legrosszabb esetben $\Omega (n \cdot log \space n)$ összehasonlításra van szüksége $n$
+                    elem
+                    rendezéséhez.</p>
+
+                <h5 class="mt-2 hidden">Döntési fa modell:</h5>
+
+                <p class="mb-1 hidden">Az összehasonlító rendezéseket döntési fákkal modellezzük. A döntési fa egy adott
+                    elemű bemenet rendezése során történt összehasonlításokat ábrázoló bináris fa.</p>
+
+                <img class="mb-2 hidden w-50 mx-auto d-block" src="img1.png" alt="">
+
+                <p class="mb-1 hidden">A rendezendő számokat kulcsoknak is szokás nevezni. A döntési fa belső csúcsaiban
+                    vannak a kulcs összehasonlítások, leveleiben a rendezés eredményeként adódó lehetséges sorozatok. Az
+                    $n$
+                    elemű bemenetnek mind az $n!$ permutációja meg kell jelenjen egy-egy levélen, azaz a döntési fának
+                    legalább $n!$ levele van.</p>
+                <p class="mb-1 hidden">A fa gyökerét és legtávolabbi levelét összekötő út hossza adja meg azoknak az
+                    összehasonlításoknak a számát, melyeket a rendezőalgoritmus a legrosszabb esetben végez.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Lineáris idejű rendezések:</h3>
+
+                <p class="mb-1 hidden">Ezek a rendezések <b>nem kulcsösszehasonlításokkal rendeznek</b>, hanem
+                    <b>osztályozzák a
+                        kulcsokat</b>. Egyes rendezések, viszont használnak kulcsösszehasonlító segédrendezéseket.
+                </p>
+
+                <h3 class="mt-5 mb-2 hidden">Radix rendezés:</h3>
+
+                <p class="mb-1 hidden">A kulcsok <b>$r$ alapú</b> számrendszerben felírt, <b>$d$ számjegyű</b>,
+                    <b>előjel nélküli
+                        egész
+                        számok</b>. Ez lesz a $dDigitNumber$ típus. Ha kell vezető nullákat írunk a számok elé,
+                    hogy $d$
+                    számjegyű legyen.</p>
+
+                <div class="row">
+                    <div class="col-12 mb-2 hidden">
+                        <table id="struktogrammHeader">
+                            <tbody>
+                                <tr>
+                                    <td>$RadixSort(L : dDigitNumber &lt;&gt;; d : \mathbb{N})$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <hr id="verticalLine" width="1" size="20"
+                            class="hrBetweenHeaderAndBody">
+                        <table id="struktogram">
+                            <tbody>
+                                <tr>
+                                    <td forloop="5" class="loopSidePart rowspan" rowspan="2" tabindex="0"></td>
+                                    <td forloop="5" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                        >$i := 1 \space to \space d$</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5" tabindex="0">stable sort on digit $i$</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden"><b>A kulcsok számjegyeit a legkevésbé fontos (jobb szélső) számjegytől a
+                        legfontosabb
+                        (bal szélső) számjegyig minden helyiérték szerint rendezzük egymás után egy stabil
+                        rendezéssel.</b>
+                    Azért
+                    fontos, hogy stabil rendezés legyen, mert az $i$-edik számjegy szerinti rendezésnél, azonos
+                    számjegyek
+                    esetén meg kell őrizni a rendezettséget. A hatékonyság miatt fontos, hogy lineáris időben
+                    rendezzenek.
+                </p>
+                <p class="mb-1 hidden">A szétválogató rendezés (distributing sort) láncolt listák számjegy szerinti
+                    rendezésére, míg a leszámláló rendezés (counting sort) tömbök rendezésére alkalmas.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+
+                <p class="mb-1 hidden">Ez $\Theta (d \cdot rendezés(n))$ költségű, ahol a $rendezés(n)$ a belső rendezésünk
+                    költsége.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">Néha használják a radix rendezést összetett kulcsú rekordok rendezésére. Ilyen
+                    összetett kulcs például a dátum, ami három komponenst (év, hó, nap) tartalmaz.</p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

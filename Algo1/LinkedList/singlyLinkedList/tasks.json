@@ -1,0 +1,37 @@
+{
+    "tasks": [
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Adjon algoritmust egy egyirányű láncolt lista megfordítására. Trükk: mintha egy verembe raknánk a lista elemeit, az eredmény listának mindig az elejére fűzzük be az eredeti lista aktuális elemét.",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img3.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Adott egy H1L, egész számokat tartalmaz, a fejelemre L1 mutat. Fűzzük ketté az elemeket: L1-ben maradjanak a páros elemek, egy új L2 H1L listába fűzzük át a páratlan elemeket. Az eredeti sorrendet tartsuk meg, azaz átfűzésnél mindig a lista végére kell majd fűzni. Az L1 listát egyszer lehet bejárni, L2-be a befűzés konstans műveletigényű legyen!",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img4.png"
+            }
+        },
+        {
+            "type": "basicTask",
+            "task": {
+                "text": "Készítsünk egy listát, mely 2-től n-ig tartalmazza a prímeket, az Eratoszthenészi szita algoritmus ötletét felhasználva. Töltsünk fel egy egyszerű listát 2..n természetes számokkal. Az első elem prím, azokat, melyek oszthatók ezzel az elemmel, töröljük a listából. A következő megmaradt szám megint prím. Többszöröseit ismét töröljük. A végén a prímek maradnak a listánkban.",
+                "img": ""
+            },
+            "solution": {
+                "text": "",
+                "img": "./img5.png"
+            }
+        }
+    ]
+}

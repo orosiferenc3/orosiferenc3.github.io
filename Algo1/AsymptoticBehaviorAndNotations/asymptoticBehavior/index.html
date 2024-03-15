@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/proofread.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Függvények aszimptotikus viselkedése</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo1/SimpleSorts/bubbleSort/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 1. > Aszimptotika és jelölések >
+                        Függvények
+                        aszimptotikus viselkedése</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 pt-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Függvények aszimptotikus viselkedése (Asymptotic
+                behavior)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">Az aszimptotika egy algoritmus futási idejének, <b>hatékonyságának</b> egyszerű
+                    leírását
+                    adja, valamint lehetővé teszi a szóba jövő algoritmusok relatív teljesítményének összehasonlítását
+                    is.
+                </p>
+
+                <p class="mb-1 hidden">Vegyünk egy példát, amelyen keresztül láthatjuk az algoritmusok <b>futási
+                        idejét</b>.
+                    Ebben
+                    a példában adjuk meg, hogy hány olyan kombinációja van $a,b,c$ pozitív számoknak, amelyek összege
+                    $n$
+                    lesz. Nézzünk meg kétféle algoritmust erre a problémára.</p>
+                <p class="mb-1 hidden">Az első esetben naivan nézzünk végig az összes lehetséges kombinációt, amelyre
+                    teljesül, hogy $a + b + c = n$.</p>
+
+                <div class="mb-2 hidden">
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Algorithm1(n : \mathbb{N})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="6" id="id22" tabindex="0">$solutions := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="12" class="loopSidePart rowspan" rowspan="5" id="id23" tabindex="0"></td>
+                                <td forloop="12" class="loopUpperPart colspan" colspan="5" tabindex="0"
+                                    >$a := 0 \space to \space n$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="13" class="loopSidePart rowspan" rowspan="4" id="id24" tabindex="0"></td>
+                                <td forloop="13" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$b := 0 \space to \space n$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="14" class="loopSidePart rowspan" rowspan="3" id="id25" tabindex="0"></td>
+                                <td forloop="14" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$c := 0 \space to \space n$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id26" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$a+b+c = n$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id27" tabindex="0">$solutions := solutions + 1$</td>
+                                <td colspan="2" rowspan="1" id="id28" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <p class="mb-1 hidden">A második esetben nézzük végig az összes $a, b$ kombinációt és ezzel számoljuk ki
+                    a
+                    $c$-t, $c = n- (a+b)$. Ha $c$ nagyobb vagy egyenlő, mint 0, akkor ez egy megfelelő kombináció.</p>
+
+                <div class="mb-2 hidden">
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Algorithm2(n : \mathbb{N})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td colspan="5" id="id50" tabindex="0">$solutions := 0$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="21" class="loopSidePart rowspan" rowspan="5" id="id51" tabindex="0"></td>
+                                <td forloop="21" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$a := 0 \space to \space n$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="22" class="loopSidePart rowspan" rowspan="4" id="id52" tabindex="0"></td>
+                                <td forloop="22" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$b := 0 \space to \space n$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id53" tabindex="0">$c := n-(a+b)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id54" tabindex="0">
+                                    <hr class="hrLeft">
+                                    <div>$c \geq 0$</div>
+                                    <hr class="hrRight">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" rowspan="1" id="id55" tabindex="0">$solutions := solutions + 1$</td>
+                                <td colspan="2" rowspan="1" id="id56" tabindex="0">$\text{SKIP}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3 class="mt-5 mb-2 hidden">Hatékonyság:</h3>
+
+                <p class="mb-1 hidden">Arra a kérdésre, hogy melyik a hatékonyabb megoldás, megmérhetnénk, hogy melyik
+                    mennyi
+                    ideig fut egy számítógépen, de ezzel az a probléma, hogy mindegyik számítógép más és más, ezért
+                    például
+                    egy szuperszámítógépen sokkal gyorsabban fog lefutni mind a kettő megoldás, mint egy ősrégi
+                    számítógépen.
+                </p>
+
+                <div class="row">
+                    <div class="col-6">
+                        <p class="mb-2 hidden text-center"><b>Első eset</b></p>
+                        <table class="mb-2 hidden">
+                            <tr>
+                                <td>$n$</td>
+                                <td>Futási idő (s)</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>0.1</td>
+                            </tr>
+                            <tr>
+                                <td>1000</td>
+                                <td>3</td>
+                            </tr>
+                            <tr>
+                                <td>10000</td>
+                                <td>58</td>
+                            </tr>
+                            <tr>
+                                <td>100000</td>
+                                <td>597</td>
+                            </tr>
+                            <tr>
+                                <td>1000000</td>
+                                <td>2052</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <p class="mb-2 hidden text-center"><b>Második eset</b></p>
+                        <table class="mb-2 hidden">
+                            <tr>
+                                <td>$n$</td>
+                                <td>Futási idő (s)</td>
+                            </tr>
+                            <tr>
+                                <td>100</td>
+                                <td>0.01</td>
+                            </tr>
+                            <tr>
+                                <td>1000</td>
+                                <td>0.9</td>
+                            </tr>
+                            <tr>
+                                <td>10000</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td>100000</td>
+                                <td>247</td>
+                            </tr>
+                            <tr>
+                                <td>1000000</td>
+                                <td>900</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <p class="mb-1 hidden">Ennél egy sokkal jobb megoldás, ha nem a futás idejét mérjük, hanem inkább
+                    megszámoljuk, hogy egyes részei a kódnak hányszor futnak le. Ez a megoldás független bármilyen
+                    géptől,
+                    mivel mindegyik gépen ugyanaz az algoritmus fut le. Ez viszont még mindig nem teljesen jó. Pl. ha
+                    tudjuk, hogy $n=20$-ra 9261-szer végzi el az algoritmus az elágazás ellenőrzését, még mindig nem
+                    tudjuk,
+                    hogy $n=100$, $n = 1000$, $n = 10000$ esetekben ez mennyi. Ezt nem is kell kiszámolnunk, elég, ha
+                    általánosítunk bármilyen $n$-re, így láthatjuk, hogy a bemenet növekedésével miként növekszik az
+                    algoritmus futási ideje.</p>
+
+                <h5 class="mt-2 hidden">Első eset:</h5>
+                <p class="mb-1 hidden">Ha az elágazást nézzük, (mivel ez az a sor kód, ami a legtöbbször futhat),
+                    $(n+1) \cdot (n+1) \cdot (n+1)$-szer fut le, azaz $(n+1)^3 = n^3 +
+                    3n^2 + 3n + 1$.</p>
+
+                <p class="mb-1 hidden">Ezt tovább egyszerűsíthetjük, mivel nagyon nagy $n$-ek esetén a domináns tag
+                    határozza meg a leginkább a műveletigényt, így a többi tag elhanyagolható. Ezzel ugyan pontatlanabb
+                    lesz
+                    a számításunk, de sokkal egyszerűbb.</p>
+                <p class="mb-1 hidden">$n^3 + 3n^2 + 3n + 1 \approx n^3$</p>
+
+                <h5 class="mt-2 hidden">Második eset:</h5>
+                <p class="mb-1 hidden">Ha az elágazást nézzük, (mivel ez az a sor kód, ami a legtöbbször futhat),
+                    $(n+1) \cdot (n+1)$-szer fut le, azaz $(n+1)^2 = n^2 + 2n + 1
+                    \approx n^2$.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Aszimptotikus jelölések</h3>
+
+                <p class="mb-1 hidden">Az alábbi jelölések olyan <b>függvényhalmazokat</b> fognak jelölni, amelyekre
+                    igaz,
+                    hogy
+                    olyan $f$ függvényekből állnak, amiket elég nagy $n$ helyettesítési értékekre, megfelelelő pozitív
+                    konstans szorzókkal <b>alulról</b>, <b>felülről</b> vagy <b>alulről és felülről</b> is becsül a $g$
+                    függvény.
+                </p>
+
+                <h5 class="mt-2 hidden">Theta ( $\Theta$ ):</h5>
+
+                <p class="mb-1 hidden">A $\Theta$ aszimptotikus <b>alsó és felső korlátot</b> ad a függvényre.</p>
+
+                <p class="mb-1 hidden">$\Theta(g(n)) = \{ \space f(n) \space | \space \exists c_1, c_2 > 0, \space n_0
+                    \geq 0 \space : \space
+                    \forall n \geq n_0 \space : \space 0 \leq c_1g(n) \leq f(n) \leq c_2g(n) \space \}$</p>
+                <p class="mb-1 hidden">$f \in \Theta(g)$</p>
+
+                <p class="mb-1 hidden">Másképp az $f(n)$ függvény hozzátartozik a $\Theta(g(n))$ halmazhoz, ha léteznek
+                    $c_1$ és $c_2$ pozitív állandók úgy, hogy $f$ elég nagy $n$-ek esetén "beszorítható" $c_1g(n)$ és
+                    $c_2g(n)$ közé. Az $f(n)$ függvény egy állandó szorzótényezőtől eltekintve egyenlő $g(n)$-nel. Ekkor
+                    azt
+                    mondjuk, hogy $g(n)$ aszimptotikusan éles korlátja $f(n)$-nek.</p>
+
+                <p class="mb-1 hidden">$f(n) = \frac{n^2}{2} − 3n \in \Theta(n^2)$</p>
+                <p class="mb-1 hidden">$c_1 \cdot n^2 \leq \frac{1}{2} n^2 - 3n \leq c_2 \cdot n^2$</p>
+                <p class="mb-1 hidden">$c_1 \leq \frac{1}{2} - \frac{3}{n} \leq c_2$</p>
+
+                <p class="mb-1 hidden">Ekkor léteznek olyan $c_1$ és $c_2$ állandók, hogy $f$ "beszorítható" $c_1 \cdot
+                    g(n)$
+                    és
+                    $c_2 \cdot g(n)$ közé. Lényegében el kell dobni az alacsonyabb rendű tagokat, és figyelmen kívül kell
+                    hagyni a
+                    legmagasabb rendű tag főegyütthatóját.</p>
+
+                <p class="mb-1 hidden">$f(n) = an^2 + bn + c \in \Theta(n^2)$</p>
+
+                <p class="mb-1 hidden">Továbbá bármelyik konstans függvényre, például $\Theta(20)$, fennáll a
+                    $\Theta(n^0)$,
+                    ami egyenlő $\Theta(1)$-el.</p>
+
+                <div id="theta" class="hiddenLineGraph text-center">
+                    <svg viewbox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Layer_1">
+                            <title>Layer 1</title>
+                            <path id="svg_2" d="m16,538c0,0 1,-498 1,-498l-1,498z" opacity="NaN" stroke="#fff"
+                                fill="#fff" />
+                            <path id="svg_3" d="m16,538l498,0l-498,0z" opacity="NaN" stroke="#fff" fill="#fff" />
+                            <path id="thetaC1g"
+                                d="m17,539c0,0 82,-103 115,-108c33,-5 77,-4 100,-9c23,-5 51,-51 79,-62c28,-11 128,-35 139,-36c11,-1 60,-10 60,-10"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="thetaC2g"
+                                d="m17,537c0,0 83,-214 135,-219c52,-5 53,5 79,-20c26,-25 84,-146 109,-145c25,1 176,-67 176,-67"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="thetaF"
+                                d="m17,447c0,0 50,-12 64,-2c14,10 22,39 34,36c12,-3 33,-48 38,-66c5,-18 25,-51 54,-61c29,-10 202,-67 213,-77c11,-10 67,-35 78,-49c11,-14 13,-16 13,-16"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <text id="thetaC2gText" style="cursor: move;" xml:space="preserve" text-anchor="start"
+                                font-family="Noto Sans JP" font-size="24" stroke-width="0" y="61" x="463" stroke="#fff"
+                                fill="#fff">c2g(n)</text>
+                            <text id="thetaFText" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP"
+                                font-size="24" stroke-width="0" y="190" x="485" stroke="#fff" fill="#fff">f(n)</text>
+                            <text id="thetaC1gText" style="cursor: move;" xml:space="preserve" text-anchor="start"
+                                font-family="Noto Sans JP" font-size="24" stroke-width="0" y="289" x="488" stroke="#fff"
+                                fill="#fff">c1g(n)</text>
+                            <path id="thetaN0" stroke-dasharray="5,5" stroke="#fff"
+                                d="m157,538c0,0 0,-488 0,-488l0,488z" opacity="NaN" fill="none" />
+                            <text id="thetaN0Text" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP"
+                                font-size="24" stroke-width="0" y="573" x="145" stroke-dasharray="5,5" stroke="#fff"
+                                fill="#fff">n0</text>
+                            <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24"
+                                id="svg_23" y="537" x="524" stroke-width="0" stroke="#fff" fill="#fff">n</text>
+                            <path id="svg_24"
+                                d="m16.66684,41.33352c0,0 -6,16.00001 -6.00017,15.99984c0.00016,0.00016 6.00017,-15.99984 6.00017,-15.99984z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="svg_25" d="m16.66684,41.33352l6.66651,15.33318l-6.66651,-15.33318z" opacity="NaN"
+                                stroke="#fff" fill="none" />
+                            <path id="svg_26" d="m514.00044,538.00045l-11.33352,-4.66685l11.33352,4.66685z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="svg_27"
+                                d="m514.00044,538.00045c0,0 -10.00001,4.66667 -10.00018,4.66649l10.00018,-4.66649z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                        </g>
+                    </svg>
+                </div>
+
+                <h5 class="mt-2 hidden">Ordó ( $O$ ):</h5>
+
+                <p class="mb-1 hidden">Az $O$ aszimptotikus <b>felső korlátot</b> ad a függvényre.</p>
+
+                <p class="mb-1 hidden">$O(g(n)) = \{ \space f(n) \space | \space \exists c > 0, \space n_0 \geq 0 \space
+                    : \space \forall n
+                    \geq
+                    n_0 \space : \space 0 \leq f(n) \leq cg(n) \space \}$</p>
+                <p class="mb-1 hidden">$f \in O(g)$</p>
+
+                <p class="mb-1 hidden">Minden az $n_0$-nál nagyobb $n$ értékre az $f(n)$ függvényérték $cg(n)$-nel
+                    egyenlő
+                    vagy annál kisebb. Az $O$ egy állandó tényezőtől eltekintve felső korlátot ad a függvényre. Ha $f(n)
+                    \in
+                    \Theta(g(n))$, akkor ez maga után vonja $f(n) \in O(g(n))$ teljesülését.</p>
+
+                <div id="ordo" class="hiddenLineGraph text-center">
+                    <svg viewbox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Layer_1">
+                            <title>Layer 1</title>
+                            <path id="svg_2" d="m16,538c0,0 1,-498 1,-498l-1,498z" opacity="NaN" stroke="#fff"
+                                fill="#fff" />
+                            <path id="svg_3" d="m16,538l498,0l-498,0z" opacity="NaN" stroke="#fff" fill="#fff" />
+                            <text id="ordoCgText" style="cursor: move;" xml:space="preserve" text-anchor="start"
+                                font-family="Noto Sans JP" font-size="24" stroke-width="0" y="80" x="474" stroke="#fff"
+                                fill="#fff">cg(n)</text>
+                            <text id="ordoFText" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP"
+                                font-size="24" stroke-width="0" y="229" x="496" stroke="#fff" fill="#fff">f(n)</text>
+                            <path id="ordoN0" stroke-dasharray="5,5" stroke="#fff" d="m165,538c0,0 0,-488 0,-488l0,488z"
+                                opacity="NaN" fill="none" />
+                            <text id="ordoN0Text" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP"
+                                font-size="24" stroke-width="0" y="573" x="152" stroke-dasharray="5,5" stroke="#fff"
+                                fill="#fff">n0</text>
+                            <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24"
+                                id="svg_23" y="537" x="524" stroke-width="0" stroke="#fff" fill="#fff">n</text>
+                            <path id="svg_24"
+                                d="m16.66684,41.33352c0,0 -6,16.00001 -6.00017,15.99984c0.00016,0.00016 6.00017,-15.99984 6.00017,-15.99984z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="svg_25" d="m16.66684,41.33352l6.66651,15.33318l-6.66651,-15.33318z" opacity="NaN"
+                                stroke="#fff" fill="none" />
+                            <path id="svg_26" d="m514.00044,538.00045l-11.33352,-4.66685l11.33352,4.66685z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="svg_27"
+                                d="m514.00044,538.00045c0,0 -10.00001,4.66667 -10.00018,4.66649l10.00018,-4.66649z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="ordoF"
+                                d="m16,400c21,7 34,21 36,32c2,11 8,33 15,33c7,0 6,6 10,-11c4,-17 33,-139 41,-156c8,-17 6,-20 16,-20c10,0 12,8 17,9c5,1 28,68 38,81c10,13 36,14 46,9c10,-5 55,-57 67,-59c12,-2 126,-54 135,-54c9,0 76,-21 75.00001,-22"
+                                stroke="#fff" fill="none" />
+                            <path id="ordoCg"
+                                d="m16,451c-1,0 94,-73 114,-99c20,-26 86,-82 106,-85c20,-3 108,-26 127,-39c19,-13 147,-130 146.00001,-131"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                        </g>
+                    </svg>
+                </div>
+
+                <h5 class="mt-2 hidden">Omega ( $\Omega$ ):</h5>
+
+                <p class="mb-1 hidden">Az $\Omega$ aszimptotikus <b>alsó korlátot</b> ad a függvényre.</p>
+
+                <p class="mb-1 hidden">$\Omega(g(n)) = \{ \space f(n) \space | \space \exists c > 0, \space n_0 \geq 0
+                    \space : \space
+                    \forall n
+                    \geq n_0 \space : \space 0 \leq cg(n) \leq f(n) \space \}$</p>
+                <p class="mb-1 hidden">$f \in \Omega(g)$</p>
+
+                <p class="mb-1 hidden">Minden az $n_0$-nál nagyobb $n$ értékre az $f(n)$ függvényérték $cg(n)$-nel
+                    egyenlő
+                    vagy annál nagyobb. Ha $f(n) \in \Theta(g(n))$, akkor ez maga után vonja $f(n) \in \Omega(g(n))$
+                    teljesülését.</p>
+
+                <div id="omega" class="hiddenLineGraph text-center">
+                    <svg viewbox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                        <g id="Layer_1">
+                            <path id="svg_2" d="m16,538c0,0 1,-498 1,-498l-1,498z" opacity="NaN" stroke="#fff"
+                                fill="#fff" />
+                            <path id="svg_3" d="m16,538l498,0l-498,0z" opacity="NaN" stroke="#fff" fill="#fff" />
+                            <text id="omagaCgText" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP"
+                                font-size="24" stroke-width="0" y="275" x="488" stroke="#fff" fill="#fff">cg(n)</text>
+                            <text id="omagaFText" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP"
+                                font-size="24" stroke-width="0" y="156" x="490" stroke="#fff" fill="#fff">f(n)</text>
+                            <path id="omagaN0" stroke-dasharray="5,5" stroke="#fff"
+                                d="m165,538c0,0 0,-488 0,-488l0,488z" opacity="NaN" fill="none" />
+                            <text id="omagaN0Text" xml:space="preserve" text-anchor="start" font-family="Noto Sans JP"
+                                font-size="24" stroke-width="0" y="573" x="154" stroke-dasharray="5,5" stroke="#fff"
+                                fill="#fff">n0</text>
+                            <text xml:space="preserve" text-anchor="start" font-family="Noto Sans JP" font-size="24"
+                                id="svg_23" y="537" x="524" stroke-width="0" stroke="#fff" fill="#fff">n</text>
+                            <path id="svg_24"
+                                d="m16.66684,41.33352c0,0 -6,16.00001 -6.00017,15.99984c0.00016,0.00016 6.00017,-15.99984 6.00017,-15.99984z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="svg_25" d="m16.66684,41.33352l6.66651,15.33318l-6.66651,-15.33318z" opacity="NaN"
+                                stroke="#fff" fill="none" />
+                            <path id="svg_26" d="m514.00044,538.00045l-11.33352,-4.66685l11.33352,4.66685z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="svg_27"
+                                d="m514.00044,538.00045c0,0 -10.00001,4.66667 -10.00018,4.66649l10.00018,-4.66649z"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="omagaF"
+                                d="m15,452c0,0 31,-104 48,-93c17,11 19,57 33,69c14,12 26,12 33,0c7,-12 64,-143 72,-153c8,-10 23,-31 39,-32c16,-1 270,-68 269.00001,-69"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                            <path id="omagaCg"
+                                d="m16,398c0,0 94,-18 115,-35c21,-17 63,-19 62,-20c1,1 46,4 62,0c16,-4 143,-39 154,-38c11,1 101,-11 100.00001,-12"
+                                opacity="NaN" stroke="#fff" fill="none" />
+                        </g>
+                    </svg>
+                </div>
+
+                <p class="mb-1 hidden">Bármely két $f(n)$ és $g(n)$ függvény esetén $f(n) \in \Theta(g(n))$ akkor és
+                    csak
+                    akkor, ha $f(n) \in O(g(n))$ és $f(n) \in \Omega(g(n))$.</p>
+
+                <h5 class="mt-2 hidden">Kis ordó ( $o$ ):</h5>
+
+                <p class="mb-1 hidden">A $o$ aszimptotikusan <b>nem éles felső korlát</b> jelölésére használjuk.</p>
+
+                <p class="mb-1 hidden">$o(g(n)) = \{ \space f(n) \space | \space \forall c > 0 : \exists n_0 \geq 0
+                    \space : \space \forall n \geq n_0 \space : \space 0 \leq f(n) < cg(n) \space \}$</p>
+                        <p class="mb-1 hidden">$f \in o(g)$</p>
+                        <p class="mb-1 hidden">$\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} = 0$</p>
+
+                        <h5 class="mt-2 hidden">Különbség ordó és kis ordó között:</h5>
+
+                        <p class="mb-1 hidden">Az ordóra igaz, hogy $2n \in O(n)$ aszimptotikusan éles felső korlát,
+                            mivel
+                            létezik
+                            olyan szám, (elég ha egy ilyen számot találunk), amellyel megszorozva $n$-t, felső korlátja
+                            lesz
+                            a
+                            $(2n)$-nek, például $c = 3$. Tehát találtunk egy ilyen számot.</p>
+                        <p class="mb-1 hidden">Ezzel szemben a kis ordóra $2n \not \in o(n)$, mivel definíció szerint,
+                            bármilyen
+                            kicsi számot is mondunk, (minden számra teljesülnie kell), egy adott ponttól
+                            (küszöbindextől)
+                            kezdve
+                            felső korlátja lesz a $(2n)$-nek. Viszont, ha azt mondjuk, hogy $c = 1$, akkor már nem
+                            teljesül
+                            az
+                            $f(n) < c \cdot g(n)$ feltétel. Tehát $2n \in o(n^2)$, de $2n \not \in o(n)$.</p>
+
+                                <h5 class="mt-2 hidden">Kis omega ( $\omega$ ):</h5>
+
+                                <p class="mb-1 hidden">A $\omega$ aszimptotikusan <b>nem éles alsó korlát</b> jelölésére
+                                    használjuk.</p>
+
+                                <p class="mb-1 hidden">$\omega(g(n)) = \{ \space f(n) \space | \space \forall c > 0 :
+                                    \exists
+                                    n_0 \geq 0 \space : \space \forall n \geq n_0 \space : \space 0 \leq cg(n) < f(n)
+                                        \space \}$</p>
+                                        <p class="mb-1 hidden">$f \in
+                                            \omega(g)$</p>
+                                        <p class="mb-1 hidden">$\lim_{n \rightarrow \infty} \frac{f(n)}{g(n)} = \infty$
+                                        </p>
+
+                                        <p class="mb-1 hidden">Míg az omegára igaz, hogy $\frac{n^2}{2} \in \Omega(n^2)$
+                                            aszimptotikusan éles alsó korlát, addig a kis omegára ez nem mondható el.
+                                            Tehát
+                                            $\frac{n^2}{2} \in \omega(n)$, de $\frac{n^2}{2} \not \in \omega(n^2)$.</p>
+
+                                        <div class="hiddenSet text-center">
+                                            <svg viewbox="0 0 600 600" xmlns="http://www.w3.org/2000/svg">
+                                                <g id="Layer_1">
+                                                    <title>Layer 1</title>
+                                                    <ellipse ry="173.5" rx="154" id="bigCircle1" cy="189.5" cx="303"
+                                                        stroke="#fff" fill="none" />
+                                                    <ellipse ry="173.5" rx="154" id="bigCircle2" cy="398.5" cx="304"
+                                                        stroke="#fff" fill="none" />
+                                                    <ellipse ry="47" rx="85.5" id="innerCircle1" cy="64" cx="303.5"
+                                                        stroke="#fff" fill="none" />
+                                                    <ellipse ry="47" rx="85.5" id="innerCircle2" cy="524" cx="304.5"
+                                                        stroke="#fff" fill="none" />
+                                                    <text id="kisOmega" xml:space="preserve" text-anchor="start"
+                                                        font-family="Noto Sans JP" font-size="24" stroke-width="0"
+                                                        y="67" x="252" stroke="#fff" fill="#fff">Kis omega</text>
+                                                    <text id="Omega" xml:space="preserve" text-anchor="start"
+                                                        font-family="Noto Sans JP" font-size="24" stroke-width="0"
+                                                        y="172" x="268" stroke="#fff" fill="#fff">Omega</text>
+                                                    <text id="Theta" xml:space="preserve" text-anchor="start"
+                                                        font-family="Noto Sans JP" font-size="24" stroke-width="0"
+                                                        y="298" x="276" stroke="#fff" fill="#fff">Theta</text>
+                                                    <text id="Ordo" xml:space="preserve" text-anchor="start"
+                                                        font-family="Noto Sans JP" font-size="24" stroke-width="0"
+                                                        y="417" x="279" stroke="#fff" fill="#fff">Ordó</text>
+                                                    <text id="kisOrdo" xml:space="preserve" text-anchor="start"
+                                                        font-family="Noto Sans JP" font-size="24" stroke-width="0"
+                                                        y="534" x="263" stroke="#fff" fill="#fff">Kis ordó</text>
+                                                </g>
+                                            </svg>
+                                        </div>
+
+                                        <h3 class="mt-5 mb-2 hidden">Tulajdonságok:</h3>
+
+                                        <ul class="mb-1 hidden">
+                                            <li>$\Theta(g) = O(g) \cap \Omega(g)$</li>
+                                            <li>$o(g) \subset O(g) \setminus \Omega(g)$</li>
+                                            <li>$\omega(g) \subset \Omega(g) \setminus O(g)$</li>
+                                            <li>ha $f \in O(g)$ és $g \in O(h)$, akkor $f \in O(h)$ (tranzitivitás)</li>
+                                            <li>ha $f \in \Omega(g)$ és $g \in \Omega(h)$, akkor $f \in \Omega(h)$
+                                                (tranzitivitás)</li>
+                                            <li>ha $f \in \Theta(g)$ és $g \in \Theta(h)$, akkor $f \in \Theta(h)$
+                                                (tranzitivitás)</li>
+                                            <li>$f \in \Theta(g) \iff g \in \Theta(f)$ (szimmetria)</li>
+                                            <li>$f \in O(g) \iff g \in \Omega(f)$ (felcserélt szimmetria)</li>
+                                            <li>$f \in O(f)$ és $f \in \Omega(f)$ és $f \in \Theta(f)$ (reflexivitás)
+                                            </li>
+                                        </ul>
+
+                                        <h3 class="mt-5 mb-2 hidden">Aszimptotikus függvények nagyságrendjére:</h3>
+
+                                        <p class="mb-1 hidden">Arra, hogy egy függvény egy másikhoz képest nagy $n$
+                                            értékekre elhanyagolható, bevezetjük az aszimptotikusan kisebb fogalmát.
+                                            \[ \phi \prec g \iff \lim_{n \to \infty} \frac{\phi(n)}{g(n)} = 0 \]
+                                            Ilyenkor azt mondjuk, hogy $\phi$ aszimptotikusan kisebb, mint $g$.</p>
+
+                                        <p class="mb-1 hidden">$log(n!) \in \Theta(n \cdot log \space n)$</p>
+
+                                        <p class="mb-1 hidden">${log \space n} \prec \sqrt{n} \prec n \prec {n \cdot log
+                                            \space n} \prec n^2 \prec {{n^2} log \space n} \prec n^3 \prec 2^n \prec n!
+                                            \prec n^n$</p>
+
+                                        <h3 class="mt-5 mb-2 hidden">Nevezetes nagyságrendek:</h3>
+
+                                        <img class="mb-2 hidden w-50 mx-auto d-block" src="img1.png" alt="">
+
+                                        <h5 class="mt-2 hidden">Példa különféle algoritmusok maximális műveletigényére:
+                                        </h5>
+                                        <ul class="mb-1 hidden">
+                                            <li>Verem vagy sor bármely művelete: $\Theta(1)$</li>
+                                            <li>Logaritmikus keresés: $\Theta(log \space n)$</li>
+                                            <li>Prímszámteszt: $\Theta(n^\frac{1}{2})$</li>
+                                            <li>Lineáris keresés: $\Theta(n)$</li>
+                                            <li>Kupacrendezés: $\Theta(n \cdot log \space n)$</li>
+                                            <li>Shell rendezés: $\Theta(n^\frac{3}{2})$</li>
+                                            <li>Buborékrendezés: $\Theta(n^2)$</li>
+                                            <li>Mátrixszorzás: $\Theta(n^3)$</li>
+                                            <li>Hanoi tornyai: $\Theta(2^n)$</li>
+                                            <li>Utazóügynök probléma: $\Theta(n!)$</li>
+                                        </ul>
+
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-1">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-1">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-1">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="lineGraphs.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+</body>
+
+</html>

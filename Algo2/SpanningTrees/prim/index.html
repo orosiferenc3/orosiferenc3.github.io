@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prim algoritmusa</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo2/SpanningTrees/kruskal/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo2/AllPairsShortestPathsAlgorithms/floydWarshallAlgorithm/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a>, <a href="../../../Algo2/GraphRepresentations/weightedGraphs/index.html"
+                    class="link">Élsúlyozott gráfok és ábrázolásaik</a>, <a
+                    href="../../../Algo1/Trees/priorityQueue/index.html" class="link">Prioritásos sor</a>, <a
+                    href="../../../Algo2/SpanningTrees/spanningtree/index.html" class="link">Minimális feszítőfák
+                    bevezetés</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 2. > Minimális feszítőfák >
+                        Prim algoritmusa</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">Prim algoritmusa (Prim's algorithm)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">Prim algoritmusa <b>mohó algoritmus</b>, tehát az aktuálisan legjobbnak tűnő élt
+                    részesíti előnyben. Prim algoritmusában az $A$ halmaz <b>élei egyetlen fát formáznak</b>.</p>
+                <p class="mb-1 hidden">A fa építése egy tetszőlegesen <b>kiválasztott gyökércsúcsból indul</b>, és addig
+                    növekszik, amíg az összes csúcsot el nem értük. Minden lépésben azt a könnyű élt vesszük hozzá az
+                    $A$
+                    fához, amelyik <b>egy $A$-beli csúcsot köt össze egy $A$-n kivüli csúccsal</b>. Ez az él könnyű él
+                    lesz,
+                    ami egyben biztonságos él is. Az $A$ fában még nem szereplő csúcsok a végrehajtás közben egy $Q$
+                    minimum
+                    prioritásos sorban helyezkednek el. Amikor az algoritmus befejeződik, a $Q$ minimum prioritásos sor
+                    üres. Ha minden csúcsot elérünk bármelyik másikból, tehát $n$ csúcs esetén $(n-1)$ él hozzáadása
+                    után,
+                    minimális feszítőfát kapunk és leáll az algoritmus.</p>
+                <p class="mb-1 hidden">A csúcsokhoz címkéket rendelünk:</p>
+
+                <ul class="mb-1 hidden">
+                    <li><b>$p$</b> a csúcs szülője</li>
+                    <li><b>$c$</b> a csúcs és a szülője közti él súlya, $c(u) = w(p(u), u)$</li>
+                </ul>
+
+                <p class="mb-1 hidden">Ha még nem adtunk hozzá $A$-hoz olyan élt, ami összekötné az $u$ csúcsot
+                    bármelyik
+                    másikkal, akkor $p(u) = \emptyset \land c(u) = \infty$. Az algoritmus lefutása után egyik csúcs $c$
+                    értéke sem lehet $\infty$, mert akkor az azt jelentené, hogy nem összefüggő a gráf és nem lehet
+                    elérni
+                    minden csúcsot.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Működése:</h3>
+
+                <p class="mb-1 hidden">Az első ciklusban inicializáljuk minden csúcs szülőjét $\emptyset$-ra és
+                    költségét
+                    végtelenre.</p>
+                <p class="mb-1 hidden">A minimum prioritásos sorban eltároljuk az $A$ fában még nem szereplő csúcsokat.
+                    A
+                    kezdő csúcsot nem rakjuk bele, mert ez alapból benne lesz $A$-ban.</p>
+                <p class="mb-1 hidden">A második ciklus során végig nézzük az adott csúcsból kimenő éleket, és ha úgy
+                    tűnik,
+                    hogy ebből a csúcsból olcsóbb úton tudunk eljutni egy csúcsba, akkor azt frissítjük. Ilyenkor az új
+                    prioritások mentén a sort is újra kellhet rendezni.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Műveletigény:</h3>
+
+                <p class="mb-1 hidden">A Prim-algoritmus hatékonysága a $Q$ prioritásos sor megvalósításán múlik. Ha
+                    $Q$-t minimum-kupacként valósítjuk meg, akkor:</p>
+
+                <ul class="mb-1 hidden">
+                    <li>$n = |G.V|$ (csúcsok száma), $m = |G.E|$ (élek száma)</li>
+                    <li>$T(n, m) \in O(m \cdot \log n)$</li>
+                </ul>
+
+                <p class="mb-1 hidden">A Prim algoritmusának futási ideje azonban Fibonacci-kupacok segítségével
+                    javítható.
+                    A Fibonacci-kupaccal megvalósított prioritásos sort használó Prim algoritmusának futási ideje $O(m +
+                    n \cdot
+                    log \space n)$.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Gyakorlati alkalmazása:</h3>
+
+                <p class="mb-1 hidden">Városok közötti utak tervezésénél, elektromos hálózatok tervezésénél,
+                    számítógépes
+                    hálózatoknál használják.</p>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares">
+                            <canvas></canvas>
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <table id="taskTable">
+                            <tbody></tbody>
+                        </table>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Prim(G : \mathcal{G}_{w};r : \mathcal{V})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td forloop="25" class="loopSidePart rowspan" rowspan="3" id="id152" tabindex="0"></td>
+                                <td forloop="25" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall u \in G.V$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id153" tabindex="0">$c(u) := \infty$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id154" tabindex="0">$p(u) := \emptyset$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id155" tabindex="0">$c(r):=0$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id156" tabindex="0">$Q : minPrQ(G.V \setminus \{ r \}, c)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id157" tabindex="0">$u := r$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="26" class="loopSidePart rowspan" rowspan="6" id="id158" tabindex="0"></td>
+                                <td forloop="26" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\lnot Q.isEmpty()$</td>
+                            </tr>
+                            <tr>
+                                <td forloop="27" class="loopSidePart rowspan" rowspan="4" id="id159" tabindex="0"></td>
+                                <td forloop="27" class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall v \in G.A(u) \land v \in Q \land
+                                    c(v) &gt; G.w(u, v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id160" tabindex="0">$p(v) := u$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id161" tabindex="0">$c(v) := G.w(u, v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id162" tabindex="0">$Q.adjust(v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" id="id163" tabindex="0">$u := Q.remMin()$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2">
+                            <canvas></canvas>
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <table id="taskTable2">
+                            <tbody></tbody>
+                        </table>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Struktogram</h1>
+                    <table id="struktogrammHeader">
+                        <tbody>
+                            <tr>
+                                <td>$Prim(G : \mathcal{G}_{w};r : \mathcal{V})$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <hr id="verticalLine" width="1" size="20"
+                        class="hrBetweenHeaderAndBody">
+                    <table id="struktogram">
+                        <tbody>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="3" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall u \in G.V$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$c(u) := \infty$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$p(u) := \emptyset$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$c(r):=0$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$Q : minPrQ(G.V \setminus \{ r \}, c)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$u := r$</td>
+                            </tr>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="6" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\lnot Q.isEmpty()$</td>
+                            </tr>
+                            <tr>
+                                <td class="loopSidePart rowspan" rowspan="4" tabindex="0"></td>
+                                <td class="loopUpperPart colspan" colspan="4" tabindex="0"
+                                    >$\forall v \in G.A(u) \land v \in Q \land
+                                    c(v) &gt; G.w(u, v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$p(v) := u$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$c(v) := G.w(u, v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$Q.adjust(v)$</td>
+                            </tr>
+                            <tr>
+                                <td colspan="5" tabindex="0">$u := Q.remMin()$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle hidden">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3 hidden">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/graph.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="prim.js"></script>
+</body>
+
+</html>

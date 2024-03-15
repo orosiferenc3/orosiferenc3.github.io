@@ -1,0 +1,42 @@
+{
+    "tasks": [
+        {
+            "type": "taskCheckbox",
+            "task": {
+                "text": "Melyek az igaz állítások?",
+                "img": "",
+                "options": [
+                    {
+                        "id": 1,
+                        "text": "A beszúró rendezés stabil rendezés."
+                    },
+                    {
+                        "id": 2,
+                        "text": "A beszúró rendezés helyben rendező algoritmus."
+                    },
+                    {
+                        "id": 3,
+                        "text": "A beszúró rendezés maximális műveletigénye $\\Theta (n)$."
+                    }
+                ]
+            },
+            "solution": [1,2]
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Rendezze a megadott tömböt a beszúró rendezés segítségével: [80,46,39,28,64,29,66,62]. Adja meg a tömb elemeit vesszővel elválasztva, szóközök nélkül, a külső ciklus 2. iterációjának lefutása után!",
+                "img": ""
+            },
+            "solution": "39,46,80,28,64,29,66,62"
+        },
+        {
+            "type": "taskInput",
+            "task": {
+                "text": "Rendezze a megadott tömböt a beszúró rendezés segítségével: [80,46,39,28,64,29,66,62]. Adja meg a tömb elemeit vesszővel elválasztva, szóközök nélkül, a külső ciklus 5. iterációjának lefutása után!",
+                "img": ""
+            },
+            "solution": "28,29,39,46,64,80,66,62"
+        }
+    ]
+}

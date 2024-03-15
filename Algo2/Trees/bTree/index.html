@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="hu">
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3KE7F4B8G6"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-3KE7F4B8G6');
+    </script>
+    <script type="text/javascript" src="../../../js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(function () {
+            $("#offcanvasNavbar").load("../../../html/navbar.html");
+        });
+
+        $(function () {
+            $("footer").load("../../../html/footer.html");
+        });
+    </script>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="cache-control" content="no-cache" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>B+ fa</title>
+    <link href="../../../bootstrap-5.2.3-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/color.css">
+    <link rel="stylesheet" href="../../../css/navbar.css">
+    <link rel="stylesheet" href="../../../css/scrollbarAndScrollAnimation.css">
+    <link rel="stylesheet" href="../../../css/struktogram.css">
+    <link rel="stylesheet" href="../../../css/tasks.css">
+    <link rel="stylesheet" href="../../../css/animation.css">
+</head>
+
+<body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-brand sticky-top navbar-dark bg-dark">
+        <div class="container-fluid py-2">
+            <div class="d-flex" id="navbarButtons">
+                <!-- Backward button -->
+                <a href="../../../Algo2/Trees/n-aryTree/index.html" class="navbar-toggler navbarHomeNextPrevButton"
+                    type="button" role="button">
+                    <i class="fa-solid fa-angle-left"></i>
+                </a>
+
+                <!-- House button -->
+                <button class="navbar-toggler navbarHomeNextPrevButton" type="button" data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+                    <i class="fa-solid fa-house"></i>
+                </button>
+
+                <!-- Forward button -->
+                <a href="../../../Algo2/GraphRepresentations/simpleGraphs/index.html"
+                    class="navbar-toggler navbarHomeNextPrevButton" type="button" role="button">
+                    <i class="fa-solid fa-angle-right"></i>
+                </a>
+
+            </div>
+
+            <!-- NAVITEMS -->
+            <div class="navbarAppearance">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#description">Leírás</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#animationAndStruktogramm">Animáció</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#tasks">Feladatok</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- OFFCANVAS -->
+            <div class="offcanvas offcanvas-start bg-dark" tabindex="-1" id="offcanvasNavbar"
+                aria-labelledby="offcanvasNavbarLabel">
+            </div>
+        </div>
+    </nav>
+
+    <div data-bs-spy="scroll" data-bs-target=".navbar" data-bs-smooth-scroll="true" tabindex="0">
+        <!-- Szükséges előismeret -->
+        <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto my-2 px-4">
+            <h5 class="mb-2 hidden">Szükséges előismeret: <a
+                    href="../../../Algo1/AsymptoticBehaviorAndNotations/asymptoticBehavior/index.html"
+                    class="link">Függvények aszimptotikus
+                    viselkedése</a>, <a href="../../../Algo1/AsymptoticBehaviorAndNotations/notations/index.html"
+                    class="link">Jelölések</a></h5>
+            <hr>
+            <p class="lead fs-6 mb-2 hidden"><b><i>Algoritmusok és adatszerkezetek 2. > Fák >
+                        B+ fa</i></b></p>
+        </div>
+
+        <!-- Leírás -->
+        <div id="description" class="px-4 py-5 my-5">
+            <h1 class="display-5 mb-5 fw-bold text-center hidden">B+ fa (B+ tree)</h1>
+            <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                <p class="mb-1 hidden">Adott a feladat, miszerint szeretnénk hatalmas mennyiségű adat tárolását
+                    megvalósítani. Természetesen kulcsfontosságú, hogy az adatokat rendezetten tároljuk, hiszen így az
+                    alapműveletek (keresés, beszúrás, törlés) hatékonyan végrehajthatók. Első ötletként felmerülhet
+                    például az AVL fák alkalmazása, azonban ezzel akadnak problémák.</p>
+                <p class="mb-1 hidden">Mivel szeretnénk ezt a rengeteg adatod hosszú távon eltárolni (adatbázis,
+                    fájlrendszer, stb.), így egy véletlen elérésű háttértáron, pl. egy mágneslemezen kívánjuk őket
+                    elhelyezni. Vagyis az adatok tárolása a <b>másodlagos memórián történik</b>.</p>
+                <p class="mb-1 hidden">Az elsődleges, közvetlenül elérhető memóriához képest (pl. RAM) a másodlagos
+                    memória írási- és olvasási <b>adatmozgatási sebessége jelentősen lassabb</b>. Így az a célunk, hogy
+                    ezen műveletek számát csökkentsük.</p>
+                <p class="mb-1 hidden">A háttértárak úgy működnek, hogy egyszerre az adatok egy egész <b>blokkját</b>,
+                    jellemzően 4KB vagy 8KB mennyiségű adatot mozgatunk. Egy bináris keresőfa egy csúcsa viszont ennek
+                    csak egy töredékét használná ki. Így már látjuk is, hogy az AVL fa miért nem jó választás. Ahhoz,
+                    hogy minél kevesebb blokkot használjunk fel, olyan adatszerkezetre van szükségünk, amely jobban
+                    kihasználja az ezek által biztosított területet. Ilyen a B+ fa.</p>
+                <h3 class="mt-5 mb-2 hidden">B+ fa:</h3>
+                <p class="mb-1 hidden">A B+ fa egy olyan adatszerkezet, ahol minden csúcs <b>legfeljebb $d$ mutatót</b>,
+                    és <b>legfejlebb $d-1$ kulcsot</b> tartalmaz, ahol $d$ $(4 \le d)$ a fára jellemző állandó, vagyis a
+                    B+ fa <b>fokszáma</b>. Ennek jelentőségét később tárgyaljuk.</p>
+                <p class="mb-1 hidden">Úgy tekintjük, hogy a belső csúcsokban mindegyik referencia két kulcs között van,
+                    azaz egy olyan részfa gyökerére mutat, amiben minden érték a két kulcs között található.</p>
+                <img class="mb-2 hidden w-50 mx-auto d-block" src="img1.png" alt="">
+                <p class="mb-1 hidden">Az <b>adatok a levélszinten</b> vannak. A <b>belső kulcsok csak hasító
+                        kulcsok</b>. Egy adott kulcsú adat keresése során ezek alapján tudhatjuk, melyik ágon keressünk
+                    tovább. A levélszinten minden kulcshoz tartozikegy mutató, ami a megfelelő adatrekordra hivatkozik.
+                    A leveleket a $d$-edik mutatókkal gyakran listába fűzik.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Ábrázolásai:</h3>
+
+                <p class="mb-1 hidden">A B+ fákat ábrázolhatjuk vizuálisan lerajzolva vagy a bináris fákhoz hasonlóan
+                    szöveges, vagyis zárójelezett formában. Ebben az esetben is érvényes a következő szabály: $( \space
+                    balRészFa \space Gyökér \space jobbRészFa \space )$.
+                    Az alábbi fa szöveges, vagyis zárójelezett formája: $\{[(1,4) 6 (9,10) 11 (11,12)] 13 [(13,15) 16
+                    (16,20,25)]\}$</p>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img2.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">Invariánsok:</h3>
+
+                <p class="mb-1 hidden">Tetszőleges $d$-ed fokú ($4\le d$ állandó) B+ fa a következő invariánsokat
+                    teljesíti:</p>
+                <ul>
+                    <li>Minden levélben legfeljebb $d-1$ kulcs, és ugyanennyi adatrekordra hivatkozó mutató található.
+                    </li>
+                    <li>A gyökértől mindegyik levél ugyanolyan távol található, vagyis <b>minden levél azonos
+                            mélységben, a legalsó szinten van.</b> (tökéletesen kiegyensúlyozott keresőfa)</li>
+                    <li>Minden belső csúcsban eggyel több mutató van, mint kulcs, ahol $d$ a felső határ a mutatók
+                        számára.</li>
+                    <li>Minden $N$ belső csúcsra (ahol $k$ az $N$ csúcsban a kulcsok száma):</li>
+                    <ul>
+                        <li>az első gyerekhez tartozó részfában minden kulcs kisebb, mint az $N$ első kulcsa</li>
+                        <li>az $i$-edik gyerekhez tartozó részfában $(2 \le i \le k)$ lévő tetszőleges $r$ kulcsra
+                            $\text{N.kulcs}[i-1] \le r \le \text{N.kulcs}[i]$.</li>
+                        <li>az utolsó gyerekhez tartozó részfában minden kulcs nagyobb-egyenlő, mint az $N$ utolsó
+                            kulcsa</li>
+                    </ul>
+                    <li>A gyökércsúcsnak legalább két gyereke van, kivéve, ha ez a fa egyetlen csúcsa.</li>
+                    <li>Minden, a gyökértől különböző belső csúcsnak legalább $\lfloor d / 2 \rfloor$ gyereke van.</li>
+                    <li>Minden levél legalább $\lfloor d / 2 \rfloor$ kulcsot tartalmaz, kivéve, ha a fának egyetlen
+                        csúcsa van.</li>
+                    <li>A B+ fa által reprezentált adathalmaz minden kulcsa megjelenik valamelyik levélben, balról
+                        jobbra szigorúan monoton növekvő sorrendben.</li>
+                </ul>
+
+                <h3 class="mt-5 mb-2 hidden">Fokszáma:</h3>
+
+                <p class="mb-1 hidden">Egy $d$ $(4\le d)$ fokszámú B+ fa esetében minden csúcs <b>legfeljebb $d$
+                        mutatót</b>, és <b>legfejlebb $d-1$ kulcsot</b> tartalmaz. Hogyan válasszuk meg $d$ értékét? A
+                    $d$ értéke függ</p>
+                <ul>
+                    <li>a kulcs méretétől,</li>
+                    <li>a mutató méretétől,</li>
+                    <li>a blokk méretétől.</li>
+                </ul>
+
+                <p class="mb-1 hidden">Jelölje ezeket rendre $k$, $m$ és $b$, és tekintsük a</p>
+                <p class="mb-1 text-center hidden">$k\cdot(d-1)+m\cdot d \le b$</p>
+                <p class="mb-1 hidden">egyenlőtlenséget. Ekkor az egyenlőtlenség bal oldala egy csúcs mérete $d$
+                    függvényében, jobb oldala pedig a blokk mérete. Emlékezzünk, hogy a célunk ez utóbbi terület minél
+                    jobb kihasználása. Ezt a lehető legnagyobb $d$ kiválasztásával érjük el.</p>
+
+                <h5 class="mt-2 hidden">Példa:</h5>
+                <p class="mb-1 hidden">Tegyük fel, hogy egy blokk 4KB, a kulcsaink 4 byte-os egész számok, és mindegyik
+                    mutató egy 6 byte-os relatív cím (a fájl kezdőcíméhez képest). Ekkor az</p>
+                <p class="mb-1 text-center hidden">$4\cdot(d-1)+6\cdot d \le 4096$</p>
+                <p class="mb-1 hidden">egyenlőtlenséget megoldva $d\le 410$ adódik, így $d=410$ értéket választjuk.</p>
+
+                <h3 class="mt-5 mb-2 hidden">A műveletigényről</h3>
+
+                <p class="mb-1 hidden">Ha a fa magassága $h$, akkor $h \in O(\log n)$, viszont <b>a gyakorlatban a fa $h$ magassága a $\log n$
+                        érték töredéke:</b></p>
+                <p class="mb-1 text-center hidden">$\log_d\left(\frac{n}{d-1}\right)\le h\le
+                    \log_{\lfloor\frac{d}{2}\rfloor}\left(\frac{n}{2}\right)$</p>
+                <p class="mb-1 hidden">Tekinstük a korábbi példában kiszámolt $d=410$ fokszámot, továbbá legyen az
+                    adatrekordok száma $n = 1.000.000.000$. Ekkor a fenti egyenlőtlenségből $2,4 \le h \le 3,8$ adódik,
+                    azaz $h = 3$ (a fának 4 szintje van).</p>
+                <p class="mb-1 hidden">Egy ilyen fánál a felső két szintet az adatbázis megnyitásakor betöltjük a
+                    központi tárba. A levélszintről viszont még egyet lépünk a tényleges adatrekord eléréséhez. Ez azt
+                    jelenti, hogy egy-egy adat eléréséhez összesen háromszor olvasunk a lemezről, egymilliárd rekordot
+                    tartalmazó adatbázis esetén. Ha pedig a keresett kulcsú rekord nincs az adatbázisban, csak kétszer
+                    olvasunk a lemezről.</p>
+
+                <h3 class="mt-5 mb-2 hidden">Beszúrás:</h3>
+
+                <p class="mb-1 hidden">Ha a fa üres, hozzunk létre egy új levélcsúcsot, ami egyben a gyökércsúcs is, és
+                    a beszúrandó kulcs/mutató pár a tartalma. Különben keressük meg a kulcsnak megfelelő levelet.</p>
+                <img class="mb-2 hidden w-50 mx-auto d-block" src="img3.png" alt="">
+                <ul>
+                    <li>Ha a levélben márszerepel a kulcs, a beszúrás sikertelen.</li>
+                    <li>Különben szúrjuk be a kulcs/mutató párt a levélbe.</li>
+                </ul>
+
+                <h5 class="mt-2 hidden">Beszúrás a levélbe:</h5>
+                <ul>
+                    <li>Ha a csúcsban van üres hely, szúrjuk be a megfelelő kulcs/mutató párt kulcs szerint rendezetten
+                        ebbe a csúcsba!</li>
+                    <li>Ha a csúcs már tele van, vágjuk szét két csúccsá, és osszuk el a $d$ darab kulcsot egyenlően a
+                        két csúcs között!</li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img4.png" alt="">
+
+                <h5 class="mt-2 hidden">Szétvágás:</h5>
+                <p class="mb-1 hidden">A <b>szétvágás során minden esetben beszúrás történik a szülő csúcsba</b>. Így,
+                    ha kell, a szülő csúcsot előbb létrehozzuk. Ekkor a <b>B+ fa magassága nő</b>.</p>
+                <ul>
+                    <li>Ha a csúcs egy levél, vegyük a második csúcs legkisebb értékének másolatát, és ismételjük meg
+                        ezt a beszúró algoritmust, hogy beszúrjuk azt a szülő csúcsba!</li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img5.png" alt="">
+                <ul>
+                    <li>Ha a csúcs nem levél, vegyük ki a középső értéket a kulcsok elosztása során, és ismételjük meg
+                        ezt a beszúró algoritmust, hogy beszúrjuk ezt a középső értéket a szülő csúcsba!</li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img6.png" alt="">
+
+                <h3 class="mt-5 mb-2 hidden">Törlés:</h3>
+
+                <p class="mb-1 hidden">Keressük meg a törlendő kulcsot tartalmazó levelet! Ha ilyen nincs, a törlés
+                    meghiúsul. Különben a törlő algoritmus futása során két út lehetséges:</p>
+
+                <ul>
+                    <li>A keresés során megtalált <b>levélcsúcs egyben a gyökércsúcs is</b>.</li>
+                    <ul>
+                        <li>Töröljük a megfelelő kulcsot és a hozzá tartozó mutatót a csúcsból!</li>
+                        <li>Ha a csúcs tartalmaz még kulcsot, kész vagyunk.</li>
+                        <li>Különben töröljük a fa egyetlen csúcsát, és üres fát kapunk.</li>
+                    </ul>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img7.png" alt="">
+                <ul>
+                    <li>A keresés során megtalált levélcsúcs nem a gyökércsúcs. Ekkor törlünk a levélcsúcsból.</li>
+                </ul>
+
+                <h5 class="mt-2 hidden">Törlés levélcsúcsból:</h5>
+                <ul>
+                    <li>Töröljük a megfelelő kulcsot és a hozzá tartozó mutatót a levélcsúcsból!</li>
+                    <li>Ha a levélcsúcs még tartalmaz elég kulcsot és mutatót, hogy <b>teljesítse az invariánsokat</b>, kész
+                        vagyunk.</li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img8.png" alt="">
+                <ul>
+                    <li>Ha a levélcsúcsban már túl kevés kulcs van ahhoz, hogy teljesítse az invariánsokat, de a
+                        <b>következő, vagy a megelőző testvérének több van</b>, mint amennyi szükséges, osszuk el a
+                        kulcsokat egyenlően közte és a megfelelő testvére között! Írjuk át a két testvér közös
+                        szülőjében a két testvérhez tartozóhasító kulcsot a két testvér közül a második minimumára!
+                    </li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img9.png" alt="">
+                <ul>
+                    <li>Ha a levélcsúcsban már túl kevés kulcs van ahhoz, hogy teljesítse az invariánst, és a
+                        <b>következő, valamint a megelőző testvére is a minimumon van</b>, hogy teljesítse az
+                        invariánst, akkor egyesítsük egy vele szomszédos testvérével! Ennek során a két testvér közül a
+                        (balról jobbra sorrend szerinti) másodikból a kulcsokat és a hozzájuk tartozó mutatókat sorban
+                        átmásoljuk az elsőbe, annak eredeti kulcsai és mutatói után, majd a második testvért töröljük.
+                        Ezután meg kell ismételnünk a törlő algoritmust a szülőre, hogy eltávolítsuk a szülőből a hasító
+                        kulcsot (ami eddig elválasztotta a most egyesített levélcsúcsokat), a most törölt második
+                        testvérre hivatkozó mutatóval együtt.
+                    </li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img10.png" alt="">
+
+                <h5 class="mt-2 hidden">Törlés belső - gyökértől különböző - csúcsból:</h5>
+                <ul>
+                    <li>Töröljük a belső csúcs éppen most egyesített két gyereke közti hasító kulcsot és az egyesítés
+                        során törölt gyerekére hivatkozó mutatót a belső csúcsból!</li>
+                    <li>Ha a belső csúcsnak van még $\lfloor \frac{d}{2}\rfloor$ gyereke, (hogy <b>teljesítse az
+                        invariánsokat</b>) kész vagyunk.</li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img11.png" alt="">
+                <ul>
+                    <li>Ha a belső csúcsnak már túl kevés gyereke van ahhoz, hogy teljesítse az invariánsokat, de a
+                        <b>következő, vagy a megelőző testvérének több van, mint amennyi szükséges</b>, osszuk el a
+                        gyerekeket és a köztük levő hasító kulcsokat egyenlően közte és a megfelelő testvére között, a
+                        hasító kulcsok közé a testvérek közti (a közös szülőjükben lévő) hasító kulcsot is beleértve! A
+                        gyerekek és a hasító kulcsok újraelosztása során, a középső hasító kulcs a testvérek közös
+                        szülőjében a két testvérhez tartozó régi hasító kulcs helyére kerül úgy, hogy megfelelően
+                        reprezentálja a köztük megváltozott vágási pontot! (Ha a két testvérben a gyerekek összlétszáma
+                        páratlan, akkor az újraelosztás után is annak a testvérnek legyen több gyereke, akinek előtte is
+                        több volt!)
+                    </li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img12.png" alt="">
+                <ul>
+                    <li>Ha a belső csúcsnak már túl kevés gyereke van ahhoz, hogy teljesítse az invariánst, és a
+                        <b>következő, valamint a megelőző testvére is a minimumon van</b>, hogy teljesítse az
+                        invariánst, akkor egyesítsük egy vele szomszédos testvérével! Az egyesített csúcsot a két
+                        testvér közül a (balról jobbra sorrend szerinti) elsőből hozzuk létre. Gyerekei és hasító
+                        kulcsai először a saját gyerekei és hasító kulcsai az eredeti sorrendben, amiket a két testvér
+                        közti (a közös szülőjükben lévő) hasító kulcs követ, és végül a második testvér gyerekei és
+                        hasító kulcsai jönnek, szintén az eredeti sorrendben. Ezután töröljük a második testvért. A két
+                        testvér egyesítése után meg kell ismételnünk a törlő algoritmust a közös szülőjükre, hogy
+                        eltávolítsuk a szülőből a hasító kulcsot (ami eddig elválasztotta a most egyesített
+                        testvéreket), a most törölt második testvérre hivatkozó mutatóval együtt.
+                    </li>
+                </ul>
+                <img class="mb-2 hidden w-75 mx-auto d-block" src="img13.png" alt="">
+
+                <h5 class="mt-2 hidden">Törlés a gyökércsúcsból, ha az nem levél:</h5>
+                <ul>
+                    <li>Töröljük a gyökércsúcs éppen most egyesített két gyereke közti hasító kulcsot és az egyesítés
+                        során törölt gyerekére hivatkozó mutatót a gyökércsúcsból!</li>
+                    <li>Ha a gyökércsúcsnak van még 2 gyereke, kész vagyunk.</li>
+                    <li>Ha a gyökércsúcsnak csak 1 gyereke maradt, akkor <b>töröljük a gyökércsúcsot</b>, és a megmaradt
+                        egyetlen gyereke legyen az új gyökércsúcs! (Ekkor a B+ fa magassága csökken.)</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Animáció és struktogram -->
+        <div class="section">
+            <div id="animationAndStruktogramm"
+                class="col-8 col-lg-8 col-md-7 text-secondary px-4 py-5 text-center bg-dark">
+                <div class="py-5" style="width: -webkit-fill-available; max-width: 1000px;">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares">
+                            <p class="mx-auto">Az animáció fejlesztés alatt áll 😭😭</p>
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="struktogramm" class="col-4 col-lg-4 col-md-5 text-secondary px-4 py-5 text-center container">
+                <div class="py-5 align-items-center">
+                    <h1 class="display-5 fw-bold text-white">Leírás</h1>
+                    <!--<table></table>-->
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Animáció mobilra -->
+        <div id="animationForMobil" class="diagonalBox bg-dark">
+            <div class="content bg-dark text-secondary py-2 text-center">
+                <div class="py-3 hidden">
+                    <h1 class="display-5 fw-bold text-white">Animáció</h1>
+                    <div class="mx-auto">
+                        <div id="squares2">
+                            <p class="mx-auto">Az animáció fejlesztés alatt áll 😭😭</p>
+                            <!--<div class="square"></div>-->
+                        </div>
+
+                        <div class="legend my-3 ps-3">
+                            <!--<div class="legendBox"></div><span>szín</span>-->
+                        </div>
+
+                        <div>
+                            <span class="speed" class="mb-3 text-muted"></span>
+                        </div>
+
+                        <div class="row justify-content-center my-2">
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="backward2">
+                                <i class="fa-solid fa-backward"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="replay2">
+                                <i class="fa-solid fa-repeat"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="play2">
+                                <i class="fa-solid fa-play"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="pause2">
+                                <i class="fa-solid fa-pause"></i>
+                            </button>
+                            <button class="col-1 mx-2 navbar-toggler animationButtons" type="button" id="forward2">
+                                <i class="fa-solid fa-forward"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Struktogramm mobilra -->
+        <div class="my-4 mx-auto hidden overflow-hidden">
+            <div id="struktogrammForMobil"
+                class="row p-4 ps-5 align-items-center border shadow-lg containerStruktogramm">
+                <div class="col-11 offset-lg-1 p-0 overflow-hidden">
+                    <h1 class="display-5 fw-bold text-white mb-4">Leírás</h1>
+                    <!--<table></table>-->
+                </div>
+            </div>
+        </div>
+
+        <!-- Feladatok -->
+        <div id="tasks">
+            <div class="px-4 py-4 text-center">
+                <div class="py-4">
+                    <h1 class="display-5 fw-bold headerStyle">Feladatok</h1>
+                    <div class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 mx-auto">
+                        <p class="mb-3">Az alábbi feladatok a gyakorlatokon elvégzendő kötelező, illetve gyakorló
+                            feladatok.</p>
+                    </div>
+                    <div id="generatedTasks"
+                        class="col-11 col-sm-11 col-md-9 col-lg-7 col-xl-7 col-xxl-7 text-start mx-auto hidden">
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">1. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt="" style="max-width: 650px;">
+
+                            <div class="accordion accordion-flush mb-4" id="accordionFlushExample">
+                                <div class="accordion-item">
+                                    <h3 class="accordion-header" id="flush-headingOne">
+                                        <button class="accordion-button collapsed" type="button"
+                                            data-bs-toggle="collapse" data-bs-target="#flush-collapseOne"
+                                            aria-expanded="false" aria-controls="flush-collapseOne">
+                                            Megoldás:
+                                        </button>
+                                    </h3>
+                                    <div id="flush-collapseOne" class="accordion-collapse collapse my-4 mx-4"
+                                        aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                                        <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A =
+                                            [3,5,2,4,1]$.</p>
+                                        <img class="w-75 mx-auto d-block" src="img1.png" alt=""
+                                            style="max-width: 650px;">
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>-->
+
+                        <!--<hr>-->
+
+                        <!--<div class="mb-4">
+                            <h3 class="mb-4">2. feladat:</h3>
+                            <p class="mb-4">Rendezze az alábbi tömböt buborékrendezéssel: $A = [3,5,2,4,1]$.</p>
+                            <img class="mb-4 w-75 mx-auto d-block" src="img1.png" alt=""
+                                style="max-width: 650px;">
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="radio1" class="form-check-input" type="radio" name="flexRadioDefault">
+                                <label class="form-check-label" for="radio1">
+                                    Default radio
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input id="checkbox1" class="form-check-input" type="checkbox">
+                                <label class="form-check-label" for="checkbox1">
+                                    Default checkbox
+                                </label>
+                            </div>
+                            <div class="input-group my-4">
+                                <input id="input1" type="text" class="form-control">
+                            </div>
+                            <button type="button" class="btn btn-primary mt-4 checkTaskButton">Ellenőrzés</button>
+                            <span class="mt-4 ms-3" id="correctAnswer1"></span>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="container-fluid bg-dark py-3 mt-1 border-top ">
+            <footer class="text-center hidden">
+            </footer>
+        </div>
+    </div>
+
+    <script src="../../../bootstrap-5.2.3-dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../anime-master/lib/anime.min.js"></script>
+    <script src="../../../js/script.js"></script>
+    <script src="../../../js/tasks.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    <script src="https://kit.fontawesome.com/38ca55f643.js" crossorigin="anonymous"></script>
+    <script src="bTree.js"></script>
+</body>
+
+</html>
